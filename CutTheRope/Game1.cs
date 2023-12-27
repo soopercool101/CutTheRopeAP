@@ -311,32 +311,6 @@ namespace CutTheRope
 
 		protected override void Update(GameTime gameTime)
 		{
-			/*
-			if (parentProcess != null)
-			{
-				if (parentProcess.HasExited)
-				{
-					Exit();
-				}
-				bool createdNew = false;
-				try
-				{
-					new Mutex(false, "Local\\{4A17D560-ABF3-4020-A3B0-1087993D49E1}", out createdNew);
-					if (createdNew)
-					{
-						Exit();
-					}
-				}
-				catch (Exception)
-				{
-					Exit();
-				}
-			}
-			else
-			{
-				Exit();
-			}
-			*/
 			elapsedTime += gameTime.ElapsedGameTime;
 			if (elapsedTime > TimeSpan.FromSeconds(1.0))
 			{
@@ -386,7 +360,7 @@ namespace CutTheRope
 			}
 			MouseState mouseState = windows.MouseCursor.GetMouseState();
 			iframework.core.Application.sharedRootController().mouseMoved(CtrRenderer.transformX(mouseState.X), CtrRenderer.transformY(mouseState.Y));
-			CtrRenderer.update((float)gameTime.ElapsedGameTime.Milliseconds / 1000f);
+			CtrRenderer.update((float)gameTime.ElapsedGameTime.TotalSeconds);
 			base.Update(gameTime);
 		}
 

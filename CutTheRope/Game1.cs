@@ -82,8 +82,8 @@ namespace CutTheRope
                 Global.GraphicsDeviceManager.ApplyChanges();
             }
             Global.GraphicsDeviceManager.PreparingDeviceSettings += GraphicsDeviceManager_PreparingDeviceSettings;
-            TargetElapsedTime = TimeSpan.FromTicks(166666L);
-            IsFixedTimeStep = false;
+            TargetElapsedTime = TimeSpan.FromMilliseconds(11.11106666666667);
+            IsFixedTimeStep = true;
             InactiveSleepTime = TimeSpan.FromTicks(500000L);
             IsMouseVisible = true;
             Activated += Game1_Activated;
@@ -323,14 +323,7 @@ namespace CutTheRope
             {
                 return;
             }
-            if (frameRate > 0 && frameRate < 50)
-            {
-                IsFixedTimeStep = true;
-            }
-            else
-            {
-                IsFixedTimeStep = false;
-            }
+            IsFixedTimeStep = true;
             keyboardStateXna = Keyboard.GetState();
             if ((IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.F11) || ((IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftAlt) || IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightAlt)) && IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Enter))) && !UseWindowMode_TODO_ChangeFullScreenResolution)
             {

@@ -71,11 +71,11 @@ namespace CutTheRope.game
 
 		private RGBAColor CONTOUR_COLOR = RGBAColor.MakeRGBA(1.0, 1.0, 1.0, 0.2);
 
-		private float INNER_CIRCLE_WIDTH = FrameworkTypes.RTPD(15.0) * 3f;
+		private float INNER_CIRCLE_WIDTH = RTPD(15.0) * 3f;
 
-		private float OUTER_CIRCLE_WIDTH = FrameworkTypes.RTPD(7.0) * 3f;
+		private float OUTER_CIRCLE_WIDTH = RTPD(7.0) * 3f;
 
-		private float ACTIVE_CIRCLE_WIDTH = FrameworkTypes.RTPD(3.0) * 3f;
+		private float ACTIVE_CIRCLE_WIDTH = RTPD(3.0) * 3f;
 
 		private float CONTROLLER_SHIFT_PARAM1 = 67.5f;
 
@@ -202,7 +202,7 @@ namespace CutTheRope.game
 				{
 					whiteRGBA.a = color.a;
 				}
-				GLDrawer.drawAntialiasedCurve2(x, y, sizeInPixels + ACTIVE_CIRCLE_WIDTH * vinilControllerL.scaleX, 0f, (float)Math.PI * 2f, 81, (ACTIVE_CIRCLE_WIDTH + FrameworkTypes.RTPD(1.0) * 3f) * vinilControllerL.scaleX, 5f, whiteRGBA);
+				GLDrawer.drawAntialiasedCurve2(x, y, sizeInPixels + ACTIVE_CIRCLE_WIDTH * vinilControllerL.scaleX, 0f, (float)Math.PI * 2f, 81, (ACTIVE_CIRCLE_WIDTH + RTPD(1.0) * 3f) * vinilControllerL.scaleX, 5f, whiteRGBA);
 				OpenGL.glColor4f(Color.White);
 				OpenGL.glEnable(0);
 			}
@@ -236,7 +236,7 @@ namespace CutTheRope.game
 			vinil.y = (vinilCenter.y = y);
 			float num = (float)(vinilHighlightL.width / 2) * (1f - vinilHighlightL.scaleX);
 			float num2 = (float)(vinilHighlightL.height / 2) * (1f - vinilHighlightL.scaleY);
-			float num3 = sizeInPixels - FrameworkTypes.RTPD(CONTROLLER_SHIFT_PARAM1 - CONTROLLER_SHIFT_PARAM2 * size) + (1f - vinilControllerL.scaleX) * (float)(vinilControllerL.width / 2);
+			float num3 = sizeInPixels - RTPD(CONTROLLER_SHIFT_PARAM1 - CONTROLLER_SHIFT_PARAM2 * size) + (1f - vinilControllerL.scaleX) * (float)(vinilControllerL.width / 2);
 			vinilHighlightL.x = x + num;
 			vinilHighlightR.x = x - num;
 			vinilHighlightL.y = (vinilHighlightR.y = y - num2);
@@ -274,10 +274,10 @@ namespace CutTheRope.game
 			rotatedCircle.circlesArray = circlesArray;
 			rotatedCircle.containedObjects = containedObjects;
 			rotatedCircle.operating = -1;
-			rotatedCircle.handle1 = global::CutTheRope.iframework.helpers.MathHelper.vect(rotatedCircle.x - FrameworkTypes.RTPD(size * 3f), rotatedCircle.y);
-			rotatedCircle.handle2 = global::CutTheRope.iframework.helpers.MathHelper.vect(rotatedCircle.x + FrameworkTypes.RTPD(size * 3f), rotatedCircle.y);
-			rotatedCircle.handle1 = global::CutTheRope.iframework.helpers.MathHelper.vectRotateAround(rotatedCircle.handle1, global::CutTheRope.iframework.helpers.MathHelper.DEGREES_TO_RADIANS(rotatedCircle.rotation), rotatedCircle.x, rotatedCircle.y);
-			rotatedCircle.handle2 = global::CutTheRope.iframework.helpers.MathHelper.vectRotateAround(rotatedCircle.handle2, global::CutTheRope.iframework.helpers.MathHelper.DEGREES_TO_RADIANS(rotatedCircle.rotation), rotatedCircle.x, rotatedCircle.y);
+			rotatedCircle.handle1 = vect(rotatedCircle.x - RTPD(size * 3f), rotatedCircle.y);
+			rotatedCircle.handle2 = vect(rotatedCircle.x + RTPD(size * 3f), rotatedCircle.y);
+			rotatedCircle.handle1 = vectRotateAround(rotatedCircle.handle1, DEGREES_TO_RADIANS(rotatedCircle.rotation), rotatedCircle.x, rotatedCircle.y);
+			rotatedCircle.handle2 = vectRotateAround(rotatedCircle.handle2, DEGREES_TO_RADIANS(rotatedCircle.rotation), rotatedCircle.x, rotatedCircle.y);
 			rotatedCircle.setSize(size);
 			rotatedCircle.setHasOneHandle(hasOneHandle_);
 			rotatedCircle.vinilControllerL.visible = false;

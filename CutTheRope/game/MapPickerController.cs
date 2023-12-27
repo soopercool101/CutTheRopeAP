@@ -24,12 +24,12 @@ namespace CutTheRope.game
 				View view = (View)new View().initFullscreen();
 				RectangleElement rectangleElement = (RectangleElement)new RectangleElement().init();
 				rectangleElement.color = RGBAColor.whiteRGBA;
-				rectangleElement.width = (int)FrameworkTypes.SCREEN_WIDTH;
-				rectangleElement.height = (int)FrameworkTypes.SCREEN_HEIGHT;
+				rectangleElement.width = (int)SCREEN_WIDTH;
+				rectangleElement.height = (int)SCREEN_HEIGHT;
 				view.addChild(rectangleElement);
 				FontGeneric font = Application.getFont(4);
 				Text text = new Text().initWithFont(font);
-				text.setString(NSObject.NSS("Loading..."));
+				text.setString(NSS("Loading..."));
 				text.anchor = (text.parentAnchor = 18);
 				view.addChild(text);
 				addViewwithID(view, 1);
@@ -43,14 +43,14 @@ namespace CutTheRope.game
 			View view = (View)new View().initFullscreen();
 			RectangleElement rectangleElement = (RectangleElement)new RectangleElement().init();
 			rectangleElement.color = RGBAColor.whiteRGBA;
-			rectangleElement.width = (int)FrameworkTypes.SCREEN_WIDTH;
-			rectangleElement.height = (int)FrameworkTypes.SCREEN_HEIGHT;
+			rectangleElement.width = (int)SCREEN_WIDTH;
+			rectangleElement.height = (int)SCREEN_HEIGHT;
 			view.addChild(rectangleElement);
 			FontGeneric font = Application.getFont(4);
 			Text text = new Text().initWithFont(font);
-			text.setString(NSObject.NSS("START"));
+			text.setString(NSS("START"));
 			Text text2 = new Text().initWithFont(font);
-			text2.setString(NSObject.NSS("START"));
+			text2.setString(NSS("START"));
 			text2.scaleX = (text2.scaleY = 1.2f);
 			Button button = new Button().initWithUpElementDownElementandID(text, text2, 0);
 			button.anchor = (button.parentAnchor = 34);
@@ -64,7 +64,7 @@ namespace CutTheRope.game
 			base.activate();
 			if (autoLoad)
 			{
-				NSString nSString = NSObject.NSS("maps/" + selectedMap);
+				NSString nSString = NSS("maps/" + selectedMap);
 				XMLNode xMLNode = XMLNode.parseXML(nSString.ToString());
 				xmlLoaderFinishedWithfromwithSuccess(xMLNode, nSString, xMLNode != null);
 			}
@@ -109,8 +109,8 @@ namespace CutTheRope.game
 			autoLoad = true;
 			CTRRootController cTRRootController = (CTRRootController)Application.sharedRootController();
 			cTRRootController.setPicker(false);
-			NSObject.NSREL(selectedMap);
-			selectedMap = (NSString)NSObject.NSRET(map);
+			NSREL(selectedMap);
+			selectedMap = (NSString)NSRET(map);
 		}
 
 		public virtual void onButtonPressed(int n)
@@ -123,7 +123,7 @@ namespace CutTheRope.game
 
 		public override void dealloc()
 		{
-			NSObject.NSREL(selectedMap);
+			NSREL(selectedMap);
 			base.dealloc();
 		}
 	}

@@ -101,7 +101,7 @@ namespace CutTheRope.windows
 				list.Add(item);
 			}
 			_mouseStateTranformed = mouseStateTranformed;
-			return global::CutTheRope.iframework.core.Application.sharedCanvas().convertTouches(list);
+			return iframework.core.Application.sharedCanvas().convertTouches(list);
 		}
 	}
 }

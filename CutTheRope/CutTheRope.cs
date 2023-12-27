@@ -21,7 +21,7 @@ namespace CutTheRope
 		{
 			get
 			{
-				if (object.ReferenceEquals(resourceMan, null))
+				if (ReferenceEquals(resourceMan, null))
 				{
 					ResourceManager resourceManager = new ResourceManager("CutTheRope.CutTheRope", typeof(CutTheRope).Assembly);
 					resourceMan = resourceManager;

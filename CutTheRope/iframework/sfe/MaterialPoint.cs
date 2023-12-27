@@ -53,7 +53,7 @@ namespace CutTheRope.iframework.sfe
 		{
 			weight = w;
 			invWeight = (float)(1.0 / (double)weight);
-			gravity = MathHelper.vect(0f, 784f * weight);
+			gravity = vect(0f, 784f * weight);
 		}
 
 		public override void dealloc()
@@ -71,11 +71,11 @@ namespace CutTheRope.iframework.sfe
 		public virtual void resetAll()
 		{
 			resetForces();
-			v = MathHelper.vectZero;
-			a = MathHelper.vectZero;
-			pos = MathHelper.vectZero;
-			posDelta = MathHelper.vectZero;
-			totalForce = MathHelper.vectZero;
+			v = vectZero;
+			a = vectZero;
+			pos = vectZero;
+			posDelta = vectZero;
+			totalForce = vectZero;
 		}
 
 		public virtual void setForcewithID(Vector force, int n)
@@ -89,7 +89,7 @@ namespace CutTheRope.iframework.sfe
 
 		public virtual void deleteForce(int n)
 		{
-			forces[n] = MathHelper.vectZero;
+			forces[n] = vectZero;
 		}
 
 		public virtual Vector getForce(int n)
@@ -99,10 +99,10 @@ namespace CutTheRope.iframework.sfe
 
 		public virtual void applyImpulseDelta(Vector impulse, float delta)
 		{
-			if (!MathHelper.vectEqual(impulse, MathHelper.vectZero))
+			if (!vectEqual(impulse, vectZero))
 			{
-				Vector v = MathHelper.vectMult(impulse, (float)((double)delta / 1.0));
-				pos = MathHelper.vectAdd(pos, v);
+				Vector v = vectMult(impulse, (float)((double)delta / 1.0));
+				pos = vectAdd(pos, v);
 			}
 		}
 
@@ -121,30 +121,30 @@ namespace CutTheRope.iframework.sfe
 
 		public virtual void update(float delta)
 		{
-			totalForce = MathHelper.vectZero;
+			totalForce = vectZero;
 			if (!disableGravity)
 			{
-				if (!MathHelper.vectEqual(globalGravity, MathHelper.vectZero))
+				if (!vectEqual(globalGravity, vectZero))
 				{
-					totalForce = MathHelper.vectAdd(totalForce, MathHelper.vectMult(globalGravity, weight));
+					totalForce = vectAdd(totalForce, vectMult(globalGravity, weight));
 				}
 				else
 				{
-					totalForce = MathHelper.vectAdd(totalForce, gravity);
+					totalForce = vectAdd(totalForce, gravity);
 				}
 			}
 			if (highestForceIndex != -1)
 			{
 				for (int i = 0; i <= highestForceIndex; i++)
 				{
-					totalForce = MathHelper.vectAdd(totalForce, forces[i]);
+					totalForce = vectAdd(totalForce, forces[i]);
 				}
 			}
-			totalForce = MathHelper.vectMult(totalForce, invWeight);
-			a = MathHelper.vectMult(totalForce, (float)((double)delta / 1.0));
-			v = MathHelper.vectAdd(v, a);
-			posDelta = MathHelper.vectMult(v, (float)((double)delta / 1.0));
-			pos = MathHelper.vectAdd(pos, posDelta);
+			totalForce = vectMult(totalForce, invWeight);
+			a = vectMult(totalForce, (float)((double)delta / 1.0));
+			v = vectAdd(v, a);
+			posDelta = vectMult(v, (float)((double)delta / 1.0));
+			pos = vectAdd(pos, posDelta);
 		}
 
 		public virtual void drawForces()

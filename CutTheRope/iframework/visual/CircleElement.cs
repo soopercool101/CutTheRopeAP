@@ -24,7 +24,7 @@ namespace CutTheRope.iframework.visual
 		{
 			base.preDraw();
 			OpenGL.glDisable(0);
-			global::CutTheRope.iframework.helpers.MathHelper.MIN(width, height);
+			MIN(width, height);
 			bool solid2 = solid;
 			OpenGL.glEnable(0);
 			OpenGL.glColor4f(Color.White);

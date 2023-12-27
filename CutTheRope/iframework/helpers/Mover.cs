@@ -88,7 +88,7 @@ namespace CutTheRope.iframework.helpers
 				{
 					float x = s.x + (float)num * (float)Math.Cos(num4);
 					float y = s.y + (float)num * (float)Math.Sin(num4);
-					addPathPoint(MathHelper.vect(x, y));
+					addPathPoint(vect(x, y));
 					num4 += num3;
 				}
 			}
@@ -104,7 +104,7 @@ namespace CutTheRope.iframework.helpers
 				{
 					NSString nSString2 = list[j];
 					NSString nSString3 = list[j + 1];
-					addPathPoint(MathHelper.vect(s.x + nSString2.floatValue(), s.y + nSString3.floatValue()));
+					addPathPoint(vect(s.x + nSString2.floatValue(), s.y + nSString3.floatValue()));
 				}
 			}
 		}
@@ -149,7 +149,7 @@ namespace CutTheRope.iframework.helpers
 		public virtual void calculateOffset()
 		{
 			Vector v = path[targetPoint];
-			offset = MathHelper.vectMult(MathHelper.vectNormalize(MathHelper.vectSub(v, pos)), moveSpeed[targetPoint]);
+			offset = vectMult(vectNormalize(vectSub(v, pos)), moveSpeed[targetPoint]);
 		}
 
 		public virtual void setMoveSpeedforPoint(float ms, int i)
@@ -172,7 +172,7 @@ namespace CutTheRope.iframework.helpers
 			{
 				Vector v = path[targetPoint];
 				bool flag = false;
-				if (!MathHelper.vectEqual(pos, v))
+				if (!vectEqual(pos, v))
 				{
 					float num = delta;
 					if (overrun != 0f)
@@ -180,11 +180,11 @@ namespace CutTheRope.iframework.helpers
 						num += overrun;
 						overrun = 0f;
 					}
-					pos = MathHelper.vectAdd(pos, MathHelper.vectMult(offset, num));
-					if (!MathHelper.sameSign(offset.x, v.x - pos.x) || !MathHelper.sameSign(offset.y, v.y - pos.y))
+					pos = vectAdd(pos, vectMult(offset, num));
+					if (!sameSign(offset.x, v.x - pos.x) || !sameSign(offset.y, v.y - pos.y))
 					{
-						overrun = MathHelper.vectLength(MathHelper.vectSub(pos, v));
-						float num2 = MathHelper.vectLength(offset);
+						overrun = vectLength(vectSub(pos, v));
+						float num2 = vectLength(offset);
 						overrun /= num2;
 						pos = v;
 						flag = true;

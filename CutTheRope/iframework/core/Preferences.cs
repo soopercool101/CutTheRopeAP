@@ -219,7 +219,7 @@ namespace CutTheRope.iframework.core
 			}
 			catch (Exception ex)
 			{
-				FrameworkTypes._LOG("Error: cannot save, " + ex.ToString());
+				_LOG("Error: cannot save, " + ex.ToString());
 				return flag;
 			}
 		}
@@ -250,7 +250,7 @@ namespace CutTheRope.iframework.core
 			}
 			catch (Exception ex)
 			{
-				FrameworkTypes._LOG("Error: cannot load, " + ex.ToString());
+				_LOG("Error: cannot load, " + ex.ToString());
 				return flag;
 			}
 		}

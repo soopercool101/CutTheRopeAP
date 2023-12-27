@@ -21,7 +21,7 @@ namespace CutTheRope.game
 				if (nSString2.characterAtIndex(0) == 'R')
 				{
 					NSString nSString3 = nSString2.substringFromIndex(2);
-					int num = (int)FrameworkTypes.RTD(nSString3.intValue());
+					int num = (int)RTD(nSString3.intValue());
 					num = (int)((float)num * 3.3f);
 					l = num / 2 + 1;
 				}
@@ -31,7 +31,7 @@ namespace CutTheRope.game
 				CTRMover cTRMover = (CTRMover)new CTRMover().initWithPathCapacityMoveSpeedRotateSpeed(l, m_, r_);
 				cTRMover.angle_ = rotation;
 				cTRMover.angle_initial = cTRMover.angle_;
-				cTRMover.setPathFromStringandStart(nSString2, MathHelper.vect(x, y));
+				cTRMover.setPathFromStringandStart(nSString2, vect(x, y));
 				setMover(cTRMover);
 				cTRMover.start();
 			}

@@ -18,8 +18,8 @@ namespace CutTheRope.iframework.visual
 			}
 			imageGrid = image;
 			drawer = new ImageMultiDrawer().initWithImageandCapacity(imageGrid, numberOfParticles);
-			width = (int)FrameworkTypes.SCREEN_WIDTH;
-			height = (int)FrameworkTypes.SCREEN_HEIGHT;
+			width = (int)SCREEN_WIDTH;
+			height = (int)SCREEN_HEIGHT;
 			totalParticles = numberOfParticles;
 			particles = new Particle[totalParticles];
 			colors = new RGBAColor[4 * totalParticles];
@@ -38,7 +38,7 @@ namespace CutTheRope.iframework.visual
 		public override void initParticle(ref Particle particle)
 		{
 			Image image = imageGrid;
-			int num = MathHelper.RND(image.texture.quadsCount - 1);
+			int num = RND(image.texture.quadsCount - 1);
 			Quad2D qt = image.texture.quads[num];
 			Quad3D qv = Quad3D.MakeQuad3D(0f, 0f, 0f, 0f, 0f);
 			Rectangle rectangle = image.texture.quadRects[num];
@@ -52,22 +52,22 @@ namespace CutTheRope.iframework.visual
 		{
 			if (p.life > 0f)
 			{
-				Vector vector = MathHelper.vectZero;
+				Vector vector = vectZero;
 				if (p.pos.x != 0f || p.pos.y != 0f)
 				{
-					vector = MathHelper.vectNormalize(p.pos);
+					vector = vectNormalize(p.pos);
 				}
 				Vector v = vector;
-				vector = MathHelper.vectMult(vector, p.radialAccel);
+				vector = vectMult(vector, p.radialAccel);
 				float num = v.x;
 				v.x = 0f - v.y;
 				v.y = num;
-				v = MathHelper.vectMult(v, p.tangentialAccel);
-				Vector v2 = MathHelper.vectAdd(MathHelper.vectAdd(vector, v), gravity);
-				v2 = MathHelper.vectMult(v2, delta);
-				p.dir = MathHelper.vectAdd(p.dir, v2);
-				v2 = MathHelper.vectMult(p.dir, delta);
-				p.pos = MathHelper.vectAdd(p.pos, v2);
+				v = vectMult(v, p.tangentialAccel);
+				Vector v2 = vectAdd(vectAdd(vector, v), gravity);
+				v2 = vectMult(v2, delta);
+				p.dir = vectAdd(p.dir, v2);
+				v2 = vectMult(p.dir, delta);
+				p.pos = vectAdd(p.pos, v2);
 				p.color.r += p.deltaColor.r * delta;
 				p.color.g += p.deltaColor.g * delta;
 				p.color.b += p.deltaColor.b * delta;
@@ -133,8 +133,8 @@ namespace CutTheRope.iframework.visual
 			}
 			OpenGL.glEnable(0);
 			OpenGL.glBindTexture(drawer.image.texture.name());
-			OpenGL.glVertexPointer(3, 5, 0, FrameworkTypes.toFloatArray(drawer.vertices));
-			OpenGL.glTexCoordPointer(2, 5, 0, FrameworkTypes.toFloatArray(drawer.texCoordinates));
+			OpenGL.glVertexPointer(3, 5, 0, toFloatArray(drawer.vertices));
+			OpenGL.glTexCoordPointer(2, 5, 0, toFloatArray(drawer.texCoordinates));
 			OpenGL.glEnableClientState(13);
 			OpenGL.glBindBuffer(2, colorsID);
 			OpenGL.glColorPointer(4, 5, 0, colors);

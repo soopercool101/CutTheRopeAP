@@ -15,7 +15,7 @@ namespace CutTheRope.game
 			{
 				bool flag = p.characterAtIndex(1) == 'C';
 				NSString nSString = p.substringFromIndex(2);
-				int num = (int)FrameworkTypes.RTD(nSString.intValue());
+				int num = (int)RTD(nSString.intValue());
 				num *= 3;
 				int num2 = num / 2;
 				float num3 = (float)(Math.PI * 2.0 / (double)num2);
@@ -26,9 +26,9 @@ namespace CutTheRope.game
 				float num4 = 0f;
 				for (int i = 0; i < num2; i++)
 				{
-					float x = s.x + (float)num * MathHelper.cosf(num4);
-					float y = s.y + (float)num * MathHelper.sinf(num4);
-					addPathPoint(MathHelper.vect(x, y));
+					float x = s.x + (float)num * cosf(num4);
+					float y = s.y + (float)num * sinf(num4);
+					addPathPoint(vect(x, y));
 					num4 += num3;
 				}
 			}
@@ -44,7 +44,7 @@ namespace CutTheRope.game
 				{
 					NSString nSString2 = list[j];
 					NSString nSString3 = list[j + 1];
-					addPathPoint(MathHelper.vect(s.x + nSString2.floatValue() * 3f, s.y + nSString3.floatValue() * 3f));
+					addPathPoint(vect(s.x + nSString2.floatValue() * 3f, s.y + nSString3.floatValue() * 3f));
 				}
 			}
 		}

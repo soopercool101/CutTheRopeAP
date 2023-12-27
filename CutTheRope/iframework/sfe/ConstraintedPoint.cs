@@ -23,8 +23,8 @@ namespace CutTheRope.iframework.sfe
 		{
 			if (base.init() != null)
 			{
-				prevPos = MathHelper.vect(2.1474836E+09f, 2.1474836E+09f);
-				pin = MathHelper.vect(-1f, -1f);
+				prevPos = vect(2.1474836E+09f, 2.1474836E+09f);
+				pin = vect(-1f, -1f);
 				constraints = new List<Constraint>();
 			}
 			return this;
@@ -132,7 +132,7 @@ namespace CutTheRope.iframework.sfe
 		public override void resetAll()
 		{
 			base.resetAll();
-			prevPos = MathHelper.vect(2.1474836E+09f, 2.1474836E+09f);
+			prevPos = vect(2.1474836E+09f, 2.1474836E+09f);
 			removeConstraints();
 		}
 
@@ -143,36 +143,36 @@ namespace CutTheRope.iframework.sfe
 
 		public virtual void update(float delta, float koeff)
 		{
-			totalForce = MathHelper.vectZero;
+			totalForce = vectZero;
 			if (!disableGravity)
 			{
-				if (!MathHelper.vectEqual(MaterialPoint.globalGravity, MathHelper.vectZero))
+				if (!vectEqual(globalGravity, vectZero))
 				{
-					totalForce = MathHelper.vectAdd(totalForce, MathHelper.vectMult(MaterialPoint.globalGravity, weight));
+					totalForce = vectAdd(totalForce, vectMult(globalGravity, weight));
 				}
 				else
 				{
-					totalForce = MathHelper.vectAdd(totalForce, gravity);
+					totalForce = vectAdd(totalForce, gravity);
 				}
 			}
 			if (highestForceIndex != -1)
 			{
 				for (int i = 0; i <= highestForceIndex; i++)
 				{
-					totalForce = MathHelper.vectAdd(totalForce, forces[i]);
+					totalForce = vectAdd(totalForce, forces[i]);
 				}
 			}
-			totalForce = MathHelper.vectMult(totalForce, invWeight);
-			a = MathHelper.vectMult(totalForce, (double)delta / 1.0 * (double)delta / 1.0);
+			totalForce = vectMult(totalForce, invWeight);
+			a = vectMult(totalForce, (double)delta / 1.0 * (double)delta / 1.0);
 			if (prevPos.x == 2.1474836E+09f)
 			{
 				prevPos = pos;
 			}
 			posDelta.x = pos.x - prevPos.x + a.x;
 			posDelta.y = pos.y - prevPos.y + a.y;
-			v = MathHelper.vectMult(posDelta, (float)(1.0 / (double)delta));
+			v = vectMult(posDelta, (float)(1.0 / (double)delta));
 			prevPos = pos;
-			pos = MathHelper.vectAdd(pos, posDelta);
+			pos = vectAdd(pos, posDelta);
 		}
 
 		public static void satisfyConstraints(ConstraintedPoint p)
@@ -183,8 +183,8 @@ namespace CutTheRope.iframework.sfe
 				return;
 			}
 			int count = p.constraints.Count;
-			Vector vector = MathHelper.vectZero;
-			Vector vector2 = MathHelper.vectZero;
+			Vector vector = vectZero;
+			Vector vector2 = vectZero;
 			for (int i = 0; i < count; i++)
 			{
 				Constraint constraint = p.constraints[i];
@@ -192,9 +192,9 @@ namespace CutTheRope.iframework.sfe
 				vector.y = constraint.cp.pos.y - p.pos.y;
 				if (vector.x == 0f && vector.y == 0f)
 				{
-					vector = MathHelper.vect(1f, 1f);
+					vector = vect(1f, 1f);
 				}
-				float num = MathHelper.vectLength(vector);
+				float num = vectLength(vector);
 				float restLength = constraint.restLength;
 				switch (constraint.type)
 				{
@@ -225,43 +225,43 @@ namespace CutTheRope.iframework.sfe
 				p.pos.y += vector.y;
 				if (constraint.cp.pin.x == -1f)
 				{
-					constraint.cp.pos = MathHelper.vectSub(constraint.cp.pos, vector2);
+					constraint.cp.pos = vectSub(constraint.cp.pos, vector2);
 				}
 			}
 		}
 
 		public static void qcpupdate(ConstraintedPoint p, float delta, float koeff)
 		{
-			p.totalForce = MathHelper.vectZero;
+			p.totalForce = vectZero;
 			if (!p.disableGravity)
 			{
-				if (!MathHelper.vectEqual(MaterialPoint.globalGravity, MathHelper.vectZero))
+				if (!vectEqual(globalGravity, vectZero))
 				{
-					p.totalForce = MathHelper.vectAdd(p.totalForce, MathHelper.vectMult(MaterialPoint.globalGravity, p.weight));
+					p.totalForce = vectAdd(p.totalForce, vectMult(globalGravity, p.weight));
 				}
 				else
 				{
-					p.totalForce = MathHelper.vectAdd(p.totalForce, p.gravity);
+					p.totalForce = vectAdd(p.totalForce, p.gravity);
 				}
 			}
 			if (p.highestForceIndex != -1)
 			{
 				for (int i = 0; i <= p.highestForceIndex; i++)
 				{
-					p.totalForce = MathHelper.vectAdd(p.totalForce, p.forces[i]);
+					p.totalForce = vectAdd(p.totalForce, p.forces[i]);
 				}
 			}
-			p.totalForce = MathHelper.vectMult(p.totalForce, p.invWeight);
-			p.a = MathHelper.vectMult(p.totalForce, (float)((double)delta / 1.0 * 0.01600000075995922 * (double)koeff));
+			p.totalForce = vectMult(p.totalForce, p.invWeight);
+			p.a = vectMult(p.totalForce, (float)((double)delta / 1.0 * 0.01600000075995922 * (double)koeff));
 			if (p.prevPos.x == 2.1474836E+09f)
 			{
 				p.prevPos = p.pos;
 			}
 			p.posDelta.x = p.pos.x - p.prevPos.x + p.a.x;
 			p.posDelta.y = p.pos.y - p.prevPos.y + p.a.y;
-			p.v = MathHelper.vectMult(p.posDelta, (float)(1.0 / (double)delta));
+			p.v = vectMult(p.posDelta, (float)(1.0 / (double)delta));
 			p.prevPos = p.pos;
-			p.pos = MathHelper.vectAdd(p.pos, p.posDelta);
+			p.pos = vectAdd(p.pos, p.posDelta);
 		}
 	}
 }

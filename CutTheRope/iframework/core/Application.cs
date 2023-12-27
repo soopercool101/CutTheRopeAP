@@ -77,7 +77,7 @@ namespace CutTheRope.iframework.core
 
 		public virtual GLCanvas createCanvas()
 		{
-			return (GLCanvas)new GLCanvas().initWithFrame(new Rectangle(0f, 0f, FrameworkTypes.SCREEN_WIDTH, FrameworkTypes.SCREEN_HEIGHT));
+			return (GLCanvas)new GLCanvas().initWithFrame(new Rectangle(0f, 0f, SCREEN_WIDTH, SCREEN_HEIGHT));
 		}
 
 		public virtual CTRResourceMgr createResourceMgr()
@@ -111,11 +111,11 @@ namespace CutTheRope.iframework.core
 				{
 					text = ((CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "ru") ? "ru" : ((CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "de") ? "de" : ((!(CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "fr")) ? "en" : "fr")));
 				}
-				appSettings.setString(8, NSObject.NSS(text));
+				appSettings.setString(8, NSS(text));
 			}
 			updateOrientation();
-			FrameworkTypes.IS_IPAD = false;
-			FrameworkTypes.IS_RETINA = false;
+			IS_IPAD = false;
+			IS_RETINA = false;
 			root = createRootController();
 			soundMgr = createSoundMgr();
 			movieMgr = createMovieMgr();
@@ -145,10 +145,10 @@ namespace CutTheRope.iframework.core
 
 		public virtual void updateOrientation()
 		{
-			FrameworkTypes.PORTRAIT_SCREEN_WIDTH = 2560f;
-			FrameworkTypes.PORTRAIT_SCREEN_HEIGHT = 1440f;
-			FrameworkTypes.SCREEN_WIDTH = FrameworkTypes.PORTRAIT_SCREEN_WIDTH;
-			FrameworkTypes.SCREEN_HEIGHT = FrameworkTypes.PORTRAIT_SCREEN_HEIGHT;
+			PORTRAIT_SCREEN_WIDTH = 2560f;
+			PORTRAIT_SCREEN_HEIGHT = 1440f;
+			SCREEN_WIDTH = PORTRAIT_SCREEN_WIDTH;
+			SCREEN_HEIGHT = PORTRAIT_SCREEN_HEIGHT;
 		}
 	}
 }

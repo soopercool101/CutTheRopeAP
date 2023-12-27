@@ -226,8 +226,8 @@ namespace CutTheRope.game
 			rotatedCircle.operating = -1;
 			rotatedCircle.handle1 = new Vector(rotatedCircle.x - size, rotatedCircle.y);
 			rotatedCircle.handle2 = new Vector(rotatedCircle.x + size, rotatedCircle.y);
-			rotatedCircle.handle1 = global::CutTheRope.iframework.helpers.MathHelper.vectRotateAround(rotatedCircle.handle1, global::CutTheRope.iframework.helpers.MathHelper.DEGREES_TO_RADIANS(rotatedCircle.rotation), rotatedCircle.x, rotatedCircle.y);
-			rotatedCircle.handle2 = global::CutTheRope.iframework.helpers.MathHelper.vectRotateAround(rotatedCircle.handle2, global::CutTheRope.iframework.helpers.MathHelper.DEGREES_TO_RADIANS(rotatedCircle.rotation), rotatedCircle.x, rotatedCircle.y);
+			rotatedCircle.handle1 = vectRotateAround(rotatedCircle.handle1, DEGREES_TO_RADIANS(rotatedCircle.rotation), rotatedCircle.x, rotatedCircle.y);
+			rotatedCircle.handle2 = vectRotateAround(rotatedCircle.handle2, DEGREES_TO_RADIANS(rotatedCircle.rotation), rotatedCircle.x, rotatedCircle.y);
 			rotatedCircle.setSize(size);
 			rotatedCircle.setHasOneHandle(hasOneHandle());
 			rotatedCircle.vinilControllerL.visible = false;

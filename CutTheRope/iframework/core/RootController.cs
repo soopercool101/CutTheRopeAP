@@ -104,13 +104,13 @@ namespace CutTheRope.iframework.core
 				if (lastTime > transitionTime)
 				{
 					transitionTime = -1f;
-					NSObject.NSREL(prevScreenImage);
+					NSREL(prevScreenImage);
 					if (prevScreenImage != null)
 					{
 						prevScreenImage.xnaTexture_.Dispose();
 					}
 					prevScreenImage = null;
-					NSObject.NSREL(nextScreenImage);
+					NSREL(nextScreenImage);
 					if (nextScreenImage != null)
 					{
 						nextScreenImage.xnaTexture_.Dispose();
@@ -148,7 +148,7 @@ namespace CutTheRope.iframework.core
 			case 4:
 			case 5:
 			{
-				float num = global::CutTheRope.iframework.helpers.MathHelper.MIN(1.0, (transitionDelay - (transitionTime - lastTime)) / transitionDelay);
+				float num = MIN(1.0, (transitionDelay - (transitionTime - lastTime)) / transitionDelay);
 				if ((double)num < 0.5)
 				{
 					if (prevScreenImage != null)
@@ -158,7 +158,7 @@ namespace CutTheRope.iframework.core
 						OpenGL.glDisable(0);
 						OpenGL.glEnable(1);
 						OpenGL.glBlendFunc(BlendingFactor.GL_SRC_ALPHA, BlendingFactor.GL_ONE_MINUS_SRC_ALPHA);
-						GLDrawer.drawSolidRectWOBorder(0f, 0f, FrameworkTypes.SCREEN_WIDTH, FrameworkTypes.SCREEN_HEIGHT, fill);
+						GLDrawer.drawSolidRectWOBorder(0f, 0f, SCREEN_WIDTH, SCREEN_HEIGHT, fill);
 						OpenGL.glDisable(1);
 					}
 					else
@@ -181,7 +181,7 @@ namespace CutTheRope.iframework.core
 					OpenGL.glDisable(0);
 					OpenGL.glEnable(1);
 					OpenGL.glBlendFunc(BlendingFactor.GL_SRC_ALPHA, BlendingFactor.GL_ONE_MINUS_SRC_ALPHA);
-					GLDrawer.drawSolidRectWOBorder(0f, 0f, FrameworkTypes.SCREEN_WIDTH, FrameworkTypes.SCREEN_HEIGHT, fill2);
+					GLDrawer.drawSolidRectWOBorder(0f, 0f, SCREEN_WIDTH, SCREEN_HEIGHT, fill2);
 					OpenGL.glDisable(1);
 				}
 				else
@@ -248,13 +248,13 @@ namespace CutTheRope.iframework.core
 				transitionTime = lastTime + transitionDelay;
 				applyLandscape();
 				currentController.activeView().draw();
-				NSObject.NSREL(nextScreenImage);
+				NSREL(nextScreenImage);
 				if (nextScreenImage != null)
 				{
 					nextScreenImage.xnaTexture_.Dispose();
 				}
 				nextScreenImage = screenGrabber.grab();
-				NSObject.NSRET(nextScreenImage);
+				NSRET(nextScreenImage);
 				OpenGL.glLoadIdentity();
 			}
 		}
@@ -269,13 +269,13 @@ namespace CutTheRope.iframework.core
 				OpenGL.glClear(0);
 				applyLandscape();
 				previousView.draw();
-				NSObject.NSREL(prevScreenImage);
+				NSREL(prevScreenImage);
 				if (prevScreenImage != null)
 				{
 					prevScreenImage.xnaTexture_.Dispose();
 				}
 				prevScreenImage = screenGrabber.grab();
-				NSObject.NSRET(prevScreenImage);
+				NSRET(prevScreenImage);
 				OpenGL.glLoadIdentity();
 			}
 		}

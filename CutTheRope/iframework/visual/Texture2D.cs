@@ -152,7 +152,7 @@ namespace CutTheRope.iframework.visual
 		{
 			quads[n] = GLDrawer.getTextureCoordinates(this, rect);
 			quadRects[n] = rect;
-			quadOffsets[n] = MathHelper.vectZero;
+			quadOffsets[n] = vectZero;
 		}
 
 		public virtual void setWvga()

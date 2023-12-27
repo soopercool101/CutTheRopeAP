@@ -81,11 +81,11 @@ namespace CutTheRope.game
 			b1.x = t1.x;
 			b2.x = t2.x;
 			b1.y = (b2.y = (float)((double)y + 5.0));
-			angle = MathHelper.DEGREES_TO_RADIANS(rotation);
-			t1 = MathHelper.vectRotateAround(t1, angle, x, y);
-			t2 = MathHelper.vectRotateAround(t2, angle, x, y);
-			b1 = MathHelper.vectRotateAround(b1, angle, x, y);
-			b2 = MathHelper.vectRotateAround(b2, angle, x, y);
+			angle = DEGREES_TO_RADIANS(rotation);
+			t1 = vectRotateAround(t1, angle, x, y);
+			t2 = vectRotateAround(t2, angle, x, y);
+			b1 = vectRotateAround(b1, angle, x, y);
+			b2 = vectRotateAround(b2, angle, x, y);
 		}
 	}
 }

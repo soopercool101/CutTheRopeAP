@@ -698,13 +698,13 @@ namespace CutTheRope.iframework.visual
 
 		public void setName(string n)
 		{
-			NSObject.NSREL(name);
+			NSREL(name);
 			name = new NSString(n);
 		}
 
 		public void setName(NSString n)
 		{
-			NSObject.NSREL(name);
+			NSREL(name);
 			name = n;
 		}
 
@@ -738,7 +738,7 @@ namespace CutTheRope.iframework.visual
 			childs = null;
 			timelines.Clear();
 			timelines = null;
-			NSObject.NSREL(name);
+			NSREL(name);
 			base.dealloc();
 		}
 	}

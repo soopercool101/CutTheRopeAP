@@ -171,12 +171,12 @@ namespace CutTheRope.game
 				{
 					raState = 4;
 					raDelay = 0.2f;
-					int num = (int)Math.Floor(MathHelper.round(time) / 60f);
-					int num2 = (int)(MathHelper.round(time) - (float)num * 60f);
+					int num = (int)Math.Floor(round(time) / 60f);
+					int num2 = (int)(round(time) - (float)num * 60f);
 					Text text5 = (Text)result.getChildWithName("dataTitle");
 					text5.setString(Application.getString(655377));
 					Text text6 = (Text)result.getChildWithName("dataValue");
-					text6.setString(NSObject.NSS(num + ":" + num2.ToString("D2")));
+					text6.setString(NSS(num + ":" + num2.ToString("D2")));
 				}
 				break;
 			}
@@ -196,10 +196,10 @@ namespace CutTheRope.game
 			{
 				ctime = time * raDelay;
 				cscore = (int)((float)starBonus + (1f - raDelay) * (float)timeBonus);
-				int num3 = (int)Math.Floor((double)MathHelper.round(ctime) / 60.0);
-				int num4 = (int)((double)MathHelper.round(ctime) - (double)num3 * 60.0);
+				int num3 = (int)Math.Floor((double)round(ctime) / 60.0);
+				int num4 = (int)((double)round(ctime) - (double)num3 * 60.0);
 				Text text16 = (Text)result.getChildWithName("dataValue");
-				text16.setString(NSObject.NSS(num3 + ":" + num4.ToString("D2")));
+				text16.setString(NSS(num3 + ":" + num4.ToString("D2")));
 				Text text17 = (Text)result.getChildWithName("scoreValue");
 				text17.setString(cscore.ToString());
 				if (flag)
@@ -338,7 +338,7 @@ namespace CutTheRope.game
 		{
 			Confetti confetti = Confetti.Confetti_createWithResID(65);
 			confetti.doRestoreCutTransparency();
-			int num = MathHelper.RND_RANGE(0, 2);
+			int num = RND_RANGE(0, 2);
 			int num2 = 18;
 			int num3 = 26;
 			switch (num)
@@ -352,22 +352,22 @@ namespace CutTheRope.game
 				num3 = 8;
 				break;
 			}
-			float num4 = MathHelper.RND_RANGE((int)FrameworkTypes.RTPD(-100.0), (int)FrameworkTypes.SCREEN_WIDTH);
-			float num5 = MathHelper.RND_RANGE((int)FrameworkTypes.RTPD(-40.0), (int)FrameworkTypes.RTPD(100.0));
-			float num6 = MathHelper.FLOAT_RND_RANGE(2, 5);
+			float num4 = RND_RANGE((int)RTPD(-100.0), (int)SCREEN_WIDTH);
+			float num5 = RND_RANGE((int)RTPD(-40.0), (int)RTPD(100.0));
+			float num6 = FLOAT_RND_RANGE(2, 5);
 			int n = confetti.addAnimationDelayLoopFirstLast(0.05, Timeline.LoopType.TIMELINE_REPLAY, num2, num3);
 			confetti.ani = confetti.getTimeline(n);
 			confetti.ani.playTimeline();
-			confetti.ani.jumpToTrackKeyFrame(4, MathHelper.RND_RANGE(0, num3 - num2 - 1));
+			confetti.ani.jumpToTrackKeyFrame(4, RND_RANGE(0, num3 - num2 - 1));
 			Timeline timeline = new Timeline().initWithMaxKeyFramesOnTrack(2);
 			timeline.addKeyFrame(KeyFrame.makeColor(RGBAColor.solidOpaqueRGBA, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
 			timeline.addKeyFrame(KeyFrame.makeColor(RGBAColor.transparentRGBA, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, num6));
 			timeline.addKeyFrame(KeyFrame.makePos(num4, num5, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
-			timeline.addKeyFrame(KeyFrame.makePos(num4, num5 + MathHelper.FLOAT_RND_RANGE((int)FrameworkTypes.RTPD(150.0), (int)FrameworkTypes.RTPD(400.0)), KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, num6));
+			timeline.addKeyFrame(KeyFrame.makePos(num4, num5 + FLOAT_RND_RANGE((int)RTPD(150.0), (int)RTPD(400.0)), KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, num6));
 			timeline.addKeyFrame(KeyFrame.makeScale(0.0, 0.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
 			timeline.addKeyFrame(KeyFrame.makeScale(1.0, 1.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.3));
-			timeline.addKeyFrame(KeyFrame.makeRotation(MathHelper.RND_RANGE(-360, 360), KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
-			timeline.addKeyFrame(KeyFrame.makeRotation(MathHelper.RND_RANGE(-360, 360), KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, num6));
+			timeline.addKeyFrame(KeyFrame.makeRotation(RND_RANGE(-360, 360), KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
+			timeline.addKeyFrame(KeyFrame.makeRotation(RND_RANGE(-360, 360), KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, num6));
 			confetti.addTimeline(timeline);
 			confetti.playTimeline(1);
 			return confetti;
@@ -442,7 +442,7 @@ namespace CutTheRope.game
 		{
 			for (int i = 0; i < 70; i++)
 			{
-				confettiAnims.addChild(createConfettiParticleNear(MathHelper.vectZero));
+				confettiAnims.addChild(createConfettiParticleNear(vectZero));
 			}
 		}
 
@@ -471,14 +471,14 @@ namespace CutTheRope.game
 			timeline.delegateTimelineDelegate = this;
 			openCloseAnims.addChild(image);
 			Vector quadSize = Image.getQuadSize(num, 0);
-			float num2 = FrameworkTypes.SCREEN_WIDTH / 2f - quadSize.x;
+			float num2 = SCREEN_WIDTH / 2f - quadSize.x;
 			Image image2 = Image.Image_createWithResIDQuad(num, 0);
 			Image image3 = Image.Image_createWithResIDQuad(num, 0);
 			image2.x = num2;
 			image2.rotationCenterX = (float)(-image2.width) / 2f;
 			image3.rotationCenterX = image2.rotationCenterX;
 			image3.rotation = 180f;
-			image3.x = FrameworkTypes.SCREEN_WIDTH - (FrameworkTypes.SCREEN_WIDTH / 2f - (float)image2.width);
+			image3.x = SCREEN_WIDTH - (SCREEN_WIDTH / 2f - (float)image2.width);
 			image3.y = -0.5f;
 			timeline = new Timeline().initWithMaxKeyFramesOnTrack(2);
 			if (open)
@@ -532,7 +532,7 @@ namespace CutTheRope.game
 			}
 			else
 			{
-				timeline.addKeyFrame(KeyFrame.makePos(FrameworkTypes.RTD(-15.0), num3, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
+				timeline.addKeyFrame(KeyFrame.makePos(RTD(-15.0), num3, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
 				timeline.addKeyFrame(KeyFrame.makePos((float)image2.width - num4, num3, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
 				timeline.addKeyFrame(KeyFrame.makeScale(0.0, 1.3, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
 				timeline.addKeyFrame(KeyFrame.makeScale(1.0, 1.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
@@ -542,15 +542,15 @@ namespace CutTheRope.game
 			timeline = new Timeline().initWithMaxKeyFramesOnTrack(2);
 			if (open)
 			{
-				timeline.addKeyFrame(KeyFrame.makePos(FrameworkTypes.SCREEN_WIDTH - (float)image2.width + num5, num3, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
-				timeline.addKeyFrame(KeyFrame.makePos(FrameworkTypes.SCREEN_WIDTH + num8, num3, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
+				timeline.addKeyFrame(KeyFrame.makePos(SCREEN_WIDTH - (float)image2.width + num5, num3, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
+				timeline.addKeyFrame(KeyFrame.makePos(SCREEN_WIDTH + num8, num3, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
 				timeline.addKeyFrame(KeyFrame.makeScale(1.0, 1.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
 				timeline.addKeyFrame(KeyFrame.makeScale(0.0, 1.3, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
 			}
 			else
 			{
-				timeline.addKeyFrame(KeyFrame.makePos(FrameworkTypes.SCREEN_WIDTH - FrameworkTypes.RTD(9.0), num3, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
-				timeline.addKeyFrame(KeyFrame.makePos(FrameworkTypes.SCREEN_WIDTH - (float)image2.width + num6, num3, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
+				timeline.addKeyFrame(KeyFrame.makePos(SCREEN_WIDTH - RTD(9.0), num3, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
+				timeline.addKeyFrame(KeyFrame.makePos(SCREEN_WIDTH - (float)image2.width + num6, num3, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
 				timeline.addKeyFrame(KeyFrame.makeScale(0.0, 1.3, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
 				timeline.addKeyFrame(KeyFrame.makeScale(1.0, 1.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
 			}
@@ -563,7 +563,7 @@ namespace CutTheRope.game
 			timeline = new Timeline().initWithMaxKeyFramesOnTrack(2);
 			if (open)
 			{
-				timeline.addKeyFrame(KeyFrame.makePos(image2.x + (float)image2.width - FrameworkTypes.RTD(6.0), 0.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
+				timeline.addKeyFrame(KeyFrame.makePos(image2.x + (float)image2.width - RTD(6.0), 0.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
 				timeline.addKeyFrame(KeyFrame.makePos(-25.0, 0.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
 				timeline.addKeyFrame(KeyFrame.makeScale(0.0, 1.3, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
 				timeline.addKeyFrame(KeyFrame.makeScale(1.0, 1.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
@@ -581,15 +581,15 @@ namespace CutTheRope.game
 			timeline = new Timeline().initWithMaxKeyFramesOnTrack(2);
 			if (open)
 			{
-				timeline.addKeyFrame(KeyFrame.makePos(FrameworkTypes.SCREEN_WIDTH - (float)image2.width + FrameworkTypes.RTD(7.0), 0.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
-				timeline.addKeyFrame(KeyFrame.makePos(FrameworkTypes.SCREEN_WIDTH, 0.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
+				timeline.addKeyFrame(KeyFrame.makePos(SCREEN_WIDTH - (float)image2.width + RTD(7.0), 0.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
+				timeline.addKeyFrame(KeyFrame.makePos(SCREEN_WIDTH, 0.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
 				timeline.addKeyFrame(KeyFrame.makeScale(0.0, 1.3, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
 				timeline.addKeyFrame(KeyFrame.makeScale(1.0, 1.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
 			}
 			else
 			{
-				timeline.addKeyFrame(KeyFrame.makePos(FrameworkTypes.SCREEN_WIDTH - 40f, 0.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
-				timeline.addKeyFrame(KeyFrame.makePos(FrameworkTypes.SCREEN_WIDTH - (float)image2.width + 20f, 0.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
+				timeline.addKeyFrame(KeyFrame.makePos(SCREEN_WIDTH - 40f, 0.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
+				timeline.addKeyFrame(KeyFrame.makePos(SCREEN_WIDTH - (float)image2.width + 20f, 0.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
 				timeline.addKeyFrame(KeyFrame.makeScale(1.0, 1.0, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
 				timeline.addKeyFrame(KeyFrame.makeScale(0.0, 1.3, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
 			}

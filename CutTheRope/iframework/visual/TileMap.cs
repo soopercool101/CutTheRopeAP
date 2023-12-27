@@ -83,8 +83,8 @@ namespace CutTheRope.iframework.visual
 			{
 				rows = r;
 				columns = c;
-				cameraViewWidth = (int)FrameworkTypes.SCREEN_WIDTH;
-				cameraViewHeight = (int)FrameworkTypes.SCREEN_HEIGHT;
+				cameraViewWidth = (int)SCREEN_WIDTH;
+				cameraViewHeight = (int)SCREEN_HEIGHT;
 				parallaxRatio = 1f;
 				drawers = new List<ImageMultiDrawer>();
 				tiles = new Dictionary<int, TileEntry>();
@@ -101,7 +101,7 @@ namespace CutTheRope.iframework.visual
 				horizontalRandom = false;
 				verticalRandom = false;
 				restoreTileTransparency = true;
-				randomSeed = MathHelper.RND_RANGE(1000, 2000);
+				randomSeed = RND_RANGE(1000, 2000);
 			}
 			return this;
 		}
@@ -196,15 +196,15 @@ namespace CutTheRope.iframework.visual
 				int num8 = (int)num7 % tileMapWidth;
 				num3 = ((!(num7 < 0f)) ? ((float)(num8 - tileMapWidth) + num) : ((float)num8 + num));
 			}
-			if (!MathHelper.rectInRect(num, num2, num + (float)cameraViewWidth, num2 + (float)cameraViewHeight, num3, num4, num3 + (float)tileMapWidth, num4 + (float)tileMapHeight))
+			if (!rectInRect(num, num2, num + (float)cameraViewWidth, num2 + (float)cameraViewHeight, num3, num4, num3 + (float)tileMapWidth, num4 + (float)tileMapHeight))
 			{
 				return;
 			}
-			Rectangle rectangle = MathHelper.rectInRectIntersection(new Rectangle(num3, num4, tileMapWidth, tileMapHeight), new Rectangle(num, num2, cameraViewWidth, cameraViewHeight));
-			Vector vector = MathHelper.vect(Math.Max(0f, rectangle.x), Math.Max(0f, rectangle.y));
-			Vector vector2 = MathHelper.vect((int)vector.x / tileWidth, (int)vector.y / tileHeight);
+			Rectangle rectangle = rectInRectIntersection(new Rectangle(num3, num4, tileMapWidth, tileMapHeight), new Rectangle(num, num2, cameraViewWidth, cameraViewHeight));
+			Vector vector = vect(Math.Max(0f, rectangle.x), Math.Max(0f, rectangle.y));
+			Vector vector2 = vect((int)vector.x / tileWidth, (int)vector.y / tileHeight);
 			float num9 = num4 + vector2.y * (float)tileHeight;
-			Vector vector3 = MathHelper.vect(num3 + vector2.x * (float)tileWidth, num9);
+			Vector vector3 = vect(num3 + vector2.x * (float)tileWidth, num9);
 			int count = drawers.Count;
 			for (int i = 0; i < count; i++)
 			{
@@ -233,7 +233,7 @@ namespace CutTheRope.iframework.visual
 					{
 						break;
 					}
-					Rectangle rectangle2 = MathHelper.rectInRectIntersection(new Rectangle(num, num2, cameraViewWidth, cameraViewHeight), new Rectangle(vector3.x, vector3.y, tileWidth, tileHeight));
+					Rectangle rectangle2 = rectInRectIntersection(new Rectangle(num, num2, cameraViewWidth, cameraViewHeight), new Rectangle(vector3.x, vector3.y, tileWidth, tileHeight));
 					Rectangle r = new Rectangle(num - vector3.x + rectangle2.x, num2 - vector3.y + rectangle2.y, rectangle2.w, rectangle2.h);
 					int num12 = j;
 					int num13 = k;
@@ -261,12 +261,12 @@ namespace CutTheRope.iframework.visual
 					}
 					if (horizontalRandom)
 					{
-						float num14 = MathHelper.fmSin(vector3.x) * (float)randomSeed;
+						float num14 = fmSin(vector3.x) * (float)randomSeed;
 						num12 = Math.Abs((int)num14 % columns);
 					}
 					if (verticalRandom)
 					{
-						float num15 = MathHelper.fmSin(vector3.y) * (float)randomSeed;
+						float num15 = fmSin(vector3.y) * (float)randomSeed;
 						num13 = Math.Abs((int)num15 % rows);
 					}
 					if (num12 >= columns)

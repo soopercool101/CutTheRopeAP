@@ -73,15 +73,15 @@ namespace CutTheRope.game
 			float num2 = 1f;
 			float[] array = new float[5] { 0.3f, 0.3f, 0.5f, 0.5f, 0.6f };
 			int num3 = array.Count();
-			float num4 = array[MathHelper.RND_RANGE(0, num3 - 1)];
+			float num4 = array[RND_RANGE(0, num3 - 1)];
 			float num5 = num4;
-			if (MathHelper.RND(1) == 1)
+			if (RND(1) == 1)
 			{
-				num4 *= 1f + (float)MathHelper.RND(1) / 10f;
+				num4 *= 1f + (float)RND(1) / 10f;
 			}
 			else
 			{
-				num5 *= 1f + (float)MathHelper.RND(1) / 10f;
+				num5 *= 1f + (float)RND(1) / 10f;
 			}
 			num *= num4;
 			num2 *= num5;
@@ -95,7 +95,7 @@ namespace CutTheRope.game
 			pollen.y = v.y;
 			float num8 = 1f;
 			float num9 = Math.Min(num8 - num, num8 - num2);
-			float rND_0_ = MathHelper.RND_0_1;
+			float rND_0_ = RND_0_1;
 			pollen.startScaleX = num9 + num;
 			pollen.startScaleY = num9 + num2;
 			pollen.scaleX = pollen.startScaleX * rND_0_;
@@ -127,15 +127,15 @@ namespace CutTheRope.game
 			int num = 44;
 			Vector vector = g.mover.path[p1];
 			Vector v = g.mover.path[p2];
-			Vector v2 = MathHelper.vectSub(v, vector);
-			float num2 = MathHelper.vectLength(v2);
+			Vector v2 = vectSub(v, vector);
+			float num2 = vectLength(v2);
 			int num3 = (int)(num2 / (float)num);
-			Vector v3 = MathHelper.vectNormalize(v2);
+			Vector v3 = vectNormalize(v2);
 			for (int i = 0; i <= num3; i++)
 			{
-				Vector v4 = MathHelper.vectAdd(vector, MathHelper.vectMult(v3, i * num));
-				v4.x += MathHelper.RND_RANGE((int)FrameworkTypes.RTPD(-2.0), (int)FrameworkTypes.RTPD(2.0));
-				v4.y += MathHelper.RND_RANGE((int)FrameworkTypes.RTPD(-2.0), (int)FrameworkTypes.RTPD(2.0));
+				Vector v4 = vectAdd(vector, vectMult(v3, i * num));
+				v4.x += RND_RANGE((int)RTPD(-2.0), (int)RTPD(2.0));
+				v4.y += RND_RANGE((int)RTPD(-2.0), (int)RTPD(2.0));
 				addPollenAtparentIndex(v4, p1);
 			}
 		}
@@ -186,8 +186,8 @@ namespace CutTheRope.game
 				OpenGL.glBlendFunc(BlendingFactor.GL_SRC_ALPHA, BlendingFactor.GL_ONE);
 				OpenGL.glEnable(0);
 				OpenGL.glBindTexture(drawer.image.texture.name());
-				OpenGL.glVertexPointer(3, 5, 0, FrameworkTypes.toFloatArray(drawer.vertices));
-				OpenGL.glTexCoordPointer(2, 5, 0, FrameworkTypes.toFloatArray(drawer.texCoordinates));
+				OpenGL.glVertexPointer(3, 5, 0, toFloatArray(drawer.vertices));
+				OpenGL.glTexCoordPointer(2, 5, 0, toFloatArray(drawer.texCoordinates));
 				OpenGL.glEnableClientState(13);
 				OpenGL.glBindBuffer(2, colorsID);
 				OpenGL.glBufferData(2, colors, 3);

@@ -274,8 +274,8 @@ namespace CutTheRope.windows
 			_skipChanges = false;
 			EnableFullScreen(!IsFullScreen);
 			Save();
-			global::CutTheRope.iframework.core.Application.sharedCanvas().reshape();
-			global::CutTheRope.iframework.core.Application.sharedRootController().fullscreenToggled(IsFullScreen);
+			iframework.core.Application.sharedCanvas().reshape();
+			iframework.core.Application.sharedRootController().fullscreenToggled(IsFullScreen);
 			FullScreenCropWidth = fullScreenCropWidth;
 			if (!IsFullScreen)
 			{
@@ -323,7 +323,7 @@ namespace CutTheRope.windows
 				}
 			}
 			Save();
-			global::CutTheRope.iframework.core.Application.sharedCanvas().reshape();
+			iframework.core.Application.sharedCanvas().reshape();
 		}
 
 		public void ApplyViewportToDevice()

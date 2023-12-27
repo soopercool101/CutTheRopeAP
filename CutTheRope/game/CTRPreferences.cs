@@ -256,7 +256,7 @@ namespace CutTheRope.game
 			{
 				if (flag)
 				{
-					return Preferences._getBooleanForKey("IAP_SHAREWARE");
+					return _getBooleanForKey("IAP_SHAREWARE");
 				}
 				return false;
 			}
@@ -275,12 +275,12 @@ namespace CutTheRope.game
 
 		public static int getStarsForPackLevel(int p, int l)
 		{
-			return Preferences._getIntForKey(getPackLevelKey("STARS_", p, l));
+			return _getIntForKey(getPackLevelKey("STARS_", p, l));
 		}
 
 		public static UNLOCKED_STATE getUnlockedForPackLevel(int p, int l)
 		{
-			return (UNLOCKED_STATE)Preferences._getIntForKey(getPackLevelKey("UNLOCKED_", p, l));
+			return (UNLOCKED_STATE)_getIntForKey(getPackLevelKey("UNLOCKED_", p, l));
 		}
 
 		public static int getPacksCount()
@@ -332,7 +332,7 @@ namespace CutTheRope.game
 
 		public static void setUnlockedForPackLevel(UNLOCKED_STATE s, int p, int l)
 		{
-			Preferences._setIntforKey((int)s, getPackLevelKey("UNLOCKED_", p, l), true);
+			_setIntforKey((int)s, getPackLevelKey("UNLOCKED_", p, l), true);
 		}
 
 		public static int sharewareFreeLevels()
@@ -347,7 +347,7 @@ namespace CutTheRope.game
 
 		public static void setLastPack(int p)
 		{
-			Preferences._setIntforKey(p, "PREFS_LAST_PACK", true);
+			_setIntforKey(p, "PREFS_LAST_PACK", true);
 		}
 
 		public static bool isPackPerfect(int p)
@@ -365,7 +365,7 @@ namespace CutTheRope.game
 
 		public static int getLastPack()
 		{
-			int val = Preferences._getIntForKey("PREFS_LAST_PACK");
+			int val = _getIntForKey("PREFS_LAST_PACK");
 			return Math.Min(Math.Max(0, val), getPacksCount() + 1);
 		}
 
@@ -375,17 +375,17 @@ namespace CutTheRope.game
 
 		public static int getScoreForPackLevel(int p, int l)
 		{
-			return Preferences._getIntForKey("SCORE_" + p + "_" + l);
+			return _getIntForKey("SCORE_" + p + "_" + l);
 		}
 
 		public static void setScoreForPackLevel(int s, int p, int l)
 		{
-			Preferences._setIntforKey(s, "SCORE_" + p + "_" + l, true);
+			_setIntforKey(s, "SCORE_" + p + "_" + l, true);
 		}
 
 		public static void setStarsForPackLevel(int s, int p, int l)
 		{
-			Preferences._setIntforKey(s, "STARS_" + p + "_" + l, true);
+			_setIntforKey(s, "STARS_" + p + "_" + l, true);
 		}
 
 		public static int getTotalStarsInPack(int p)
@@ -473,8 +473,8 @@ namespace CutTheRope.game
 
 		public void setScoreHash()
 		{
-			NSString input = NSObject.NSS(getTotalScore().ToString());
-			NSString mD5Str = MathHelper.getMD5Str(input);
+			NSString input = NSS(getTotalScore().ToString());
+			NSString mD5Str = getMD5Str(input);
 			setStringforKey(mD5Str.ToString(), "PREFS_SCORE_HASH", true);
 		}
 

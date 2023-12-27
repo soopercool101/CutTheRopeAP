@@ -55,7 +55,7 @@ namespace CutTheRope.game
 		public override void initParticle(ref Particle particle)
 		{
 			base.initParticle(ref particle);
-			int num = MathHelper.RND_RANGE(6, 8);
+			int num = RND_RANGE(6, 8);
 			Quad2D qt = imageGrid.texture.quads[num];
 			Quad3D qv = Quad3D.MakeQuad3D(0f, 0f, 0f, 0f, 0f);
 			drawer.setTextureQuadatVertexQuadatIndex(qt, qv, particleCount);
@@ -68,10 +68,10 @@ namespace CutTheRope.game
 		{
 			if (p.life > 0f)
 			{
-				p.dir = MathHelper.vectMult(p.dir, 0.9);
-				Vector v = MathHelper.vectMult(p.dir, delta);
-				v = MathHelper.vectAdd(v, gravity);
-				p.pos = MathHelper.vectAdd(p.pos, v);
+				p.dir = vectMult(p.dir, 0.9);
+				Vector v = vectMult(p.dir, delta);
+				v = vectAdd(v, gravity);
+				p.pos = vectAdd(p.pos, v);
 				p.color.r += p.deltaColor.r * delta;
 				p.color.g += p.deltaColor.g * delta;
 				p.color.b += p.deltaColor.b * delta;

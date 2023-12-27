@@ -200,11 +200,11 @@ namespace CutTheRope.ctr_commons
 		{
 			if (gApp != null)
 			{
-				FrameworkTypes._LOG("Application already created");
+				_LOG("Application already created");
 				return;
 			}
-			ResDataPhoneFull.LANGUAGE = language;
-			global::CutTheRope.iframework.helpers.MathHelper.fmInit();
+			LANGUAGE = language;
+			fmInit();
 			gApp = new CTRApp();
 			gApp.init();
 			gApp.applicationDidFinishLaunching(null);
@@ -214,12 +214,12 @@ namespace CutTheRope.ctr_commons
 		{
 			if (gApp == null)
 			{
-				FrameworkTypes._LOG("Application already destroyed");
+				_LOG("Application already destroyed");
 				return;
 			}
 			Application.sharedSoundMgr().stopAllSounds();
 			Application.sharedPreferences().savePreferences();
-			NSObject.NSREL(gApp);
+			NSREL(gApp);
 			gApp = null;
 			gPaused = false;
 		}
@@ -257,39 +257,39 @@ namespace CutTheRope.ctr_commons
 
 		public static void Java_com_zeptolab_ctr_CtrRenderer_nativeResize(int width, int height, bool isLowMem)
 		{
-			FrameworkTypes.REAL_SCREEN_WIDTH = width;
-			FrameworkTypes.REAL_SCREEN_HEIGHT = height;
-			FrameworkTypes.SCREEN_RATIO = FrameworkTypes.REAL_SCREEN_HEIGHT / FrameworkTypes.REAL_SCREEN_WIDTH;
-			FrameworkTypes.IS_WVGA = width > 500 || height > 500;
-			FrameworkTypes.IS_QVGA = width < 280 || height < 280;
+			REAL_SCREEN_WIDTH = width;
+			REAL_SCREEN_HEIGHT = height;
+			SCREEN_RATIO = REAL_SCREEN_HEIGHT / REAL_SCREEN_WIDTH;
+			IS_WVGA = width > 500 || height > 500;
+			IS_QVGA = width < 280 || height < 280;
 			if (isLowMem)
 			{
-				FrameworkTypes.IS_WVGA = false;
+				IS_WVGA = false;
 			}
-			FrameworkTypes.VIEW_SCREEN_WIDTH = FrameworkTypes.REAL_SCREEN_WIDTH;
-			FrameworkTypes.VIEW_SCREEN_HEIGHT = FrameworkTypes.SCREEN_HEIGHT * FrameworkTypes.REAL_SCREEN_WIDTH / FrameworkTypes.SCREEN_WIDTH;
-			if (FrameworkTypes.VIEW_SCREEN_HEIGHT > FrameworkTypes.REAL_SCREEN_HEIGHT)
+			VIEW_SCREEN_WIDTH = REAL_SCREEN_WIDTH;
+			VIEW_SCREEN_HEIGHT = SCREEN_HEIGHT * REAL_SCREEN_WIDTH / SCREEN_WIDTH;
+			if (VIEW_SCREEN_HEIGHT > REAL_SCREEN_HEIGHT)
 			{
-				FrameworkTypes.VIEW_SCREEN_HEIGHT = FrameworkTypes.REAL_SCREEN_HEIGHT;
-				FrameworkTypes.VIEW_SCREEN_WIDTH = FrameworkTypes.SCREEN_WIDTH * FrameworkTypes.REAL_SCREEN_HEIGHT / FrameworkTypes.SCREEN_HEIGHT;
+				VIEW_SCREEN_HEIGHT = REAL_SCREEN_HEIGHT;
+				VIEW_SCREEN_WIDTH = SCREEN_WIDTH * REAL_SCREEN_HEIGHT / SCREEN_HEIGHT;
 			}
-			FrameworkTypes.VIEW_OFFSET_X = ((float)width - FrameworkTypes.VIEW_SCREEN_WIDTH) / 2f;
-			FrameworkTypes.VIEW_OFFSET_Y = ((float)height - FrameworkTypes.VIEW_SCREEN_HEIGHT) / 2f;
-			FrameworkTypes.SCREEN_HEIGHT_EXPANDED = FrameworkTypes.SCREEN_HEIGHT * FrameworkTypes.REAL_SCREEN_HEIGHT / FrameworkTypes.VIEW_SCREEN_HEIGHT;
-			FrameworkTypes.SCREEN_WIDTH_EXPANDED = FrameworkTypes.SCREEN_WIDTH * FrameworkTypes.REAL_SCREEN_WIDTH / FrameworkTypes.VIEW_SCREEN_WIDTH;
-			FrameworkTypes.SCREEN_OFFSET_Y = (FrameworkTypes.SCREEN_HEIGHT_EXPANDED - FrameworkTypes.SCREEN_HEIGHT) / 2f;
-			FrameworkTypes.SCREEN_OFFSET_X = (FrameworkTypes.SCREEN_WIDTH_EXPANDED - FrameworkTypes.SCREEN_WIDTH) / 2f;
-			FrameworkTypes.SCREEN_BG_SCALE_Y = FrameworkTypes.SCREEN_HEIGHT_EXPANDED / FrameworkTypes.SCREEN_HEIGHT;
-			FrameworkTypes.SCREEN_BG_SCALE_X = FrameworkTypes.SCREEN_WIDTH_EXPANDED / FrameworkTypes.SCREEN_WIDTH;
-			if (FrameworkTypes.IS_WVGA)
+			VIEW_OFFSET_X = ((float)width - VIEW_SCREEN_WIDTH) / 2f;
+			VIEW_OFFSET_Y = ((float)height - VIEW_SCREEN_HEIGHT) / 2f;
+			SCREEN_HEIGHT_EXPANDED = SCREEN_HEIGHT * REAL_SCREEN_HEIGHT / VIEW_SCREEN_HEIGHT;
+			SCREEN_WIDTH_EXPANDED = SCREEN_WIDTH * REAL_SCREEN_WIDTH / VIEW_SCREEN_WIDTH;
+			SCREEN_OFFSET_Y = (SCREEN_HEIGHT_EXPANDED - SCREEN_HEIGHT) / 2f;
+			SCREEN_OFFSET_X = (SCREEN_WIDTH_EXPANDED - SCREEN_WIDTH) / 2f;
+			SCREEN_BG_SCALE_Y = SCREEN_HEIGHT_EXPANDED / SCREEN_HEIGHT;
+			SCREEN_BG_SCALE_X = SCREEN_WIDTH_EXPANDED / SCREEN_WIDTH;
+			if (IS_WVGA)
 			{
-				FrameworkTypes.SCREEN_WIDE_BG_SCALE_Y = (float)((double)FrameworkTypes.SCREEN_HEIGHT_EXPANDED * 1.5 / 800.0);
-				FrameworkTypes.SCREEN_WIDE_BG_SCALE_X = FrameworkTypes.SCREEN_BG_SCALE_X;
+				SCREEN_WIDE_BG_SCALE_Y = (float)((double)SCREEN_HEIGHT_EXPANDED * 1.5 / 800.0);
+				SCREEN_WIDE_BG_SCALE_X = SCREEN_BG_SCALE_X;
 			}
 			else
 			{
-				FrameworkTypes.SCREEN_WIDE_BG_SCALE_Y = FrameworkTypes.SCREEN_BG_SCALE_Y;
-				FrameworkTypes.SCREEN_WIDE_BG_SCALE_X = FrameworkTypes.SCREEN_BG_SCALE_X;
+				SCREEN_WIDE_BG_SCALE_Y = SCREEN_BG_SCALE_Y;
+				SCREEN_WIDE_BG_SCALE_X = SCREEN_BG_SCALE_X;
 			}
 		}
 

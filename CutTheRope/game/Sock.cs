@@ -51,11 +51,11 @@ namespace CutTheRope.game
 
 		public virtual void createAnimations()
 		{
-			light = Animation.Animation_createWithResID(85);
+			light = Animation_createWithResID(85);
 			light.anchor = 34;
 			light.parentAnchor = 10;
 			light.y = 270f;
-			light.x = FrameworkTypes.RTD(0.0);
+			light.x = RTD(0.0);
 			light.addAnimationWithIDDelayLoopCountSequence(0, 0.05f, Timeline.LoopType.TIMELINE_NO_LOOP, 4, 2, new List<int> { 3, 4, 4 });
 			light.doRestoreCutTransparency();
 			light.visible = false;
@@ -71,11 +71,11 @@ namespace CutTheRope.game
 			b1.x = t1.x;
 			b2.x = t2.x;
 			b1.y = (b2.y = y + 15f);
-			angle = MathHelper.DEGREES_TO_RADIANS(rotation);
-			t1 = MathHelper.vectRotateAround(t1, angle, x, y);
-			t2 = MathHelper.vectRotateAround(t2, angle, x, y);
-			b1 = MathHelper.vectRotateAround(b1, angle, x, y);
-			b2 = MathHelper.vectRotateAround(b2, angle, x, y);
+			angle = DEGREES_TO_RADIANS(rotation);
+			t1 = vectRotateAround(t1, angle, x, y);
+			t2 = vectRotateAround(t2, angle, x, y);
+			b1 = vectRotateAround(b1, angle, x, y);
+			b2 = vectRotateAround(b2, angle, x, y);
 		}
 
 		public override void draw()

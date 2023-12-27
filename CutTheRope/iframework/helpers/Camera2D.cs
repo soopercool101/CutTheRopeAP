@@ -36,21 +36,21 @@ namespace CutTheRope.iframework.helpers
 			}
 			else if (type == CAMERA_TYPE.CAMERA_SPEED_DELAY)
 			{
-				offset = MathHelper.vectMult(MathHelper.vectSub(target, pos), speed);
+				offset = vectMult(vectSub(target, pos), speed);
 			}
 			else if (type == CAMERA_TYPE.CAMERA_SPEED_PIXELS)
 			{
-				offset = MathHelper.vectMult(MathHelper.vectNormalize(MathHelper.vectSub(target, pos)), speed);
+				offset = vectMult(vectNormalize(vectSub(target, pos)), speed);
 			}
 		}
 
 		public virtual void update(float delta)
 		{
-			if (!MathHelper.vectEqual(pos, target))
+			if (!vectEqual(pos, target))
 			{
-				pos = MathHelper.vectAdd(pos, MathHelper.vectMult(offset, delta));
-				pos = MathHelper.vect(MathHelper.round(pos.x), MathHelper.round(pos.y));
-				if (!MathHelper.sameSign(offset.x, target.x - pos.x) || !MathHelper.sameSign(offset.y, target.y - pos.y))
+				pos = vectAdd(pos, vectMult(offset, delta));
+				pos = vect(round(pos.x), round(pos.y));
+				if (!sameSign(offset.x, target.x - pos.x) || !sameSign(offset.y, target.y - pos.y))
 				{
 					pos = target;
 				}

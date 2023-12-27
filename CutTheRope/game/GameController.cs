@@ -95,10 +95,10 @@ namespace CutTheRope.game
 			gameScene.gameSceneDelegate = this;
 			gameView.addChildwithID(gameScene, 0);
 			Button button = MenuController.createButtonWithImageQuad1Quad2IDDelegate(69, 0, 1, 6, this);
-			button.x = -base.canvas.xOffsetScaled;
+			button.x = -canvas.xOffsetScaled;
 			gameView.addChildwithID(button, 1);
 			Button button2 = MenuController.createButtonWithImageQuad1Quad2IDDelegate(62, 0, 1, 1, this);
-			button2.x = -base.canvas.xOffsetScaled;
+			button2.x = -canvas.xOffsetScaled;
 			gameView.addChildwithID(button2, 2);
 			Image image = Image.Image_createWithResIDQuad(66, 0);
 			image.anchor = (image.parentAnchor = 10);
@@ -110,10 +110,10 @@ namespace CutTheRope.game
 			CTRRootController cTRRootController = (CTRRootController)Application.sharedRootController();
 			CTRPreferences.getScoreForPackLevel(cTRRootController.getPack(), cTRRootController.getLevel());
 			mapNameLabel.anchor = (mapNameLabel.parentAnchor = 12);
-			mapNameLabel.x = FrameworkTypes.RTD(-10.0) - (float)base.canvas.xOffsetScaled + 256f;
-			mapNameLabel.y = FrameworkTypes.RTD(-5.0);
+			mapNameLabel.x = RTD(-10.0) - (float)canvas.xOffsetScaled + 256f;
+			mapNameLabel.y = RTD(-5.0);
 			image.addChild(mapNameLabel);
-			VBox vBox = new VBox().initWithOffsetAlignWidth(5.0, 2, FrameworkTypes.SCREEN_WIDTH);
+			VBox vBox = new VBox().initWithOffsetAlignWidth(5.0, 2, SCREEN_WIDTH);
 			Button c = MenuController.createButtonWithTextIDDelegate(Application.getString(655397), 0, this);
 			vBox.addChild(c);
 			Button c2 = MenuController.createButtonWithTextIDDelegate(Application.getString(655398), 2, this);
@@ -123,14 +123,14 @@ namespace CutTheRope.game
 			Button c4 = MenuController.createButtonWithTextIDDelegate(Application.getString(655400), 4, this);
 			vBox.addChild(c4);
 			vBox.anchor = (vBox.parentAnchor = 10);
-			Vector offset = MathHelper.vectSub(Image.getQuadCenter(8, 0), Image.getQuadOffset(8, 12));
-			ToggleButton toggleButton = MenuController.createAudioButtonWithQuadDelegateIDiconOffset(3, this, 10, MathHelper.vectZero);
+			Vector offset = vectSub(Image.getQuadCenter(8, 0), Image.getQuadOffset(8, 12));
+			ToggleButton toggleButton = MenuController.createAudioButtonWithQuadDelegateIDiconOffset(3, this, 10, vectZero);
 			ToggleButton toggleButton2 = MenuController.createAudioButtonWithQuadDelegateIDiconOffset(2, this, 11, offset);
 			HBox hBox = new HBox().initWithOffsetAlignHeight(-10f, 16, toggleButton.height);
 			hBox.addChild(toggleButton2);
 			hBox.addChild(toggleButton);
 			vBox.addChild(hBox);
-			vBox.y = (FrameworkTypes.SCREEN_HEIGHT - (float)vBox.height) / 2f;
+			vBox.y = (SCREEN_HEIGHT - (float)vBox.height) / 2f;
 			bool flag = Preferences._getBooleanForKey("SOUND_ON");
 			bool flag2 = Preferences._getBooleanForKey("MUSIC_ON");
 			if (!flag)
@@ -189,17 +189,17 @@ namespace CutTheRope.game
 			{
 				NSString[] array = new NSString[11]
 				{
-					NSObject.NSS("1058364368"),
-					NSObject.NSS("1058328727"),
-					NSObject.NSS("1058324751"),
-					NSObject.NSS("1515793567"),
-					NSObject.NSS("1432760157"),
-					NSObject.NSS("1058327768"),
-					NSObject.NSS("1058407145"),
-					NSObject.NSS("1991641832"),
-					NSObject.NSS("1335599628"),
-					NSObject.NSS("99928734496"),
-					NSObject.NSS("com.zeptolab.ctr.djboxperfect")
+					NSS("1058364368"),
+					NSS("1058328727"),
+					NSS("1058324751"),
+					NSS("1515793567"),
+					NSS("1432760157"),
+					NSS("1058327768"),
+					NSS("1058407145"),
+					NSS("1991641832"),
+					NSS("1335599628"),
+					NSS("99928734496"),
+					NSS("com.zeptolab.ctr.djboxperfect")
 				};
 				NSString name = array[pack];
 				CTRRootController.postAchievementName(name);
@@ -226,17 +226,17 @@ namespace CutTheRope.game
 			{
 				NSString[] array = new NSString[11]
 				{
-					NSObject.NSS("681486798"),
-					NSObject.NSS("681462993"),
-					NSObject.NSS("681520253"),
-					NSObject.NSS("1515813296"),
-					NSObject.NSS("1432721430"),
-					NSObject.NSS("681512374"),
-					NSObject.NSS("1058310903"),
-					NSObject.NSS("1991474812"),
-					NSObject.NSS("1321820679"),
-					NSObject.NSS("23523272771"),
-					NSObject.NSS("com.zeptolab.ctr.djboxcompleted")
+					NSS("681486798"),
+					NSS("681462993"),
+					NSS("681520253"),
+					NSS("1515813296"),
+					NSS("1432721430"),
+					NSS("681512374"),
+					NSS("1058310903"),
+					NSS("1991474812"),
+					NSS("1321820679"),
+					NSS("23523272771"),
+					NSS("com.zeptolab.ctr.djboxcompleted")
 				};
 				CTRRootController.postAchievementName(array[pack]);
 			}
@@ -244,15 +244,15 @@ namespace CutTheRope.game
 			int totalStars = CTRPreferences.getTotalStars();
 			if (totalStars >= 50 && totalStars < 150)
 			{
-				CTRRootController.postAchievementName("677900534", FrameworkTypes.ACHIEVEMENT_STRING("\"Bronze Scissors\""));
+				CTRRootController.postAchievementName("677900534", ACHIEVEMENT_STRING("\"Bronze Scissors\""));
 			}
 			else if (totalStars >= 150 && totalStars < 300)
 			{
-				CTRRootController.postAchievementName("681508185", FrameworkTypes.ACHIEVEMENT_STRING("\"Silver Scissors\""));
+				CTRRootController.postAchievementName("681508185", ACHIEVEMENT_STRING("\"Silver Scissors\""));
 			}
 			else if (totalStars >= 300)
 			{
-				CTRRootController.postAchievementName("681473653", FrameworkTypes.ACHIEVEMENT_STRING("\"Golden Scissors\""));
+				CTRRootController.postAchievementName("681473653", ACHIEVEMENT_STRING("\"Golden Scissors\""));
 			}
 			Preferences._savePreferences();
 			int num2 = 0;
@@ -332,13 +332,13 @@ namespace CutTheRope.game
 
 		public virtual void gameWon()
 		{
-			postFlurryLevelEvent(NSObject.NSS("LEVEL_WON"));
+			postFlurryLevelEvent(NSS("LEVEL_WON"));
 			levelWon();
 		}
 
 		public virtual void gameLost()
 		{
-			postFlurryLevelEvent(NSObject.NSS("LEVEL_LOST"));
+			postFlurryLevelEvent(NSS("LEVEL_LOST"));
 		}
 
 		public virtual bool lastLevelInPack()
@@ -520,11 +520,11 @@ namespace CutTheRope.game
 				CTRRootController cTRRootController = (CTRRootController)Application.sharedRootController();
 				if (cTRRootController.isPicker())
 				{
-					mapNameLabel.setString(NSObject.NSS(""));
+					mapNameLabel.setString(NSS(""));
 					return;
 				}
 				int scoreForPackLevel = CTRPreferences.getScoreForPackLevel(cTRRootController.getPack(), cTRRootController.getLevel());
-				mapNameLabel.setString(NSObject.NSS(string.Concat(Application.getString(655380), ": ", scoreForPackLevel)));
+				mapNameLabel.setString(NSS(string.Concat(Application.getString(655380), ": ", scoreForPackLevel)));
 			}
 			else
 			{
@@ -686,7 +686,7 @@ namespace CutTheRope.game
 
 		public virtual void onNextLevel()
 		{
-			CTRPreferences.gameViewChanged(NSObject.NSS("game"));
+			CTRPreferences.gameViewChanged(NSS("game"));
 			CTRRootController cTRRootController = (CTRRootController)Application.sharedRootController();
 			View view = getView(0);
 			GameView gameView = (GameView)view;
@@ -735,10 +735,10 @@ namespace CutTheRope.game
 		{
 			View view = getView(0);
 			BaseElement child = view.getChild(2);
-			child.x = -base.canvas.xOffsetScaled;
+			child.x = -canvas.xOffsetScaled;
 			BaseElement child2 = view.getChild(1);
-			child2.x = -base.canvas.xOffsetScaled;
-			mapNameLabel.x = FrameworkTypes.RTD(-10.0) - (float)base.canvas.xOffsetScaled + 256f;
+			child2.x = -canvas.xOffsetScaled;
+			mapNameLabel.x = RTD(-10.0) - (float)canvas.xOffsetScaled + 256f;
 			GameScene gameScene = (GameScene)view.getChild(0);
 			if (gameScene != null)
 			{

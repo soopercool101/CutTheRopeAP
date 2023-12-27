@@ -99,27 +99,27 @@ namespace CutTheRope.iframework.core
 			{
 				if (locale != null)
 				{
-					return NSObject.NSS(locale);
+					return NSS(locale);
 				}
-				switch (ResDataPhoneFull.LANGUAGE)
+				switch (LANGUAGE)
 				{
 				case Language.LANG_EN:
-					return NSObject.NSS("en");
+					return NSS("en");
 				case Language.LANG_RU:
-					return NSObject.NSS("ru");
+					return NSS("ru");
 				case Language.LANG_DE:
-					return NSObject.NSS("de");
+					return NSS("de");
 				case Language.LANG_FR:
-					return NSObject.NSS("fr");
+					return NSS("fr");
 				case Language.LANG_ZH:
-					return NSObject.NSS("zh");
+					return NSS("zh");
 				case Language.LANG_JA:
-					return NSObject.NSS("ja");
+					return NSS("ja");
 				default:
-					return NSObject.NSS("en");
+					return NSS("en");
 				}
 			}
-			return NSObject.NSS("");
+			return NSS("");
 		}
 
 		public virtual void setString(int sid, NSString str)
@@ -127,18 +127,18 @@ namespace CutTheRope.iframework.core
 			if (sid == 8)
 			{
 				locale = str.ToString();
-				ResDataPhoneFull.LANGUAGE = Language.LANG_EN;
+				LANGUAGE = Language.LANG_EN;
 				if (locale == "ru")
 				{
-					ResDataPhoneFull.LANGUAGE = Language.LANG_RU;
+					LANGUAGE = Language.LANG_RU;
 				}
 				else if (locale == "de")
 				{
-					ResDataPhoneFull.LANGUAGE = Language.LANG_DE;
+					LANGUAGE = Language.LANG_DE;
 				}
 				if (locale == "fr")
 				{
-					ResDataPhoneFull.LANGUAGE = Language.LANG_FR;
+					LANGUAGE = Language.LANG_FR;
 				}
 			}
 		}

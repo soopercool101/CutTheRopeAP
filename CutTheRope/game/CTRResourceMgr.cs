@@ -20,43 +20,43 @@ namespace CutTheRope.game
 			switch (r)
 			{
 			case 149:
-				if (ResDataPhoneFull.LANGUAGE == Language.LANG_RU)
+				if (LANGUAGE == Language.LANG_RU)
 				{
 					return 139;
 				}
-				if (ResDataPhoneFull.LANGUAGE == Language.LANG_DE)
+				if (LANGUAGE == Language.LANG_DE)
 				{
 					return 138;
 				}
-				if (ResDataPhoneFull.LANGUAGE == Language.LANG_FR)
+				if (LANGUAGE == Language.LANG_FR)
 				{
 					return 137;
 				}
 				break;
 			case 69:
-				if (ResDataPhoneFull.LANGUAGE == Language.LANG_RU)
+				if (LANGUAGE == Language.LANG_RU)
 				{
 					return 140;
 				}
-				if (ResDataPhoneFull.LANGUAGE == Language.LANG_DE)
+				if (LANGUAGE == Language.LANG_DE)
 				{
 					return 141;
 				}
-				if (ResDataPhoneFull.LANGUAGE == Language.LANG_FR)
+				if (LANGUAGE == Language.LANG_FR)
 				{
 					return 69;
 				}
 				break;
 			case 70:
-				if (ResDataPhoneFull.LANGUAGE == Language.LANG_RU)
+				if (LANGUAGE == Language.LANG_RU)
 				{
 					return 142;
 				}
-				if (ResDataPhoneFull.LANGUAGE == Language.LANG_DE)
+				if (LANGUAGE == Language.LANG_DE)
 				{
 					return 144;
 				}
-				if (ResDataPhoneFull.LANGUAGE == Language.LANG_FR)
+				if (LANGUAGE == Language.LANG_FR)
 				{
 					return 143;
 				}

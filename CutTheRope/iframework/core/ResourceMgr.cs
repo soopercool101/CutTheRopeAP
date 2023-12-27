@@ -85,7 +85,7 @@ namespace CutTheRope.iframework.core
 			{
 				value = loadStringsInfo(resID);
 				string text = value.ToString();
-				value = NSObject.NSS(text.Replace('\u00a0', ' '));
+				value = NSS(text.Replace('\u00a0', ' '));
 				break;
 			}
 			}
@@ -119,15 +119,15 @@ namespace CutTheRope.iframework.core
 			if (xMLNode != null)
 			{
 				string tag = "en";
-				if (ResDataPhoneFull.LANGUAGE == Language.LANG_RU)
+				if (LANGUAGE == Language.LANG_RU)
 				{
 					tag = "ru";
 				}
-				if (ResDataPhoneFull.LANGUAGE == Language.LANG_FR)
+				if (LANGUAGE == Language.LANG_FR)
 				{
 					tag = "fr";
 				}
-				if (ResDataPhoneFull.LANGUAGE == Language.LANG_DE)
+				if (LANGUAGE == Language.LANG_DE)
 				{
 					tag = "de";
 				}
@@ -195,7 +195,7 @@ namespace CutTheRope.iframework.core
 
 		public virtual void setTextureInfo(Texture2D t, XMLNode i, bool isWvga, float scaleX, float scaleY)
 		{
-			t.preCutSize = MathHelper.vectUndefined;
+			t.preCutSize = vectUndefined;
 			XMLNode xMLNode = i.findChildWithTagNameRecursively("quads", false);
 			if (xMLNode != null)
 			{
@@ -226,11 +226,11 @@ namespace CutTheRope.iframework.core
 				array2[k] = list2[k].floatValue();
 			}
 			setOffsetsInfo(t, array2, list2.Count, scaleX, scaleY);
-			XMLNode xMLNode3 = i.findChildWithTagNameRecursively(NSObject.NSS("preCutWidth"), false);
-			XMLNode xMLNode4 = i.findChildWithTagNameRecursively(NSObject.NSS("preCutHeight"), false);
+			XMLNode xMLNode3 = i.findChildWithTagNameRecursively(NSS("preCutWidth"), false);
+			XMLNode xMLNode4 = i.findChildWithTagNameRecursively(NSS("preCutHeight"), false);
 			if (xMLNode3 != null && xMLNode4 != null)
 			{
-				t.preCutSize = MathHelper.vect(xMLNode3.data.intValue(), xMLNode4.data.intValue());
+				t.preCutSize = vect(xMLNode3.data.intValue(), xMLNode4.data.intValue());
 				if (isWvga)
 				{
 					t.preCutSize.x /= 1.5f;
@@ -241,7 +241,7 @@ namespace CutTheRope.iframework.core
 
 		private static string fullPathFromRelativePath(string relPath)
 		{
-			return ResDataPhoneFull.ContentFolder + relPath;
+			return ContentFolder + relPath;
 		}
 
 		private void setQuadsInfo(Texture2D t, float[] data, int size, float scaleX, float scaleY)
@@ -252,10 +252,10 @@ namespace CutTheRope.iframework.core
 			for (int i = 0; i < num; i++)
 			{
 				int num3 = i * 4;
-				Rectangle rect = FrameworkTypes.MakeRectangle(data[num3], data[num3 + 1], data[num3 + 2], data[num3 + 3]);
+				Rectangle rect = MakeRectangle(data[num3], data[num3 + 1], data[num3 + 2], data[num3 + 3]);
 				if ((float)num2 < rect.h + rect.y)
 				{
-					num2 = (int)MathHelper.ceil(rect.h + rect.y);
+					num2 = (int)ceil(rect.h + rect.y);
 				}
 				rect.x /= scaleX;
 				rect.y /= scaleY;
@@ -424,12 +424,12 @@ namespace CutTheRope.iframework.core
 				}
 				return;
 			}
-			if (ResDataPhoneFull.isSound(resId))
+			if (isSound(resId))
 			{
 				Application.sharedSoundMgr().getSound(resId);
 				return;
 			}
-			if (ResDataPhoneFull.isFont(resId))
+			if (isFont(resId))
 			{
 				Application.getFont(resId);
 				return;
@@ -454,7 +454,7 @@ namespace CutTheRope.iframework.core
 				xmlStrings = null;
 				return;
 			}
-			if (ResDataPhoneFull.isSound(resId))
+			if (isSound(resId))
 			{
 				Application.sharedSoundMgr().freeSound(resId);
 				return;

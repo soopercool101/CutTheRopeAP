@@ -91,7 +91,7 @@ namespace CutTheRope.iframework.platform
 		{
 			if (fpsText != null && fpsFont != null)
 			{
-				NSString @string = NSObject.NSS(fps.ToString("F1"));
+				NSString @string = NSS(fps.ToString("F1"));
 				fpsText.setString(@string);
 				OpenGL.glColor4f(Color.White);
 				OpenGL.glEnable(0);

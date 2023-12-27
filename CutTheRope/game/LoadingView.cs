@@ -25,20 +25,20 @@ namespace CutTheRope.game
 			Texture2D texture = Application.getTexture(num);
 			OpenGL.glColor4f(s_Color1);
 			Vector quadSize = Image.getQuadSize(num, 0);
-			float num3 = FrameworkTypes.SCREEN_WIDTH / 2f - quadSize.x;
+			float num3 = SCREEN_WIDTH / 2f - quadSize.x;
 			GLDrawer.drawImageQuad(texture, 0, num3, 0.0);
 			OpenGL.glPushMatrix();
-			float num4 = FrameworkTypes.SCREEN_WIDTH / 2f + quadSize.x / 2f;
-			OpenGL.glTranslatef(num4, FrameworkTypes.SCREEN_HEIGHT / 2f, 0.0);
+			float num4 = SCREEN_WIDTH / 2f + quadSize.x / 2f;
+			OpenGL.glTranslatef(num4, SCREEN_HEIGHT / 2f, 0.0);
 			OpenGL.glRotatef(180.0, 0.0, 0.0, 1.0);
-			OpenGL.glTranslatef(0f - num4, (0f - FrameworkTypes.SCREEN_HEIGHT) / 2f, 0.0);
-			GLDrawer.drawImageQuad(texture, 0, FrameworkTypes.SCREEN_WIDTH / 2f, 0.5);
+			OpenGL.glTranslatef(0f - num4, (0f - SCREEN_HEIGHT) / 2f, 0.0);
+			GLDrawer.drawImageQuad(texture, 0, SCREEN_WIDTH / 2f, 0.5);
 			OpenGL.glPopMatrix();
 			Texture2D texture2 = Application.getTexture(5);
 			if (!game)
 			{
 				OpenGL.glEnable(4);
-				OpenGL.setScissorRectangle(0.0, 0.0, FrameworkTypes.SCREEN_WIDTH, (double)(1200f * num2) / 100.0);
+				OpenGL.setScissorRectangle(0.0, 0.0, SCREEN_WIDTH, (double)(1200f * num2) / 100.0);
 			}
 			OpenGL.glColor4f(Color.White);
 			num3 = Image.getQuadOffset(5, 0).x;

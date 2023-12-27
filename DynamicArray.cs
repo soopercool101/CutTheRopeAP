@@ -225,7 +225,7 @@ internal class DynamicArray : NSObject, IEnumerable
 				map[i] = null;
 			}
 		}
-		NSObject.free(map);
+		free(map);
 		map = null;
 		base.dealloc();
 	}

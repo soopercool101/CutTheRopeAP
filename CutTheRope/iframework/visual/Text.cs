@@ -28,7 +28,7 @@ namespace CutTheRope.iframework.visual
 
 		public static Text createWithFontandString(int i, string str)
 		{
-			return createWithFontandString(i, NSObject.NSS(str));
+			return createWithFontandString(i, NSS(str));
 		}
 
 		public static Text createWithFontandString(int i, NSString str)
@@ -42,7 +42,7 @@ namespace CutTheRope.iframework.visual
 		{
 			if (init() != null)
 			{
-				font = (FontGeneric)NSObject.NSRET(i);
+				font = (FontGeneric)NSRET(i);
 				formattedStrings = new List<FormattedString>();
 				width = -1;
 				height = -1;
@@ -57,7 +57,7 @@ namespace CutTheRope.iframework.visual
 
 		public virtual void setString(string newString)
 		{
-			setString(NSObject.NSS(newString));
+			setString(NSS(newString));
 		}
 
 		public virtual void setString(NSString newString)
@@ -126,10 +126,10 @@ namespace CutTheRope.iframework.visual
 			float num5 = 0f;
 			int num6 = (int)font.fontHeight();
 			int num7 = 0;
-			NSString nSString = NSObject.NSS("..");
+			NSString nSString = NSS("..");
 			char[] characters2 = nSString.getCharacters();
 			int num8 = (int)font.getCharOffset(characters2, 0, 2);
-			int num9 = (int)((maxHeight == -1f) ? ((float)formattedStrings.Count) : MathHelper.MIN(formattedStrings.Count, maxHeight / ((float)num6 + font.getLineOffset())));
+			int num9 = (int)((maxHeight == -1f) ? ((float)formattedStrings.Count) : MIN(formattedStrings.Count, maxHeight / ((float)num6 + font.getLineOffset())));
 			bool flag = num9 != formattedStrings.Count;
 			int[] array2 = new int[num];
 			for (int k = 0; k < num9; k++)
@@ -190,7 +190,7 @@ namespace CutTheRope.iframework.visual
 			}
 			if (maxHeight != -1f)
 			{
-				height = (int)MathHelper.MIN(height, maxHeight);
+				height = (int)MIN(height, maxHeight);
 			}
 		}
 

@@ -7,7 +7,7 @@ namespace CutTheRope.iframework.visual
 		public override void initParticle(ref Particle particle)
 		{
 			Image image = imageGrid;
-			int num = MathHelper.RND(image.texture.quadsCount - 1);
+			int num = RND(image.texture.quadsCount - 1);
 			Quad2D qt = image.texture.quads[num];
 			Quad3D qv = Quad3D.MakeQuad3D(0f, 0f, 0f, 0f, 0f);
 			Rectangle rectangle = image.texture.quadRects[num];

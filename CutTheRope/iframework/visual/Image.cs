@@ -31,7 +31,7 @@ namespace CutTheRope.iframework.visual
 		public static Vector getQuadSize(int textureID, int quad)
 		{
 			Texture2D texture2D = Application.getTexture(textureID);
-			return MathHelper.vect(texture2D.quadRects[quad].w, texture2D.quadRects[quad].h);
+			return vect(texture2D.quadRects[quad].w, texture2D.quadRects[quad].h);
 		}
 
 		public static Vector getQuadOffset(int textureID, int quad)
@@ -43,14 +43,14 @@ namespace CutTheRope.iframework.visual
 		public static Vector getQuadCenter(int textureID, int quad)
 		{
 			Texture2D texture2D = Application.getTexture(textureID);
-			return MathHelper.vectAdd(texture2D.quadOffsets[quad], MathHelper.vect(MathHelper.ceil((double)texture2D.quadRects[quad].w / 2.0), MathHelper.ceil((double)texture2D.quadRects[quad].h / 2.0)));
+			return vectAdd(texture2D.quadOffsets[quad], vect(ceil((double)texture2D.quadRects[quad].w / 2.0), ceil((double)texture2D.quadRects[quad].h / 2.0)));
 		}
 
 		public static Vector getRelativeQuadOffset(int textureID, int quadToCountFrom, int quad)
 		{
 			Vector quadOffset = getQuadOffset(textureID, quadToCountFrom);
 			Vector quadOffset2 = getQuadOffset(textureID, quad);
-			return MathHelper.vectSub(quadOffset2, quadOffset);
+			return vectSub(quadOffset2, quadOffset);
 		}
 
 		public static void setElementPositionWithQuadCenter(BaseElement e, int textureID, int quad)
@@ -97,7 +97,7 @@ namespace CutTheRope.iframework.visual
 			if (init() != null)
 			{
 				texture = t;
-				NSObject.NSRET(texture);
+				NSRET(texture);
 				restoreCutTransparency = false;
 				if (texture.quadsCount > 0)
 				{
@@ -130,7 +130,7 @@ namespace CutTheRope.iframework.visual
 
 		public virtual void doRestoreCutTransparency()
 		{
-			if (texture.preCutSize.x != MathHelper.vectUndefined.x)
+			if (texture.preCutSize.x != vectUndefined.x)
 			{
 				restoreCutTransparency = true;
 				width = (int)texture.preCutSize.x;
@@ -202,7 +202,7 @@ namespace CutTheRope.iframework.visual
 
 		public override void dealloc()
 		{
-			NSObject.NSREL(texture);
+			NSREL(texture);
 			base.dealloc();
 		}
 	}

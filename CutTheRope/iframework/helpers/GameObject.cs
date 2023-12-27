@@ -65,7 +65,7 @@ namespace CutTheRope.iframework.helpers
 			base.update(delta);
 			if (!topLeftCalculated)
 			{
-				BaseElement.calculateTopLeft(this);
+				calculateTopLeft(this);
 				topLeftCalculated = true;
 			}
 			if (mover != null)
@@ -95,7 +95,7 @@ namespace CutTheRope.iframework.helpers
 
 		public override void dealloc()
 		{
-			NSObject.NSREL(mover);
+			NSREL(mover);
 			base.dealloc();
 		}
 
@@ -142,7 +142,7 @@ namespace CutTheRope.iframework.helpers
 				Mover mover = new Mover().initWithPathCapacityMoveSpeedRotateSpeed(l, m_, r_);
 				mover.angle_ = rotation;
 				mover.angle_initial = mover.angle_;
-				mover.setPathFromStringandStart(nSString, MathHelper.vect(x, y));
+				mover.setPathFromStringandStart(nSString, vect(x, y));
 				setMover(mover);
 				mover.start();
 			}
@@ -166,14 +166,14 @@ namespace CutTheRope.iframework.helpers
 				rotatedBB = true;
 			}
 			rotation = a;
-			Vector v = MathHelper.vect(bb.x, bb.y);
-			Vector v2 = MathHelper.vect(bb.x + bb.w, bb.y);
-			Vector v3 = MathHelper.vect(bb.x + bb.w, bb.y + bb.h);
-			Vector v4 = MathHelper.vect(bb.x, bb.y + bb.h);
-			v = MathHelper.vectRotateAround(v, MathHelper.DEGREES_TO_RADIANS(a), (float)((double)width / 2.0 + (double)rotationCenterX), (float)((double)height / 2.0 + (double)rotationCenterY));
-			v2 = MathHelper.vectRotateAround(v2, MathHelper.DEGREES_TO_RADIANS(a), (float)((double)width / 2.0 + (double)rotationCenterX), (float)((double)height / 2.0 + (double)rotationCenterY));
-			v3 = MathHelper.vectRotateAround(v3, MathHelper.DEGREES_TO_RADIANS(a), (float)((double)width / 2.0 + (double)rotationCenterX), (float)((double)height / 2.0 + (double)rotationCenterY));
-			v4 = MathHelper.vectRotateAround(v4, MathHelper.DEGREES_TO_RADIANS(a), (float)((double)width / 2.0 + (double)rotationCenterX), (float)((double)height / 2.0 + (double)rotationCenterY));
+			Vector v = vect(bb.x, bb.y);
+			Vector v2 = vect(bb.x + bb.w, bb.y);
+			Vector v3 = vect(bb.x + bb.w, bb.y + bb.h);
+			Vector v4 = vect(bb.x, bb.y + bb.h);
+			v = vectRotateAround(v, DEGREES_TO_RADIANS(a), (float)((double)width / 2.0 + (double)rotationCenterX), (float)((double)height / 2.0 + (double)rotationCenterY));
+			v2 = vectRotateAround(v2, DEGREES_TO_RADIANS(a), (float)((double)width / 2.0 + (double)rotationCenterX), (float)((double)height / 2.0 + (double)rotationCenterY));
+			v3 = vectRotateAround(v3, DEGREES_TO_RADIANS(a), (float)((double)width / 2.0 + (double)rotationCenterX), (float)((double)height / 2.0 + (double)rotationCenterY));
+			v4 = vectRotateAround(v4, DEGREES_TO_RADIANS(a), (float)((double)width / 2.0 + (double)rotationCenterX), (float)((double)height / 2.0 + (double)rotationCenterY));
 			rbb.tlX = v.x;
 			rbb.tlY = v.y;
 			rbb.trX = v2.x;
@@ -208,47 +208,47 @@ namespace CutTheRope.iframework.helpers
 			float num2 = o1.drawY + o1.bb.y;
 			float num3 = o2.drawX + o2.bb.x;
 			float num4 = o2.drawY + o2.bb.y;
-			return MathHelper.rectInRect(num, num2, num + o1.bb.w, num2 + o1.bb.h, num3, num4, num3 + o2.bb.w, num4 + o2.bb.h);
+			return rectInRect(num, num2, num + o1.bb.w, num2 + o1.bb.h, num3, num4, num3 + o2.bb.w, num4 + o2.bb.h);
 		}
 
 		private static bool objectsIntersectRotated(GameObject o1, GameObject o2)
 		{
-			Vector tl = MathHelper.vect(o1.drawX + o1.rbb.tlX, o1.drawY + o1.rbb.tlY);
-			Vector tr = MathHelper.vect(o1.drawX + o1.rbb.trX, o1.drawY + o1.rbb.trY);
-			Vector br = MathHelper.vect(o1.drawX + o1.rbb.brX, o1.drawY + o1.rbb.brY);
-			Vector bl = MathHelper.vect(o1.drawX + o1.rbb.blX, o1.drawY + o1.rbb.blY);
-			Vector tl2 = MathHelper.vect(o2.drawX + o2.rbb.tlX, o2.drawY + o2.rbb.tlY);
-			Vector tr2 = MathHelper.vect(o2.drawX + o2.rbb.trX, o2.drawY + o2.rbb.trY);
-			Vector br2 = MathHelper.vect(o2.drawX + o2.rbb.brX, o2.drawY + o2.rbb.brY);
-			Vector bl2 = MathHelper.vect(o2.drawX + o2.rbb.blX, o2.drawY + o2.rbb.blY);
-			return MathHelper.obbInOBB(tl, tr, br, bl, tl2, tr2, br2, bl2);
+			Vector tl = vect(o1.drawX + o1.rbb.tlX, o1.drawY + o1.rbb.tlY);
+			Vector tr = vect(o1.drawX + o1.rbb.trX, o1.drawY + o1.rbb.trY);
+			Vector br = vect(o1.drawX + o1.rbb.brX, o1.drawY + o1.rbb.brY);
+			Vector bl = vect(o1.drawX + o1.rbb.blX, o1.drawY + o1.rbb.blY);
+			Vector tl2 = vect(o2.drawX + o2.rbb.tlX, o2.drawY + o2.rbb.tlY);
+			Vector tr2 = vect(o2.drawX + o2.rbb.trX, o2.drawY + o2.rbb.trY);
+			Vector br2 = vect(o2.drawX + o2.rbb.brX, o2.drawY + o2.rbb.brY);
+			Vector bl2 = vect(o2.drawX + o2.rbb.blX, o2.drawY + o2.rbb.blY);
+			return obbInOBB(tl, tr, br, bl, tl2, tr2, br2, bl2);
 		}
 
 		private static bool objectsIntersectRotatedWithUnrotated(GameObject o1, GameObject o2)
 		{
-			Vector tl = MathHelper.vect(o1.drawX + o1.rbb.tlX, o1.drawY + o1.rbb.tlY);
-			Vector tr = MathHelper.vect(o1.drawX + o1.rbb.trX, o1.drawY + o1.rbb.trY);
-			Vector br = MathHelper.vect(o1.drawX + o1.rbb.brX, o1.drawY + o1.rbb.brY);
-			Vector bl = MathHelper.vect(o1.drawX + o1.rbb.blX, o1.drawY + o1.rbb.blY);
-			Vector tl2 = MathHelper.vect(o2.drawX + o2.bb.x, o2.drawY + o2.bb.y);
-			Vector tr2 = MathHelper.vect(o2.drawX + o2.bb.x + o2.bb.w, o2.drawY + o2.bb.y);
-			Vector br2 = MathHelper.vect(o2.drawX + o2.bb.x + o2.bb.w, o2.drawY + o2.bb.y + o2.bb.h);
-			Vector bl2 = MathHelper.vect(o2.drawX + o2.bb.x, o2.drawY + o2.bb.y + o2.bb.h);
-			return MathHelper.obbInOBB(tl, tr, br, bl, tl2, tr2, br2, bl2);
+			Vector tl = vect(o1.drawX + o1.rbb.tlX, o1.drawY + o1.rbb.tlY);
+			Vector tr = vect(o1.drawX + o1.rbb.trX, o1.drawY + o1.rbb.trY);
+			Vector br = vect(o1.drawX + o1.rbb.brX, o1.drawY + o1.rbb.brY);
+			Vector bl = vect(o1.drawX + o1.rbb.blX, o1.drawY + o1.rbb.blY);
+			Vector tl2 = vect(o2.drawX + o2.bb.x, o2.drawY + o2.bb.y);
+			Vector tr2 = vect(o2.drawX + o2.bb.x + o2.bb.w, o2.drawY + o2.bb.y);
+			Vector br2 = vect(o2.drawX + o2.bb.x + o2.bb.w, o2.drawY + o2.bb.y + o2.bb.h);
+			Vector bl2 = vect(o2.drawX + o2.bb.x, o2.drawY + o2.bb.y + o2.bb.h);
+			return obbInOBB(tl, tr, br, bl, tl2, tr2, br2, bl2);
 		}
 
 		public static bool pointInObject(Vector p, GameObject o)
 		{
 			float checkX = o.drawX + o.bb.x;
 			float checkY = o.drawY + o.bb.y;
-			return MathHelper.pointInRect(p.x, p.y, checkX, checkY, o.bb.w, o.bb.h);
+			return pointInRect(p.x, p.y, checkX, checkY, o.bb.w, o.bb.h);
 		}
 
 		public static bool rectInObject(float r1x, float r1y, float r2x, float r2y, GameObject o)
 		{
 			float num = o.drawX + o.bb.x;
 			float num2 = o.drawY + o.bb.y;
-			return MathHelper.rectInRect(r1x, r1y, r2x, r2y, num, num2, num + o.bb.w, num2 + o.bb.h);
+			return rectInRect(r1x, r1y, r2x, r2y, num, num2, num + o.bb.w, num2 + o.bb.h);
 		}
 	}
 }

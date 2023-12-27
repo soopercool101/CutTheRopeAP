@@ -53,7 +53,7 @@ namespace CutTheRope.game
 						OpenGL.glDisable(0);
 						OpenGL.glEnable(1);
 						OpenGL.glBlendFunc(BlendingFactor.GL_SRC_ALPHA, BlendingFactor.GL_ONE_MINUS_SRC_ALPHA);
-						GLDrawer.drawSolidRectWOBorder(0f, 0f, FrameworkTypes.SCREEN_WIDTH, FrameworkTypes.SCREEN_HEIGHT, RGBAColor.MakeRGBA(0.1, 0.1, 0.1, 0.5));
+						GLDrawer.drawSolidRectWOBorder(0f, 0f, SCREEN_WIDTH, SCREEN_HEIGHT, RGBAColor.MakeRGBA(0.1, 0.1, 0.1, 0.5));
 						OpenGL.glColor4f(Color.White);
 						OpenGL.glEnable(0);
 					}
@@ -71,7 +71,7 @@ namespace CutTheRope.game
 				OpenGL.glDisable(0);
 				OpenGL.glEnable(1);
 				OpenGL.glBlendFunc(BlendingFactor.GL_SRC_ALPHA, BlendingFactor.GL_ONE_MINUS_SRC_ALPHA);
-				GLDrawer.drawSolidRectWOBorder(0f, 0f, FrameworkTypes.SCREEN_WIDTH, FrameworkTypes.SCREEN_HEIGHT, RGBAColor.MakeRGBA(1.0, 1.0, 1.0, num3));
+				GLDrawer.drawSolidRectWOBorder(0f, 0f, SCREEN_WIDTH, SCREEN_HEIGHT, RGBAColor.MakeRGBA(1.0, 1.0, 1.0, num3));
 				OpenGL.glColor4f(Color.White);
 				OpenGL.glEnable(0);
 			}

@@ -360,7 +360,7 @@ namespace CutTheRope
 			}
 			MouseState mouseState = windows.MouseCursor.GetMouseState();
 			iframework.core.Application.sharedRootController().mouseMoved(CtrRenderer.transformX(mouseState.X), CtrRenderer.transformY(mouseState.Y));
-			CtrRenderer.update((float)gameTime.ElapsedGameTime.TotalSeconds);
+			CtrRenderer.update((float)gameTime.ElapsedGameTime.TotalSeconds * 1.5f);
 			base.Update(gameTime);
 		}
 

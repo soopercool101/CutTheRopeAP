@@ -1319,7 +1319,6 @@ namespace CutTheRope.game
 
 		public override void update(float delta)
 		{
-			delta = 0.016f;
 			base.update(delta);
 			dd.update(delta);
 			pollenDrawer.update(delta);

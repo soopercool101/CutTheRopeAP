@@ -107,7 +107,7 @@ namespace CutTheRope.ctr_commons
 
 		public static void update(float gameTime)
 		{
-			Java_com_zeptolab_ctr_CtrRenderer_nativeTick(16f);
+			Java_com_zeptolab_ctr_CtrRenderer_nativeTick(gameTime);
 		}
 
 		public static void onDrawFrame()
@@ -356,9 +356,8 @@ namespace CutTheRope.ctr_commons
 		{
 			if (gApp != null && !gPaused)
 			{
-				float delta2 = delta / 1000f;
-				NSTimer.fireTimers(delta2);
-				Application.sharedRootController().performTick(delta2);
+				NSTimer.fireTimers(delta);
+				Application.sharedRootController().performTick(delta);
 			}
 		}
 	}

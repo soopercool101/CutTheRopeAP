@@ -1,11 +1,11 @@
 namespace CutTheRope.iframework.visual
 {
-	internal class ActionData
-	{
-		public string actionName;
+    internal class ActionData
+    {
+        public string actionName;
 
-		public int actionParam;
+        public int actionParam;
 
-		public int actionSubParam;
-	}
+        public int actionSubParam;
+    }
 }

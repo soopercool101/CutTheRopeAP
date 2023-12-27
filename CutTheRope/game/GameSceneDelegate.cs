@@ -1,9 +1,9 @@
 namespace CutTheRope.game
 {
-	internal interface GameSceneDelegate
-	{
-		void gameWon();
+    internal interface GameSceneDelegate
+    {
+        void gameWon();
 
-		void gameLost();
-	}
+        void gameLost();
+    }
 }

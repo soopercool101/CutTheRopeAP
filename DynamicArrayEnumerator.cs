@@ -4,49 +4,49 @@ using CutTheRope.ios;
 
 internal class DynamicArrayEnumerator : IEnumerator
 {
-	public NSObject[] _map;
+    public NSObject[] _map;
 
-	private int _highestIndex;
+    private int _highestIndex;
 
-	private int position = -1;
+    private int position = -1;
 
-	object IEnumerator.Current
-	{
-		get
-		{
-			return Current;
-		}
-	}
+    object IEnumerator.Current
+    {
+        get
+        {
+            return Current;
+        }
+    }
 
-	public NSObject Current
-	{
-		get
-		{
-			try
-			{
-				return _map[position];
-			}
-			catch (IndexOutOfRangeException)
-			{
-				throw new InvalidOperationException();
-			}
-		}
-	}
+    public NSObject Current
+    {
+        get
+        {
+            try
+            {
+                return _map[position];
+            }
+            catch (IndexOutOfRangeException)
+            {
+                throw new InvalidOperationException();
+            }
+        }
+    }
 
-	public DynamicArrayEnumerator(NSObject[] list, int highestIndex)
-	{
-		_map = list;
-		_highestIndex = highestIndex;
-	}
+    public DynamicArrayEnumerator(NSObject[] list, int highestIndex)
+    {
+        _map = list;
+        _highestIndex = highestIndex;
+    }
 
-	public bool MoveNext()
-	{
-		position++;
-		return position < _highestIndex + 1;
-	}
+    public bool MoveNext()
+    {
+        position++;
+        return position < _highestIndex + 1;
+    }
 
-	public void Reset()
-	{
-		position = -1;
-	}
+    public void Reset()
+    {
+        position = -1;
+    }
 }

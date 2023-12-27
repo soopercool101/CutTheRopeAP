@@ -1,9 +1,9 @@
 namespace CutTheRope.iframework.core
 {
-	internal interface ResourceMgrDelegate
-	{
-		void resourceLoaded(int res);
+    internal interface ResourceMgrDelegate
+    {
+        void resourceLoaded(int res);
 
-		void allResourcesLoaded();
-	}
+        void allResourcesLoaded();
+    }
 }

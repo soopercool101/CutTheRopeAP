@@ -4,52 +4,52 @@ using CutTheRope.iframework.visual;
 
 namespace CutTheRope.game
 {
-	internal class Bubble : GameObject
-	{
-		public bool popped;
+    internal class Bubble : GameObject
+    {
+        public bool popped;
 
-		public float initial_rotation;
+        public float initial_rotation;
 
-		public float initial_x;
+        public float initial_x;
 
-		public float initial_y;
+        public float initial_y;
 
-		public RotatedCircle initial_rotatedCircle;
+        public RotatedCircle initial_rotatedCircle;
 
-		public bool withoutShadow;
+        public bool withoutShadow;
 
-		public static Bubble Bubble_create(Texture2D t)
-		{
-			return (Bubble)new Bubble().initWithTexture(t);
-		}
+        public static Bubble Bubble_create(Texture2D t)
+        {
+            return (Bubble)new Bubble().initWithTexture(t);
+        }
 
-		public static Bubble Bubble_createWithResID(int r)
-		{
-			return Bubble_create(Application.getTexture(r));
-		}
+        public static Bubble Bubble_createWithResID(int r)
+        {
+            return Bubble_create(Application.getTexture(r));
+        }
 
-		public static Bubble Bubble_createWithResIDQuad(int r, int q)
-		{
-			Bubble bubble = Bubble_create(Application.getTexture(r));
-			bubble.setDrawQuad(q);
-			return bubble;
-		}
+        public static Bubble Bubble_createWithResIDQuad(int r, int q)
+        {
+            Bubble bubble = Bubble_create(Application.getTexture(r));
+            bubble.setDrawQuad(q);
+            return bubble;
+        }
 
-		public override void draw()
-		{
-			base.preDraw();
-			if (!withoutShadow)
-			{
-				if (quadToDraw == -1)
-				{
-					GLDrawer.drawImage(texture, drawX, drawY);
-				}
-				else
-				{
-					drawQuad(quadToDraw);
-				}
-			}
-			base.postDraw();
-		}
-	}
+        public override void draw()
+        {
+            base.preDraw();
+            if (!withoutShadow)
+            {
+                if (quadToDraw == -1)
+                {
+                    GLDrawer.drawImage(texture, drawX, drawY);
+                }
+                else
+                {
+                    drawQuad(quadToDraw);
+                }
+            }
+            base.postDraw();
+        }
+    }
 }

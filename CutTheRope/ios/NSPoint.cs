@@ -1,9 +1,9 @@
 namespace CutTheRope.ios
 {
-	internal struct NSPoint
-	{
-		public float x;
+    internal struct NSPoint
+    {
+        public float x;
 
-		public float y;
-	}
+        public float y;
+    }
 }

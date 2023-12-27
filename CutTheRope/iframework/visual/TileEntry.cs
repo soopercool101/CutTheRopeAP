@@ -2,10 +2,10 @@ using CutTheRope.ios;
 
 namespace CutTheRope.iframework.visual
 {
-	internal class TileEntry : NSObject
-	{
-		public int drawerIndex;
+    internal class TileEntry : NSObject
+    {
+        public int drawerIndex;
 
-		public int quad;
-	}
+        public int quad;
+    }
 }

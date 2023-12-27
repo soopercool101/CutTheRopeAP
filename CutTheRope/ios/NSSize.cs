@@ -1,9 +1,9 @@
 namespace CutTheRope.ios
 {
-	internal struct NSSize
-	{
-		public float width;
+    internal struct NSSize
+    {
+        public float width;
 
-		public float height;
-	}
+        public float height;
+    }
 }

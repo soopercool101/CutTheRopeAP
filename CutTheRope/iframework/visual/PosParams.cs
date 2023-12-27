@@ -1,9 +1,9 @@
 namespace CutTheRope.iframework.visual
 {
-	internal class PosParams
-	{
-		public float x;
+    internal class PosParams
+    {
+        public float x;
 
-		public float y;
-	}
+        public float y;
+    }
 }

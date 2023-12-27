@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using CutTheRope.iframework.helpers;
 using CutTheRope.iframework.visual;
 using CutTheRope.ios;
 using CutTheRope.windows;

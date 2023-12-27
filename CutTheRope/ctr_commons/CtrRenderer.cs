@@ -4,7 +4,6 @@ using System.Diagnostics;
 using CutTheRope.game;
 using CutTheRope.iframework;
 using CutTheRope.iframework.core;
-using CutTheRope.iframework.helpers;
 using CutTheRope.iframework.platform;
 using CutTheRope.iframework.visual;
 using CutTheRope.ios;

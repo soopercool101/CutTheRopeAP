@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using CutTheRope.iframework;
-using CutTheRope.iframework.core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;

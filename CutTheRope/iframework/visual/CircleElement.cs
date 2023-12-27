@@ -1,4 +1,3 @@
-using CutTheRope.iframework.helpers;
 using CutTheRope.ios;
 using CutTheRope.windows;
 using Microsoft.Xna.Framework;

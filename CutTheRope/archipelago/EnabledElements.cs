@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CutTheRope.archipelago
+﻿namespace CutTheRope.archipelago
 {
     public static class EnabledElements
     {
+        public static bool AutomaticGrab { get; set; } = true;
         public static bool Bubble { get; set; } = true;
     }
 }

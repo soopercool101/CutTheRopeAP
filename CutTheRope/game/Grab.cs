@@ -1,3 +1,4 @@
+using CutTheRope.archipelago;
 using CutTheRope.iframework;
 using CutTheRope.iframework.core;
 using CutTheRope.iframework.helpers;
@@ -204,7 +205,7 @@ namespace CutTheRope.game
                 }
                 mover.setMoveSpeed(launcherSpeed);
             }
-            if (hideRadius)
+            if (hideRadius || !EnabledElements.AutomaticGrab)
             {
                 radiusAlpha -= 1.5f * delta;
                 if ((double)radiusAlpha <= 0.0)

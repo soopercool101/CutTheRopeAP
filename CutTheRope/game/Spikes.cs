@@ -219,7 +219,7 @@ namespace CutTheRope.game
             else if (!electroOn)
             {
                 Mover.moveVariableToTarget(ref electroTimer, 0f, 1f, delta);
-                if ((double)electroTimer == 0.0)
+                if ((double)electroTimer == 0.0 || !EnabledElements.ElectroTimer)
                 {
                     turnElectroOn();
                 }

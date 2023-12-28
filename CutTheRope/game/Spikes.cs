@@ -1,4 +1,5 @@
 using System;
+using CutTheRope.archipelago;
 using CutTheRope.iframework;
 using CutTheRope.iframework.core;
 using CutTheRope.iframework.helpers;
@@ -206,7 +207,7 @@ namespace CutTheRope.game
             {
                 return;
             }
-            if (electroOn)
+            if (electroOn && EnabledElements.ElectroTimer)
             {
                 Mover.moveVariableToTarget(ref electroTimer, 0f, 1f, delta);
                 if ((double)electroTimer == 0.0)
@@ -214,7 +215,7 @@ namespace CutTheRope.game
                     turnElectroOff();
                 }
             }
-            else
+            else if (!electroOn)
             {
                 Mover.moveVariableToTarget(ref electroTimer, 0f, 1f, delta);
                 if ((double)electroTimer == 0.0)

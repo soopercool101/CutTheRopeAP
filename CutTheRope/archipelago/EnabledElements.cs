@@ -11,9 +11,10 @@
         public static bool Bouncer { get; set; } = false;
         public static bool Wheel { get; set; } = false;
         public static bool GravityButton { get; set; } = false;
-        public static bool Razor { get; set; } = false;
+        public static bool Blade { get; set; } = false;
         public static bool Bee { get; set; } = false;
         public static bool Record { get; set; } = false;
+        public static bool ElectroTimer { get; set; } = false;
 
         // Useful
         public static bool TimedStarDisable { get; set; } = false;

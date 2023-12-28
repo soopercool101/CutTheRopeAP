@@ -354,7 +354,7 @@ namespace CutTheRope
             }
             if (IsKeyPressed(Keys.D9))
             {
-                EnabledElements.Razor = !EnabledElements.Razor;
+                EnabledElements.Blade = !EnabledElements.Blade;
             }
             if (IsKeyPressed(Keys.D0))
             {
@@ -365,6 +365,10 @@ namespace CutTheRope
                 EnabledElements.Record = !EnabledElements.Record;
             }
             if (IsKeyPressed(Keys.OemPlus))
+            {
+                EnabledElements.ElectroTimer = !EnabledElements.ElectroTimer;
+            }
+            if (IsKeyPressed(Keys.Back))
             {
                 EnabledElements.TimedStarDisable = !EnabledElements.TimedStarDisable;
             }

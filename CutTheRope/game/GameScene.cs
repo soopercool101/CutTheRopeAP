@@ -1415,6 +1415,10 @@ namespace CutTheRope.game
                             grab.reCalcCircle();
                         }
                     }
+                    if (grab.hasSpider && EnabledElements.SpiderDisable)
+                    {
+                        grab.updateSpider(delta);
+                    }
                     if (rope != null)
                     {
                         if (rope.cut != -1 && (double)rope.cutTime == 0.0)

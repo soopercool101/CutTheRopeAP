@@ -1348,14 +1348,14 @@ namespace CutTheRope.game
                 packContainer.moveToScrollPointmoveMultiplier(num + 1, 0.8);
                 showNextPackStatus = true;
             }
-            else
-            {
-                replayingIntroMovie = false;
-                packContainer.placeToScrollPoint(cTRRootController.getPack() + 1);
-                CTRSoundMgr._stopMusic();
-                Application.sharedMovieMgr().delegateMovieMgrDelegate = this;
-                Application.sharedMovieMgr().playURL(NSS("outro"), !Preferences._getBooleanForKey("MUSIC_ON") && !Preferences._getBooleanForKey("SOUND_ON"));
-            }
+            //else
+            //{
+            //    replayingIntroMovie = false;
+            //    packContainer.placeToScrollPoint(cTRRootController.getPack() + 1);
+            //    CTRSoundMgr._stopMusic();
+            //    Application.sharedMovieMgr().delegateMovieMgrDelegate = this;
+            //    Application.sharedMovieMgr().playURL(NSS("outro"), !Preferences._getBooleanForKey("MUSIC_ON") && !Preferences._getBooleanForKey("SOUND_ON"));
+            //}
         }
 
         public override void onChildDeactivated(int n)
@@ -1455,18 +1455,18 @@ namespace CutTheRope.game
             Application.sharedRootController().setViewTransition(-1);
             MapPickerController mapPickerController = (MapPickerController)getChild(0);
             mapPickerController.setAutoLoadMap(LevelsList.LEVEL_NAMES[pack, level]);
-            if (pack == 0 && level == 0 && CTRPreferences.getScoreForPackLevel(0, 0) != 0)
-            {
-                replayingIntroMovie = true;
-                showView(7);
-                CTRSoundMgr._stopMusic();
-                Application.sharedMovieMgr().delegateMovieMgrDelegate = this;
-                Application.sharedMovieMgr().playURL(NSS("intro"), !Preferences._getBooleanForKey("MUSIC_ON") && !Preferences._getBooleanForKey("SOUND_ON"));
-            }
-            else
-            {
-                activateChild(0);
-            }
+            //if (pack == 0 && level == 0 && CTRPreferences.getScoreForPackLevel(0, 0) != 0)
+            //{
+            //    replayingIntroMovie = true;
+            //    showView(7);
+            //    CTRSoundMgr._stopMusic();
+            //    Application.sharedMovieMgr().delegateMovieMgrDelegate = this;
+            //    Application.sharedMovieMgr().playURL(NSS("intro"), !Preferences._getBooleanForKey("MUSIC_ON") && !Preferences._getBooleanForKey("SOUND_ON"));
+            //}
+            //else
+            //{
+            activateChild(0);
+            //}
         }
 
         public virtual void recreateOptions()
@@ -1596,17 +1596,17 @@ namespace CutTheRope.game
                     GameController.checkForBoxPerfect(i);
                 }
                 replayingIntroMovie = false;
-                if (CTRPreferences.getScoreForPackLevel(0, 0) == 0)
-                {
-                    showView(7);
-                    CTRSoundMgr._stopMusic();
-                    Application.sharedMovieMgr().delegateMovieMgrDelegate = this;
-                    Application.sharedMovieMgr().playURL(NSS("intro"), !Preferences._getBooleanForKey("MUSIC_ON") && !Preferences._getBooleanForKey("SOUND_ON"));
-                }
-                else
-                {
-                    moviePlaybackFinished(null);
-                }
+                //if (CTRPreferences.getScoreForPackLevel(0, 0) == 0)
+                //{
+                //    showView(7);
+                //    CTRSoundMgr._stopMusic();
+                //    Application.sharedMovieMgr().delegateMovieMgrDelegate = this;
+                //    Application.sharedMovieMgr().playURL(NSS("intro"), !Preferences._getBooleanForKey("MUSIC_ON") && !Preferences._getBooleanForKey("SOUND_ON"));
+                //}
+                //else
+                //{
+                moviePlaybackFinished(null);
+                //}
                 break;
             }
             case 5:

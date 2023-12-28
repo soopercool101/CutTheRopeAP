@@ -1975,49 +1975,53 @@ namespace CutTheRope.game
                 }
                 return;
             }
-            foreach (Bouncer bouncer in bouncers)
+
+            if (EnabledElements.Bouncer)
             {
-                bouncer.update(delta);
-                float num22 = 40f;
-                bool flag8 = false;
-                bool flag9 = false;
-                if (twoParts != 2)
+                foreach (Bouncer bouncer in bouncers)
                 {
-                    flag8 = (lineInRect(bouncer.t1.x, bouncer.t1.y, bouncer.t2.x, bouncer.t2.y, starL.pos.x - num22, starL.pos.y - num22, num22 * 2f, num22 * 2f) || lineInRect(bouncer.b1.x, bouncer.b1.y, bouncer.b2.x, bouncer.b2.y, starL.pos.x - num22, starL.pos.y - num22, num22 * 2f, num22 * 2f)) && !noCandyL;
-                    if (flag8)
-                    {
-                        flag9 = true;
-                    }
-                    else
-                    {
-                        flag8 = (lineInRect(bouncer.t1.x, bouncer.t1.y, bouncer.t2.x, bouncer.t2.y, starR.pos.x - num22, starR.pos.y - num22, num22 * 2f, num22 * 2f) || lineInRect(bouncer.b1.x, bouncer.b1.y, bouncer.b2.x, bouncer.b2.y, starR.pos.x - num22, starR.pos.y - num22, num22 * 2f, num22 * 2f)) && !noCandyR;
-                    }
-                }
-                else
-                {
-                    flag8 = (lineInRect(bouncer.t1.x, bouncer.t1.y, bouncer.t2.x, bouncer.t2.y, star.pos.x - num22, star.pos.y - num22, num22 * 2f, num22 * 2f) || lineInRect(bouncer.b1.x, bouncer.b1.y, bouncer.b2.x, bouncer.b2.y, star.pos.x - num22, star.pos.y - num22, num22 * 2f, num22 * 2f)) && !noCandy;
-                }
-                if (flag8)
-                {
+                    bouncer.update(delta);
+                    float num22 = 40f;
+                    bool flag8 = false;
+                    bool flag9 = false;
                     if (twoParts != 2)
                     {
-                        if (flag9)
+                        flag8 = (lineInRect(bouncer.t1.x, bouncer.t1.y, bouncer.t2.x, bouncer.t2.y, starL.pos.x - num22, starL.pos.y - num22, num22 * 2f, num22 * 2f) || lineInRect(bouncer.b1.x, bouncer.b1.y, bouncer.b2.x, bouncer.b2.y, starL.pos.x - num22, starL.pos.y - num22, num22 * 2f, num22 * 2f)) && !noCandyL;
+                        if (flag8)
                         {
-                            handleBouncePtDelta(bouncer, starL, delta);
+                            flag9 = true;
                         }
                         else
                         {
-                            handleBouncePtDelta(bouncer, starR, delta);
+                            flag8 = (lineInRect(bouncer.t1.x, bouncer.t1.y, bouncer.t2.x, bouncer.t2.y, starR.pos.x - num22, starR.pos.y - num22, num22 * 2f, num22 * 2f) || lineInRect(bouncer.b1.x, bouncer.b1.y, bouncer.b2.x, bouncer.b2.y, starR.pos.x - num22, starR.pos.y - num22, num22 * 2f, num22 * 2f)) && !noCandyR;
                         }
                     }
                     else
                     {
-                        handleBouncePtDelta(bouncer, star, delta);
+                        flag8 = (lineInRect(bouncer.t1.x, bouncer.t1.y, bouncer.t2.x, bouncer.t2.y, star.pos.x - num22, star.pos.y - num22, num22 * 2f, num22 * 2f) || lineInRect(bouncer.b1.x, bouncer.b1.y, bouncer.b2.x, bouncer.b2.y, star.pos.x - num22, star.pos.y - num22, num22 * 2f, num22 * 2f)) && !noCandy;
                     }
-                }
-                else
-                {
-                    bouncer.skip = false;
+                    if (flag8)
+                    {
+                        if (twoParts != 2)
+                        {
+                            if (flag9)
+                            {
+                                handleBouncePtDelta(bouncer, starL, delta);
+                            }
+                            else
+                            {
+                                handleBouncePtDelta(bouncer, starR, delta);
+                            }
+                        }
+                        else
+                        {
+                            handleBouncePtDelta(bouncer, star, delta);
+                        }
+                    }
+                    else
+                    {
+                        bouncer.skip = false;
+                    }
                 }
             }
             float num23 = -40f;

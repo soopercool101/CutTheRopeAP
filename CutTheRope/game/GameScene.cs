@@ -1710,7 +1710,6 @@ namespace CutTheRope.game
 
             if (EnabledElements.Bubble)
             {
-
                 foreach (Bubble bubble3 in bubbles)
                 {
                     bubble3.update(delta);
@@ -2151,18 +2150,21 @@ namespace CutTheRope.game
             if (special != 0 && special == 1 && !noCandy && candyBubble != null && candy.y < 400f && candy.x > 1200f)
             {
                 special = 0;
-                foreach (TutorialText tutorial2 in tutorials)
+                if (EnabledElements.Tutorials)
                 {
-                    if (tutorial2.special == 1)
+                    foreach (TutorialText tutorial2 in tutorials)
                     {
-                        tutorial2.playTimeline(0);
+                        if (tutorial2.special == 1)
+                        {
+                            tutorial2.playTimeline(0);
+                        }
                     }
-                }
-                foreach (GameObjectSpecial tutorialImage2 in tutorialImages)
-                {
-                    if (tutorialImage2.special == 1)
+                    foreach (GameObjectSpecial tutorialImage2 in tutorialImages)
                     {
-                        tutorialImage2.playTimeline(0);
+                        if (tutorialImage2.special == 1)
+                        {
+                            tutorialImage2.playTimeline(0);
+                        }
                     }
                 }
             }

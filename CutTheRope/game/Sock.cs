@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CutTheRope.archipelago;
 using CutTheRope.iframework;
 using CutTheRope.iframework.core;
 using CutTheRope.iframework.helpers;
@@ -80,6 +81,7 @@ namespace CutTheRope.game
 
         public override void draw()
         {
+            color = new RGBAColor(1f, 1f, 1f, EnabledElements.Hat ? 1f : 0.5f);
             Timeline timeline = light.getCurrentTimeline();
             if (timeline != null && timeline.state == Timeline.TimelineState.TIMELINE_STOPPED)
             {

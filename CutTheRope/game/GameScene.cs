@@ -1836,47 +1836,50 @@ namespace CutTheRope.game
                 rotatedCircles.removeObject(rotatedCircle2);
             }
             float num19 = RTPD(20.0);
-            foreach (Sock sock3 in socks)
+            if (EnabledElements.Hat)
             {
-                sock3.update(delta);
-                if (Mover.moveVariableToTarget(ref sock3.idleTimeout, 0.0, 1.0, delta))
+                foreach (Sock sock3 in socks)
                 {
-                    sock3.state = Sock.SOCK_IDLE;
-                }
-                float num20 = sock3.rotation;
-                sock3.rotation = 0f;
-                sock3.updateRotation();
-                Vector vector3 = vectRotate(star.posDelta, DEGREES_TO_RADIANS(0f - num20));
-                sock3.rotation = num20;
-                sock3.updateRotation();
-                if ((double)vector3.y >= 0.0 && (lineInRect(sock3.t1.x, sock3.t1.y, sock3.t2.x, sock3.t2.y, star.pos.x - num19, star.pos.y - num19, num19 * 2f, num19 * 2f) || lineInRect(sock3.b1.x, sock3.b1.y, sock3.b2.x, sock3.b2.y, star.pos.x - num19, star.pos.y - num19, num19 * 2f, num19 * 2f)))
-                {
-                    if (sock3.state != Sock.SOCK_IDLE)
+                    sock3.update(delta);
+                    if (Mover.moveVariableToTarget(ref sock3.idleTimeout, 0.0, 1.0, delta))
                     {
-                        continue;
+                        sock3.state = Sock.SOCK_IDLE;
                     }
-                    foreach (Sock sock4 in socks)
+                    float num20 = sock3.rotation;
+                    sock3.rotation = 0f;
+                    sock3.updateRotation();
+                    Vector vector3 = vectRotate(star.posDelta, DEGREES_TO_RADIANS(0f - num20));
+                    sock3.rotation = num20;
+                    sock3.updateRotation();
+                    if ((double)vector3.y >= 0.0 && (lineInRect(sock3.t1.x, sock3.t1.y, sock3.t2.x, sock3.t2.y, star.pos.x - num19, star.pos.y - num19, num19 * 2f, num19 * 2f) || lineInRect(sock3.b1.x, sock3.b1.y, sock3.b2.x, sock3.b2.y, star.pos.x - num19, star.pos.y - num19, num19 * 2f, num19 * 2f)))
                     {
-                        if (sock4 != sock3 && sock4.group == sock3.group)
+                        if (sock3.state != Sock.SOCK_IDLE)
                         {
-                            sock3.state = Sock.SOCK_RECEIVING;
-                            sock4.state = Sock.SOCK_THROWING;
-                            releaseAllRopes(false);
-                            savedSockSpeed = 0.9f * vectLength(star.v);
-                            savedSockSpeed *= 1.4f;
-                            targetSock = sock4;
-                            sock3.light.playTimeline(0);
-                            sock3.light.visible = true;
-                            CTRSoundMgr._playSound(45);
-                            dd.callObjectSelectorParamafterDelay(selector_teleport, null, 0.1);
-                            break;
+                            continue;
                         }
+                        foreach (Sock sock4 in socks)
+                        {
+                            if (sock4 != sock3 && sock4.group == sock3.group)
+                            {
+                                sock3.state = Sock.SOCK_RECEIVING;
+                                sock4.state = Sock.SOCK_THROWING;
+                                releaseAllRopes(false);
+                                savedSockSpeed = 0.9f * vectLength(star.v);
+                                savedSockSpeed *= 1.4f;
+                                targetSock = sock4;
+                                sock3.light.playTimeline(0);
+                                sock3.light.visible = true;
+                                CTRSoundMgr._playSound(45);
+                                dd.callObjectSelectorParamafterDelay(selector_teleport, null, 0.1);
+                                break;
+                            }
+                        }
+                        break;
                     }
-                    break;
-                }
-                if (sock3.state != Sock.SOCK_IDLE && sock3.idleTimeout == 0f)
-                {
-                    sock3.idleTimeout = 0.8f;
+                    if (sock3.state != Sock.SOCK_IDLE && sock3.idleTimeout == 0f)
+                    {
+                        sock3.idleTimeout = 0.8f;
+                    }
                 }
             }
             foreach (Razor razor in razors)

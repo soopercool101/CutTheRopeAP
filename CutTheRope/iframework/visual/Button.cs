@@ -1,4 +1,5 @@
 using System;
+using CutTheRope.archipelago;
 using CutTheRope.iframework.helpers;
 using CutTheRope.ios;
 
@@ -75,6 +76,16 @@ namespace CutTheRope.iframework.visual
             touchRightInc = r;
             touchTopInc = t;
             touchBottomInc = b;
+        }
+
+        public bool IsBladeButton;
+        public override void update(float delta)
+        {
+            if (IsBladeButton)
+            {
+                visible = EnabledElements.Blade;
+            }
+            base.update(delta);
         }
 
         public virtual void forceTouchRect(Rectangle r)

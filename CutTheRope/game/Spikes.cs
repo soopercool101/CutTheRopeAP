@@ -107,6 +107,7 @@ namespace CutTheRope.game
                 image.doRestoreCutTransparency();
                 image2.doRestoreCutTransparency();
                 rotateButton = new Button().initWithUpElementDownElementandID(image, image2, 0);
+                rotateButton.IsBladeButton = true;
                 rotateButton.delegateButtonDelegate = this;
                 rotateButton.anchor = (rotateButton.parentAnchor = 18);
                 addChild(rotateButton);
@@ -236,7 +237,7 @@ namespace CutTheRope.game
 
         public virtual void onButtonPressed(int n)
         {
-            if (n == 0)
+            if (n == 0 && EnabledElements.Blade)
             {
                 delegateRotateAllSpikesWithID(toggled);
                 if (spikesNormal)

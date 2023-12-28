@@ -328,6 +328,10 @@ namespace CutTheRope
             {
                 EnabledElements.AirCushion = !EnabledElements.AirCushion;
             }
+            if (IsKeyPressed(Keys.D0))
+            {
+                EnabledElements.Tutorials = !EnabledElements.Tutorials;
+            }
 #endif
             if (branding != null)
             {

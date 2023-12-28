@@ -1771,13 +1771,17 @@ namespace CutTheRope.game
                     }
                 }
             }
-            foreach (Text tutorial in tutorials)
+
+            if (EnabledElements.Tutorials)
             {
-                tutorial.update(delta);
-            }
-            foreach (GameObject tutorialImage in tutorialImages)
-            {
-                tutorialImage.update(delta);
+                foreach (Text tutorial in tutorials)
+                {
+                    tutorial.update(delta);
+                }
+                foreach (GameObject tutorialImage in tutorialImages)
+                {
+                    tutorialImage.update(delta);
+                }
             }
 
             if (EnabledElements.AirCushion)

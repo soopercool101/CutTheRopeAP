@@ -2,8 +2,12 @@
 {
     public static class EnabledElements
     {
-        public static bool AutomaticGrab { get; set; } = true;
-        public static bool Bubble { get; set; } = true;
-        public static bool AirCushion { get; set; } = true;
+        // Progression
+        public static bool AutomaticGrab { get; set; } = false;
+        public static bool Bubble { get; set; } = false;
+        public static bool AirCushion { get; set; } = false;
+
+        // Filler
+        public static bool Tutorials { get; set; } = false;
     }
 }

@@ -3053,41 +3053,44 @@ namespace CutTheRope.game
             RotatedCircle rotatedCircle = null;
             bool flag = false;
             bool flag2 = false;
-            foreach (RotatedCircle rotatedCircle5 in rotatedCircles)
+            if (EnabledElements.Record)
             {
-                float num2 = vectDistance(vect(tx + camera.pos.x, ty + camera.pos.y), rotatedCircle5.handle1);
-                float num3 = vectDistance(vect(tx + camera.pos.x, ty + camera.pos.y), rotatedCircle5.handle2);
-                if ((!(num2 < 90f) || rotatedCircle5.hasOneHandle()) && !(num3 < 90f))
+                foreach (RotatedCircle rotatedCircle5 in rotatedCircles)
                 {
-                    continue;
-                }
-                foreach (RotatedCircle rotatedCircle6 in rotatedCircles)
-                {
-                    if (rotatedCircles.getObjectIndex(rotatedCircle6) > rotatedCircles.getObjectIndex(rotatedCircle5))
+                    float num2 = vectDistance(vect(tx + camera.pos.x, ty + camera.pos.y), rotatedCircle5.handle1);
+                    float num3 = vectDistance(vect(tx + camera.pos.x, ty + camera.pos.y), rotatedCircle5.handle2);
+                    if ((!(num2 < 90f) || rotatedCircle5.hasOneHandle()) && !(num3 < 90f))
                     {
-                        float num4 = vectDistance(vect(rotatedCircle6.x, rotatedCircle6.y), vect(rotatedCircle5.x, rotatedCircle5.y));
-                        if (num4 + rotatedCircle6.sizeInPixels <= rotatedCircle5.sizeInPixels)
+                        continue;
+                    }
+                    foreach (RotatedCircle rotatedCircle6 in rotatedCircles)
+                    {
+                        if (rotatedCircles.getObjectIndex(rotatedCircle6) > rotatedCircles.getObjectIndex(rotatedCircle5))
                         {
-                            flag = true;
-                        }
-                        if (num4 <= rotatedCircle5.sizeInPixels + rotatedCircle6.sizeInPixels)
-                        {
-                            flag2 = true;
+                            float num4 = vectDistance(vect(rotatedCircle6.x, rotatedCircle6.y), vect(rotatedCircle5.x, rotatedCircle5.y));
+                            if (num4 + rotatedCircle6.sizeInPixels <= rotatedCircle5.sizeInPixels)
+                            {
+                                flag = true;
+                            }
+                            if (num4 <= rotatedCircle5.sizeInPixels + rotatedCircle6.sizeInPixels)
+                            {
+                                flag2 = true;
+                            }
                         }
                     }
+                    rotatedCircle5.lastTouch = vect(tx + camera.pos.x, ty + camera.pos.y);
+                    rotatedCircle5.operating = ti;
+                    if (num2 < 90f)
+                    {
+                        rotatedCircle5.setIsLeftControllerActive(true);
+                    }
+                    if (num3 < 90f)
+                    {
+                        rotatedCircle5.setIsRightControllerActive(true);
+                    }
+                    rotatedCircle = rotatedCircle5;
+                    break;
                 }
-                rotatedCircle5.lastTouch = vect(tx + camera.pos.x, ty + camera.pos.y);
-                rotatedCircle5.operating = ti;
-                if (num2 < 90f)
-                {
-                    rotatedCircle5.setIsLeftControllerActive(true);
-                }
-                if (num3 < 90f)
-                {
-                    rotatedCircle5.setIsRightControllerActive(true);
-                }
-                rotatedCircle = rotatedCircle5;
-                break;
             }
             if (rotatedCircles.getObjectIndex(rotatedCircle) != rotatedCircles.count() - 1 && flag2 && !flag)
             {

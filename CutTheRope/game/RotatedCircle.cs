@@ -1,4 +1,5 @@
 using System;
+using CutTheRope.archipelago;
 using CutTheRope.iframework;
 using CutTheRope.iframework.core;
 using CutTheRope.iframework.helpers;
@@ -208,6 +209,7 @@ namespace CutTheRope.game
             }
             vinilHighlightL.color = color;
             vinilHighlightR.color = color;
+            vinilControllerL.visible = vinilControllerR.visible = EnabledElements.Record;
             vinilControllerL.color = color;
             vinilControllerR.color = color;
             vinil.color = color;

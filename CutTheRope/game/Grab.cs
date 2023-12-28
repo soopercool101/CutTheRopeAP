@@ -1,3 +1,4 @@
+using System;
 using CutTheRope.archipelago;
 using CutTheRope.iframework;
 using CutTheRope.iframework.core;
@@ -27,7 +28,13 @@ namespace CutTheRope.game
 
         public Bungee rope;
 
-        public float radius;
+        private float _radius;
+
+        public float radius
+        {
+            get => EnabledElements.AutomaticGrab ? _radius : -1;
+            set => _radius = value;
+        }
 
         public float radiusAlpha;
 
@@ -205,7 +212,7 @@ namespace CutTheRope.game
                 }
                 mover.setMoveSpeed(launcherSpeed);
             }
-            if (hideRadius || !EnabledElements.AutomaticGrab)
+            if (hideRadius)
             {
                 radiusAlpha -= 1.5f * delta;
                 if ((double)radiusAlpha <= 0.0)
@@ -304,10 +311,10 @@ namespace CutTheRope.game
                 back.draw();
             }
             OpenGL.glDisable(0);
-            if (radius != -1f || hideRadius)
+            if (_radius != -1f || hideRadius)
             {
                 RGBAColor rGBAColor = RGBAColor.MakeRGBA(0.2, 0.5, 0.9, radiusAlpha);
-                drawGrabCircle(this, x, y, radius, vertexCount, rGBAColor);
+                drawGrabCircle(this, x, y, _radius, vertexCount, rGBAColor);
             }
             OpenGL.glColor4f(Color.White);
             OpenGL.glEnable(0);
@@ -394,8 +401,8 @@ namespace CutTheRope.game
 
         public virtual void setRadius(float r)
         {
-            radius = r;
-            if (radius == -1f)
+            _radius = r;
+            if (_radius == -1f)
             {
                 int r2 = RND_RANGE(76, 77);
                 back = Image_createWithResIDQuad(r2, 0);

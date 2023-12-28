@@ -3106,7 +3106,7 @@ namespace CutTheRope.game
                     bungee.handleWheelTouch(vect(tx + camera.pos.x, ty + camera.pos.y));
                     bungee.wheelOperating = ti;
                 }
-                if ((double)bungee.moveLength > 0.0 && pointInRect(tx + camera.pos.x, ty + camera.pos.y, bungee.x - 65f, bungee.y - 65f, 130f, 130f))
+                if (EnabledElements.Slider && (double)bungee.moveLength > 0.0 && pointInRect(tx + camera.pos.x, ty + camera.pos.y, bungee.x - 65f, bungee.y - 65f, 130f, 130f))
                 {
                     bungee.moverDragging = ti;
                     return true;

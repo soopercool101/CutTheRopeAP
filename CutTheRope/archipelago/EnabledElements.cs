@@ -6,6 +6,7 @@
         public static bool AutomaticGrab { get; set; } = false;
         public static bool Bubble { get; set; } = false;
         public static bool AirCushion { get; set; } = false;
+        public static bool Slider { get; set; } = false;
 
         // Useful
         public static bool TimedStarDisable { get; set; } = false;

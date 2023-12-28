@@ -353,7 +353,7 @@ namespace CutTheRope.game
             }
             OpenGL.glColor4f(Color.White);
             OpenGL.glEnable(0);
-            if ((double)moveLength <= 0.0)
+            if ((double)moveLength <= 0.0 || !EnabledElements.Slider)
             {
                 front.draw();
             }

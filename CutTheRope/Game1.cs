@@ -340,6 +340,10 @@ namespace CutTheRope
             {
                 EnabledElements.Bouncer = !EnabledElements.Bouncer;
             }
+            if (IsKeyPressed(Keys.D7))
+            {
+                EnabledElements.Wheel = !EnabledElements.Wheel;
+            }
             if (IsKeyPressed(Keys.D0))
             {
                 EnabledElements.Tutorials = !EnabledElements.Tutorials;

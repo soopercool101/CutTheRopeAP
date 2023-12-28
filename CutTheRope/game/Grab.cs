@@ -367,6 +367,7 @@ namespace CutTheRope.game
             }
             if (wheel)
             {
+                wheelImage2.color = new RGBAColor(1f, 1f, 1f, EnabledElements.Wheel ? 1f : 0.5f);
                 wheelImage2.draw();
             }
             base.postDraw();

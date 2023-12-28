@@ -3108,7 +3108,7 @@ namespace CutTheRope.game
             }
             foreach (Grab bungee in bungees)
             {
-                if (bungee.wheel && pointInRect(tx + camera.pos.x, ty + camera.pos.y, bungee.x - 110f, bungee.y - 110f, 220f, 220f))
+                if (EnabledElements.Wheel && bungee.wheel && pointInRect(tx + camera.pos.x, ty + camera.pos.y, bungee.x - 110f, bungee.y - 110f, 220f, 220f))
                 {
                     bungee.handleWheelTouch(vect(tx + camera.pos.x, ty + camera.pos.y));
                     bungee.wheelOperating = ti;

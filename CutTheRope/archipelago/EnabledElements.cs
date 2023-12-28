@@ -9,6 +9,7 @@
         public static bool Slider { get; set; } = false;
         public static bool Hat { get; set; }
         public static bool Bouncer { get; set; }
+        public static bool Wheel { get; set; }
 
         // Useful
         public static bool TimedStarDisable { get; set; } = false;

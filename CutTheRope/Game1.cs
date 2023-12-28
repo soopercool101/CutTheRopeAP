@@ -100,21 +100,21 @@ namespace CutTheRope
             mouseState_Y = e.Y;
             switch (e.Button)
             {
-            case MouseButtons.Left:
-                mouseState_LeftButton = Microsoft.Xna.Framework.Input.ButtonState.Pressed;
-                break;
-            case MouseButtons.Middle:
-                mouseState_MiddleButton = Microsoft.Xna.Framework.Input.ButtonState.Pressed;
-                break;
-            case MouseButtons.Right:
-                mouseState_RightButton = Microsoft.Xna.Framework.Input.ButtonState.Pressed;
-                break;
-            case MouseButtons.XButton1:
-                mouseState_XButton1 = Microsoft.Xna.Framework.Input.ButtonState.Pressed;
-                break;
-            case MouseButtons.XButton2:
-                mouseState_XButton2 = Microsoft.Xna.Framework.Input.ButtonState.Pressed;
-                break;
+                case MouseButtons.Left:
+                    mouseState_LeftButton = Microsoft.Xna.Framework.Input.ButtonState.Pressed;
+                    break;
+                case MouseButtons.Middle:
+                    mouseState_MiddleButton = Microsoft.Xna.Framework.Input.ButtonState.Pressed;
+                    break;
+                case MouseButtons.Right:
+                    mouseState_RightButton = Microsoft.Xna.Framework.Input.ButtonState.Pressed;
+                    break;
+                case MouseButtons.XButton1:
+                    mouseState_XButton1 = Microsoft.Xna.Framework.Input.ButtonState.Pressed;
+                    break;
+                case MouseButtons.XButton2:
+                    mouseState_XButton2 = Microsoft.Xna.Framework.Input.ButtonState.Pressed;
+                    break;
             }
             if (_DrawMovie && e.Button == MouseButtons.Left)
             {
@@ -129,21 +129,21 @@ namespace CutTheRope
             mouseState_Y = e.Y;
             switch (e.Button)
             {
-            case MouseButtons.Left:
-                mouseState_LeftButton = Microsoft.Xna.Framework.Input.ButtonState.Released;
-                break;
-            case MouseButtons.Middle:
-                mouseState_MiddleButton = Microsoft.Xna.Framework.Input.ButtonState.Released;
-                break;
-            case MouseButtons.Right:
-                mouseState_RightButton = Microsoft.Xna.Framework.Input.ButtonState.Released;
-                break;
-            case MouseButtons.XButton1:
-                mouseState_XButton1 = Microsoft.Xna.Framework.Input.ButtonState.Released;
-                break;
-            case MouseButtons.XButton2:
-                mouseState_XButton2 = Microsoft.Xna.Framework.Input.ButtonState.Released;
-                break;
+                case MouseButtons.Left:
+                    mouseState_LeftButton = Microsoft.Xna.Framework.Input.ButtonState.Released;
+                    break;
+                case MouseButtons.Middle:
+                    mouseState_MiddleButton = Microsoft.Xna.Framework.Input.ButtonState.Released;
+                    break;
+                case MouseButtons.Right:
+                    mouseState_RightButton = Microsoft.Xna.Framework.Input.ButtonState.Released;
+                    break;
+                case MouseButtons.XButton1:
+                    mouseState_XButton1 = Microsoft.Xna.Framework.Input.ButtonState.Released;
+                    break;
+                case MouseButtons.XButton2:
+                    mouseState_XButton2 = Microsoft.Xna.Framework.Input.ButtonState.Released;
+                    break;
             }
             CtrRenderer.Java_com_zeptolab_ctr_CtrRenderer_nativeTouchProcess(Global.MouseCursor.GetTouchLocation());
         }
@@ -218,11 +218,6 @@ namespace CutTheRope
         private void Game1_Activated(object sender, EventArgs e)
         {
             CtrRenderer.Java_com_zeptolab_ctr_CtrRenderer_nativeResume();
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
         }
 
         protected override void LoadContent()

@@ -1,3 +1,5 @@
+using CutTheRope.archipelago;
+using CutTheRope.iframework;
 using CutTheRope.iframework.core;
 using CutTheRope.iframework.helpers;
 using CutTheRope.iframework.visual;
@@ -49,6 +51,12 @@ namespace CutTheRope.game
             angle = DEGREES_TO_RADIANS(rotation);
             t1 = vectRotateAround(t1, angle, x, y);
             t2 = vectRotateAround(t2, angle, x, y);
+        }
+
+        public override void draw()
+        {
+            color = new RGBAColor(1f, 1f, 1f, EnabledElements.AirCushion ? 1f : 0.5f);
+            base.draw();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
+using CutTheRope.archipelago;
 using CutTheRope.ctr_commons;
 using CutTheRope.iframework;
 using CutTheRope.iframework.core;
@@ -12,6 +13,7 @@ using CutTheRope.windows;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace CutTheRope
 {
@@ -39,7 +41,7 @@ namespace CutTheRope
 
         private Cursor _cursorLast;
 
-        private Dictionary<Microsoft.Xna.Framework.Input.Keys, bool> keyState = new Dictionary<Microsoft.Xna.Framework.Input.Keys, bool>();
+        private Dictionary<Keys, bool> keyState = new Dictionary<Keys, bool>();
 
         private KeyboardState keyboardStateXna;
 
@@ -273,7 +275,7 @@ namespace CutTheRope
             return result;
         }
 
-        public bool IsKeyPressed(Microsoft.Xna.Framework.Input.Keys key)
+        public bool IsKeyPressed(Keys key)
         {
             bool value = false;
             keyState.TryGetValue(key, out value);
@@ -286,7 +288,7 @@ namespace CutTheRope
             return false;
         }
 
-        public bool IsKeyDown(Microsoft.Xna.Framework.Input.Keys key)
+        public bool IsKeyDown(Keys key)
         {
             return keyboardStateXna.IsKeyDown(key);
         }
@@ -307,12 +309,26 @@ namespace CutTheRope
                 return;
             }
             keyboardStateXna = Keyboard.GetState();
-            if (IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.F11) || ((IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftAlt) || IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightAlt)) && IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Enter)))
+            if (IsKeyPressed(Keys.F11) || ((IsKeyDown(Keys.LeftAlt) || IsKeyDown(Keys.RightAlt)) && IsKeyPressed(Keys.Enter)))
             {
                 Global.ScreenSizeManager.ToggleFullScreen();
                 Thread.Sleep(500);
                 return;
             }
+#if DEBUG
+            if (IsKeyPressed(Keys.D1))
+            {
+                EnabledElements.Bubble = !EnabledElements.Bubble;
+            }
+            if (IsKeyPressed(Keys.D2))
+            {
+                EnabledElements.AutomaticGrab = !EnabledElements.AutomaticGrab;
+            }
+            if (IsKeyPressed(Keys.D3))
+            {
+                EnabledElements.AirCushion = !EnabledElements.AirCushion;
+            }
+#endif
             if (branding != null)
             {
                 if (IsActive && branding.IsLoaded)
@@ -329,7 +345,7 @@ namespace CutTheRope
                 }
                 return;
             }
-            if (IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Escape) || GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
+            if (IsKeyPressed(Keys.Escape) || GamePad.GetState(PlayerIndex.One).Buttons.Back == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
             {
                 iframework.core.Application.sharedMovieMgr().stop();
                 CtrRenderer.Java_com_zeptolab_ctr_CtrRenderer_nativeBackPressed();

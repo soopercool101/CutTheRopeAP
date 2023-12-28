@@ -1779,12 +1779,16 @@ namespace CutTheRope.game
             {
                 tutorialImage.update(delta);
             }
-            foreach (Pump pump in pumps)
+
+            if (EnabledElements.AirCushion)
             {
-                pump.update(delta);
-                if (Mover.moveVariableToTarget(ref pump.pumpTouchTimer, 0.0, 1.0, delta))
+                foreach (Pump pump in pumps)
                 {
-                    operatePump(pump);
+                    pump.update(delta);
+                    if (Mover.moveVariableToTarget(ref pump.pumpTouchTimer, 0.0, 1.0, delta))
+                    {
+                        operatePump(pump);
+                    }
                 }
             }
             RotatedCircle rotatedCircle2 = null;

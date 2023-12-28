@@ -332,6 +332,10 @@ namespace CutTheRope.game
         public override void draw()
         {
             base.preDraw();
+            if (radius == _radius != circleDrawn)
+            {
+                reCalcCircle();
+            }
             OpenGL.glEnable(0);
             Bungee bungee = rope;
             if (wheel)
@@ -397,8 +401,10 @@ namespace CutTheRope.game
         public virtual void reCalcCircle()
         {
             GLDrawer.calcCircle(x, y, radius, vertexCount, vertices);
+            circleDrawn = !circleDrawn;
         }
 
+        private bool circleDrawn = false;
         public virtual void setRadius(float r)
         {
             _radius = r;
@@ -414,6 +420,7 @@ namespace CutTheRope.game
                 addChild(front);
                 back.visible = false;
                 front.visible = false;
+                circleDrawn = true;
             }
             else
             {
@@ -428,14 +435,18 @@ namespace CutTheRope.game
                 front.visible = false;
                 radiusAlpha = 1f;
                 hideRadius = false;
-                vertexCount = (int)MAX(16f, radius);
+                vertexCount = (int)MAX(16f, _radius);
                 vertexCount /= 2;
                 if (vertexCount % 2 != 0)
                 {
                     vertexCount++;
                 }
                 vertices = new float[vertexCount * 2];
-                GLDrawer.calcCircle(x, y, radius, vertexCount, vertices);
+                if (radius == _radius)
+                {
+                    GLDrawer.calcCircle(x, y, radius, vertexCount, vertices);
+                    circleDrawn = true;
+                }
             }
             if (wheel)
             {

@@ -3038,15 +3038,16 @@ namespace CutTheRope.game
                     return true;
                 }
             }
-            int num = pumps.count();
-            for (int i = 0; i < num; i++)
+            if (EnabledElements.AirCushion)
             {
-                Pump pump = (Pump)pumps.objectAtIndex(i);
-                if (GameObject.pointInObject(vect(tx + camera.pos.x, ty + camera.pos.y), pump))
+                foreach (Pump pump in pumps)
                 {
-                    pump.pumpTouchTimer = 0.05f;
-                    pump.pumpTouch = ti;
-                    return true;
+                    if (GameObject.pointInObject(vect(tx + camera.pos.x, ty + camera.pos.y), pump))
+                    {
+                        pump.pumpTouchTimer = 0.05f;
+                        pump.pumpTouch = ti;
+                        return true;
+                    }
                 }
             }
             RotatedCircle rotatedCircle = null;

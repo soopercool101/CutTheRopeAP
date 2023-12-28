@@ -1,3 +1,5 @@
+using CutTheRope.archipelago;
+
 namespace CutTheRope.iframework.visual
 {
     internal class ToggleButton : BaseElement, ButtonDelegate
@@ -31,7 +33,8 @@ namespace CutTheRope.iframework.visual
             }
         }
 
-        public ToggleButton initWithUpElement1DownElement1UpElement2DownElement2andID(BaseElement u1, BaseElement d1, BaseElement u2, BaseElement d2, int bid)
+        public bool IsGravityButton;
+        public ToggleButton initWithUpElement1DownElement1UpElement2DownElement2andID(BaseElement u1, BaseElement d1, BaseElement u2, BaseElement d2, int bid, bool isGravityButton)
         {
             if (init() != null)
             {
@@ -46,6 +49,7 @@ namespace CutTheRope.iframework.visual
                 b2.setEnabled(false);
                 b1.delegateButtonDelegate = this;
                 b2.delegateButtonDelegate = this;
+                IsGravityButton = isGravityButton;
             }
             return this;
         }
@@ -70,6 +74,13 @@ namespace CutTheRope.iframework.visual
         public bool on()
         {
             return b2.isEnabled();
+        }
+
+        public override void draw()
+        {
+            if (IsGravityButton)
+                color = new RGBAColor(1f, 1f, 1f, EnabledElements.GravityButton ? 1f : 0.5f);
+            base.draw();
         }
     }
 }

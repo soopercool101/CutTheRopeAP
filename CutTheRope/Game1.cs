@@ -316,6 +316,10 @@ namespace CutTheRope
                 return;
             }
 #if DEBUG
+            if (IsKeyPressed(Keys.OemTilde))
+            {
+                EnabledElements.Tutorials = !EnabledElements.Tutorials;
+            }
             if (IsKeyPressed(Keys.D1))
             {
                 EnabledElements.Bubble = !EnabledElements.Bubble;
@@ -344,11 +348,23 @@ namespace CutTheRope
             {
                 EnabledElements.Wheel = !EnabledElements.Wheel;
             }
+            if (IsKeyPressed(Keys.D8))
+            {
+                EnabledElements.GravityButton = !EnabledElements.GravityButton;
+            }
+            if (IsKeyPressed(Keys.D9))
+            {
+                EnabledElements.Razor = !EnabledElements.Razor;
+            }
             if (IsKeyPressed(Keys.D0))
             {
-                EnabledElements.Tutorials = !EnabledElements.Tutorials;
+                EnabledElements.Bee = !EnabledElements.Bee;
             }
             if (IsKeyPressed(Keys.OemMinus))
+            {
+                EnabledElements.Record = !EnabledElements.Record;
+            }
+            if (IsKeyPressed(Keys.OemPlus))
             {
                 EnabledElements.TimedStarDisable = !EnabledElements.TimedStarDisable;
             }

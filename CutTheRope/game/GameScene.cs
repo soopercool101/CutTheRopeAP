@@ -385,7 +385,7 @@ namespace CutTheRope.game
             Image d2 = Image.Image_createWithResIDQuad(78, 56);
             Image u2 = Image.Image_createWithResIDQuad(78, 57);
             Image d3 = Image.Image_createWithResIDQuad(78, 57);
-            ToggleButton toggleButton = new ToggleButton().initWithUpElement1DownElement1UpElement2DownElement2andID(u, d2, u2, d3, 0);
+            ToggleButton toggleButton = new ToggleButton().initWithUpElement1DownElement1UpElement2DownElement2andID(u, d2, u2, d3, 0, true);
             toggleButton.delegateButtonDelegate = d;
             return toggleButton;
         }
@@ -3001,7 +3001,7 @@ namespace CutTheRope.game
             {
                 return true;
             }
-            if (gravityButton != null)
+            if (gravityButton != null && EnabledElements.GravityButton)
             {
                 Button button = (Button)gravityButton.getChild(gravityButton.on() ? 1 : 0);
                 if (button.isInTouchZoneXYforTouchDown(tx + camera.pos.x, ty + camera.pos.y, true))

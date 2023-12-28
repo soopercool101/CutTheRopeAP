@@ -313,7 +313,7 @@ namespace CutTheRope.game
             image2.addChild(text2);
             image3.addChild(text3);
             image4.addChild(text4);
-            ToggleButton toggleButton = new ToggleButton().initWithUpElement1DownElement1UpElement2DownElement2andID(image, image2, image3, image4, bid);
+            ToggleButton toggleButton = new ToggleButton().initWithUpElement1DownElement1UpElement2DownElement2andID(image, image2, image3, image4, bid, false);
             toggleButton.setTouchIncreaseLeftRightTopBottom(10.0, 10.0, 10.0, 10.0);
             toggleButton.delegateButtonDelegate = d;
             return toggleButton;
@@ -437,7 +437,7 @@ namespace CutTheRope.game
             Image d = createAudioElementForQuadwithCrosspressediconOffset(q, false, true, offset);
             Image u2 = createAudioElementForQuadwithCrosspressediconOffset(q, true, false, offset);
             Image d2 = createAudioElementForQuadwithCrosspressediconOffset(q, true, true, offset);
-            ToggleButton toggleButton = new ToggleButton().initWithUpElement1DownElement1UpElement2DownElement2andID(u, d, u2, d2, bid);
+            ToggleButton toggleButton = new ToggleButton().initWithUpElement1DownElement1UpElement2DownElement2andID(u, d, u2, d2, bid, false);
             toggleButton.delegateButtonDelegate = delegateValue;
             return toggleButton;
         }
@@ -507,7 +507,7 @@ namespace CutTheRope.game
             baseElement3.width = (baseElement4.width = width);
             baseElement3.height = (baseElement4.height = height);
             baseElement2.scaleX = (baseElement2.scaleY = (baseElement4.scaleX = (baseElement4.scaleY = 1.2f)));
-            ToggleButton toggleButton = new ToggleButton().initWithUpElement1DownElement1UpElement2DownElement2andID(baseElement, baseElement2, baseElement3, baseElement4, bId);
+            ToggleButton toggleButton = new ToggleButton().initWithUpElement1DownElement1UpElement2DownElement2andID(baseElement, baseElement2, baseElement3, baseElement4, bId, false);
             toggleButton.delegateButtonDelegate = delegateValue;
             return toggleButton;
         }

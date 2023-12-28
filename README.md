@@ -1,2 +1,3 @@
-# CutTheRopeAP
-Cut the Rope for Archipelago
+# CutTheRope
+
+Decompilation of Cut the Rope's Steam port

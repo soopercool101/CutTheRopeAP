@@ -37,8 +37,6 @@ namespace CutTheRope
 
         private Microsoft.Xna.Framework.Input.ButtonState mouseState_XButton2;
 
-        private bool UseWindowMode_TODO_ChangeFullScreenResolution = true; // some bug in startup fullscrenn (NulRefrenceExcepton)
-
         private Cursor _cursorLast;
 
         private Dictionary<Microsoft.Xna.Framework.Input.Keys, bool> keyState = new Dictionary<Microsoft.Xna.Framework.Input.Keys, bool>();
@@ -165,10 +163,6 @@ namespace CutTheRope
         private void GraphicsDeviceManager_PreparingDeviceSettings(object sender, PreparingDeviceSettingsEventArgs e)
         {
             e.GraphicsDeviceInformation.PresentationParameters.DepthStencilFormat = DepthFormat.None;
-            if (e.GraphicsDeviceInformation.Adapter.CurrentDisplayMode.Width > ScreenSizeManager.MAX_WINDOW_WIDTH || e.GraphicsDeviceInformation.Adapter.CurrentDisplayMode.Height > ScreenSizeManager.MAX_WINDOW_WIDTH)
-            {
-                UseWindowMode_TODO_ChangeFullScreenResolution = true;
-            }
         }
 
         private void form_Resize(object sender, EventArgs e)
@@ -183,7 +177,7 @@ namespace CutTheRope
                 form.WindowState = FormWindowState.Normal;
                 if (!Global.ScreenSizeManager.IsFullScreen)
                 {
-                    //Global.ScreenSizeManager.ToggleFullScreen();
+                    Global.ScreenSizeManager.ToggleFullScreen();
                 }
             }
         }
@@ -239,21 +233,14 @@ namespace CutTheRope
             OpenGL.Init();
             Global.MouseCursor.Load(Content);
             Form form = WindowAsForm();
-            if (UseWindowMode_TODO_ChangeFullScreenResolution)
+            Window.AllowUserResizing = true;
+            if (form != null)
             {
-                Window.AllowUserResizing = true;
-                if (form != null)
-                {
-                    form.MaximizeBox = false;
-                }
-            }
-            else
-            {
-                Window.AllowUserResizing = true;
+                form.MaximizeBox = false;
             }
             Preferences._loadPreferences();
             int num = Preferences._getIntForKey("PREFS_WINDOW_WIDTH");
-            bool isFullScreen = !UseWindowMode_TODO_ChangeFullScreenResolution && (num <= 0 || Preferences._getBooleanForKey("PREFS_WINDOW_FULLSCREEN"));
+            bool isFullScreen = num <= 0 || Preferences._getBooleanForKey("PREFS_WINDOW_FULLSCREEN");
             Global.ScreenSizeManager.Init(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode, num, isFullScreen);
             Window.ClientSizeChanged += Window_ClientSizeChanged;
             if (form != null)
@@ -325,7 +312,7 @@ namespace CutTheRope
                 return;
             }
             keyboardStateXna = Keyboard.GetState();
-            if ((IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.F11) || ((IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftAlt) || IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightAlt)) && IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Enter))) && !UseWindowMode_TODO_ChangeFullScreenResolution)
+            if (IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.F11) || ((IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftAlt) || IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightAlt)) && IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Enter)))
             {
                 Global.ScreenSizeManager.ToggleFullScreen();
                 Thread.Sleep(500);
@@ -343,6 +330,7 @@ namespace CutTheRope
                     {
                         branding.Update(gameTime);
                     }
+
                 }
                 return;
             }

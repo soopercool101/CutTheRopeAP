@@ -384,7 +384,7 @@ namespace CutTheRope.iframework.core
         {
             try
             {
-                currentController.fullscreenToggled(isFullscreen);
+                currentController?.fullscreenToggled(isFullscreen);
             }
             catch (Exception)
             {

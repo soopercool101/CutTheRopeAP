@@ -7,6 +7,9 @@
         public static bool Bubble { get; set; } = false;
         public static bool AirCushion { get; set; } = false;
 
+        // Useful
+        public static bool TimedStarDisable { get; set; } = false;
+
         // Filler
         public static bool Tutorials { get; set; } = false;
     }

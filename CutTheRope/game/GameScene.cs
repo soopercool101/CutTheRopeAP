@@ -1673,7 +1673,7 @@ namespace CutTheRope.game
                 foreach (Star star in stars)
                 {
                     star.update(delta);
-                    if ((double)star.timeout > 0.0 && (double)star.time == 0.0)
+                    if ((double)star.timeout > 0.0 && (double)star.time == 0.0 && !EnabledElements.TimedStarDisable && star.getTimeline(1) != null)
                     {
                         star.getTimeline(1).delegateTimelineDelegate = aniPool;
                         aniPool.addChild(star);

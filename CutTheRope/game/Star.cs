@@ -1,3 +1,4 @@
+using CutTheRope.archipelago;
 using CutTheRope.iframework;
 using CutTheRope.iframework.core;
 using CutTheRope.iframework.helpers;
@@ -51,7 +52,7 @@ namespace CutTheRope.game
 
         public override void draw()
         {
-            if (timedAnim != null)
+            if (timedAnim != null && !EnabledElements.TimedStarDisable)
             {
                 timedAnim.draw();
             }
@@ -60,7 +61,7 @@ namespace CutTheRope.game
 
         public virtual void createAnimations()
         {
-            if (!((double)timeout <= 0.0))
+            if (!((double)timeout <= 0.0) && !EnabledElements.TimedStarDisable)
             {
                 timedAnim = Animation_createWithResID(78);
                 timedAnim.anchor = (timedAnim.parentAnchor = 18);

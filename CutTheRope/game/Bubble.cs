@@ -1,3 +1,4 @@
+using CutTheRope.archipelago;
 using CutTheRope.iframework.core;
 using CutTheRope.iframework.helpers;
 using CutTheRope.iframework.visual;
@@ -49,7 +50,8 @@ namespace CutTheRope.game
                     drawQuad(quadToDraw);
                 }
             }
-            base.postDraw();
+            if(EnabledElements.Bubble)
+                base.postDraw();
         }
     }
 }

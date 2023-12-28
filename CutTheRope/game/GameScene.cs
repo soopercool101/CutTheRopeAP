@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CutTheRope.archipelago;
 using CutTheRope.iframework;
 using CutTheRope.iframework.core;
 using CutTheRope.iframework.helpers;
@@ -1706,62 +1707,67 @@ namespace CutTheRope.game
                     }
                 }
             }
-            foreach (Bubble bubble3 in bubbles)
+
+            if (EnabledElements.Bubble)
             {
-                bubble3.update(delta);
-                float num17 = 85f;
-                if (twoParts != 2)
+
+                foreach (Bubble bubble3 in bubbles)
                 {
-                    if (!noCandyL && !bubble3.popped && pointInRect(candyL.x, candyL.y, bubble3.x - num17, bubble3.y - num17, num17 * 2f, num17 * 2f))
+                    bubble3.update(delta);
+                    float num17 = 85f;
+                    if (twoParts != 2)
                     {
-                        if (candyBubbleL != null)
+                        if (!noCandyL && !bubble3.popped && pointInRect(candyL.x, candyL.y, bubble3.x - num17, bubble3.y - num17, num17 * 2f, num17 * 2f))
+                        {
+                            if (candyBubbleL != null)
+                            {
+                                popBubbleAtXY(bubble3.x, bubble3.y);
+                            }
+                            candyBubbleL = bubble3;
+                            candyBubbleAnimationL.visible = true;
+                            CTRSoundMgr._playSound(13);
+                            bubble3.popped = true;
+                            bubble3.removeChildWithID(0);
+                            break;
+                        }
+                        if (!noCandyR && !bubble3.popped && pointInRect(candyR.x, candyR.y, bubble3.x - num17, bubble3.y - num17, num17 * 2f, num17 * 2f))
+                        {
+                            if (candyBubbleR != null)
+                            {
+                                popBubbleAtXY(bubble3.x, bubble3.y);
+                            }
+                            candyBubbleR = bubble3;
+                            candyBubbleAnimationR.visible = true;
+                            CTRSoundMgr._playSound(13);
+                            bubble3.popped = true;
+                            bubble3.removeChildWithID(0);
+                            break;
+                        }
+                    }
+                    else if (!noCandy && !bubble3.popped && pointInRect(candy.x, candy.y, bubble3.x - num17, bubble3.y - num17, num17 * 2f, num17 * 2f))
+                    {
+                        if (candyBubble != null)
                         {
                             popBubbleAtXY(bubble3.x, bubble3.y);
                         }
-                        candyBubbleL = bubble3;
-                        candyBubbleAnimationL.visible = true;
+                        candyBubble = bubble3;
+                        candyBubbleAnimation.visible = true;
                         CTRSoundMgr._playSound(13);
                         bubble3.popped = true;
                         bubble3.removeChildWithID(0);
                         break;
                     }
-                    if (!noCandyR && !bubble3.popped && pointInRect(candyR.x, candyR.y, bubble3.x - num17, bubble3.y - num17, num17 * 2f, num17 * 2f))
+                    if (bubble3.withoutShadow)
                     {
-                        if (candyBubbleR != null)
+                        continue;
+                    }
+                    foreach (RotatedCircle rotatedCircle5 in rotatedCircles)
+                    {
+                        float num18 = vectDistance(vect(bubble3.x, bubble3.y), vect(rotatedCircle5.x, rotatedCircle5.y));
+                        if (num18 < rotatedCircle5.sizeInPixels)
                         {
-                            popBubbleAtXY(bubble3.x, bubble3.y);
+                            bubble3.withoutShadow = true;
                         }
-                        candyBubbleR = bubble3;
-                        candyBubbleAnimationR.visible = true;
-                        CTRSoundMgr._playSound(13);
-                        bubble3.popped = true;
-                        bubble3.removeChildWithID(0);
-                        break;
-                    }
-                }
-                else if (!noCandy && !bubble3.popped && pointInRect(candy.x, candy.y, bubble3.x - num17, bubble3.y - num17, num17 * 2f, num17 * 2f))
-                {
-                    if (candyBubble != null)
-                    {
-                        popBubbleAtXY(bubble3.x, bubble3.y);
-                    }
-                    candyBubble = bubble3;
-                    candyBubbleAnimation.visible = true;
-                    CTRSoundMgr._playSound(13);
-                    bubble3.popped = true;
-                    bubble3.removeChildWithID(0);
-                    break;
-                }
-                if (bubble3.withoutShadow)
-                {
-                    continue;
-                }
-                foreach (RotatedCircle rotatedCircle5 in rotatedCircles)
-                {
-                    float num18 = vectDistance(vect(bubble3.x, bubble3.y), vect(rotatedCircle5.x, rotatedCircle5.y));
-                    if (num18 < rotatedCircle5.sizeInPixels)
-                    {
-                        bubble3.withoutShadow = true;
                     }
                 }
             }

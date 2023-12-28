@@ -223,16 +223,26 @@ namespace CutTheRope.game
             }
             if (bee != null)
             {
-                Vector v = mover.path[mover.targetPoint];
-                Vector pos = mover.pos;
-                Vector vector = vectSub(v, pos);
-                float t = 0f;
-                if (ABS(vector.x) > 15f)
+                if (EnabledElements.Bee)
                 {
-                    float num = 10f;
-                    t = ((vector.x > 0f) ? num : (0f - num));
+                    bee.visible = true;
+                    mover.unpause();
+                    Vector v = mover.path[mover.targetPoint];
+                    Vector pos = mover.pos;
+                    Vector vector = vectSub(v, pos);
+                    float t = 0f;
+                    if (ABS(vector.x) > 15f)
+                    {
+                        float num = 10f;
+                        t = ((vector.x > 0f) ? num : (0f - num));
+                    }
+                    Mover.moveVariableToTarget(ref bee.rotation, t, 60f, delta);
                 }
-                Mover.moveVariableToTarget(ref bee.rotation, t, 60f, delta);
+                else
+                {
+                    bee.visible = false;
+                    mover.pause();
+                }
             }
             if (wheel && wheelDirty)
             {

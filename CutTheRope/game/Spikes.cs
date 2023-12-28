@@ -168,7 +168,10 @@ namespace CutTheRope.game
             electroOn = true;
             playTimeline(1);
             electroTimer = onTime;
-            sndElectric = CTRSoundMgr._playSoundLooped(28);
+            if(sndElectric == null)
+            {
+                sndElectric = CTRSoundMgr._playSoundLooped(28);
+            }
         }
 
         public virtual void rotateSpikes()
@@ -208,18 +211,18 @@ namespace CutTheRope.game
             {
                 return;
             }
-            if (electroOn && EnabledElements.ElectroTimer)
+            if (electroOn && EnabledElements.ElectroTimer != EnabledElements.ElectroTimerState.AlwaysOn)
             {
                 Mover.moveVariableToTarget(ref electroTimer, 0f, 1f, delta);
-                if ((double)electroTimer == 0.0)
+                if ((double)electroTimer == 0.0 || EnabledElements.ElectroTimer == EnabledElements.ElectroTimerState.AlwaysOff)
                 {
                     turnElectroOff();
                 }
             }
-            else if (!electroOn)
+            else if (!electroOn && EnabledElements.ElectroTimer != EnabledElements.ElectroTimerState.AlwaysOff)
             {
                 Mover.moveVariableToTarget(ref electroTimer, 0f, 1f, delta);
-                if ((double)electroTimer == 0.0 || !EnabledElements.ElectroTimer)
+                if ((double)electroTimer == 0.0 || EnabledElements.ElectroTimer == EnabledElements.ElectroTimerState.AlwaysOn)
                 {
                     turnElectroOn();
                 }

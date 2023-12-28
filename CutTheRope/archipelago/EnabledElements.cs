@@ -7,7 +7,13 @@
         public static bool Bubble { get; set; } = false;
         public static bool AirCushion { get; set; } = false;
         public static bool Slider { get; set; } = false;
-        public static bool ElectroTimer { get; set; } = false;
+        public enum ElectroTimerState
+        {
+            AlwaysOn = 0,
+            Normal = 1,
+            AlwaysOff = 2
+        }
+        public static ElectroTimerState ElectroTimer { get; set; } = ElectroTimerState.AlwaysOn;
         public static bool Hat { get; set; } = false;
         public static bool Bouncer { get; set; } = false;
         public static bool Wheel { get; set; } = false;

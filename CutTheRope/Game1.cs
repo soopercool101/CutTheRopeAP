@@ -366,7 +366,14 @@ namespace CutTheRope
             }
             if (IsKeyPressed(Keys.OemPlus))
             {
-                EnabledElements.ElectroTimer = !EnabledElements.ElectroTimer;
+                if (EnabledElements.ElectroTimer < EnabledElements.ElectroTimerState.AlwaysOff)
+                {
+                    EnabledElements.ElectroTimer++;
+                }
+                else
+                {
+                    EnabledElements.ElectroTimer = EnabledElements.ElectroTimerState.AlwaysOn;
+                }
             }
             if (IsKeyPressed(Keys.Back))
             {

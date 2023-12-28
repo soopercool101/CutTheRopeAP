@@ -2766,6 +2766,11 @@ namespace CutTheRope.game
 
         public virtual void spiderBusted(Grab g)
         {
+            if (EnabledElements.SpiderDisable)
+            {
+                g.hasSpider = false;
+                return;
+            }
             int num = Preferences._getIntForKey("PREFS_SPIDERS_BUSTED") + 1;
             Preferences._setIntforKey(num, "PREFS_SPIDERS_BUSTED", false);
             if (num == 40)

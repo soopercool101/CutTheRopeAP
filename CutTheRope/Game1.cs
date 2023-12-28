@@ -372,6 +372,10 @@ namespace CutTheRope
             {
                 EnabledElements.TimedStarDisable = !EnabledElements.TimedStarDisable;
             }
+            if (IsKeyPressed(Keys.Tab))
+            {
+                EnabledElements.SpiderDisable = !EnabledElements.SpiderDisable;
+            }
 #endif
             if (branding != null)
             {

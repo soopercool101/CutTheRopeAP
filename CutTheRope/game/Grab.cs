@@ -260,6 +260,11 @@ namespace CutTheRope.game
 
         public virtual void updateSpider(float delta)
         {
+            if (hasSpider && EnabledElements.SpiderDisable)
+            {
+                spider.scaleX = spider.scaleY = 0f;
+                return;
+            }
             if (hasSpider && shouldActivate)
             {
                 shouldActivate = false;
@@ -279,6 +284,7 @@ namespace CutTheRope.game
             bool flag = false;
             if (rope != null)
             {
+                spider.scaleX = spider.scaleY = 1f;
                 for (int i = 0; i < rope.drawPtsCount; i += 2)
                 {
                     Vector vector = vect(rope.drawPts[i], rope.drawPts[i + 1]);

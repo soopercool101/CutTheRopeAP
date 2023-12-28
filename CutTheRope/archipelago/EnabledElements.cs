@@ -7,6 +7,7 @@
         public static bool Bubble { get; set; } = false;
         public static bool AirCushion { get; set; } = false;
         public static bool Slider { get; set; } = false;
+        public static bool ElectroTimer { get; set; } = false;
         public static bool Hat { get; set; } = false;
         public static bool Bouncer { get; set; } = false;
         public static bool Wheel { get; set; } = false;
@@ -14,10 +15,10 @@
         public static bool Blade { get; set; } = false;
         public static bool Bee { get; set; } = false;
         public static bool Record { get; set; } = false;
-        public static bool ElectroTimer { get; set; } = false;
 
         // Useful
         public static bool TimedStarDisable { get; set; } = false;
+        public static bool SpiderDisable { get; set; } = false;
 
         // Filler
         public static bool Tutorials { get; set; } = false;

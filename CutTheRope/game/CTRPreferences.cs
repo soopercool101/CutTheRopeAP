@@ -182,8 +182,11 @@ namespace CutTheRope.game
 
         private static int[] PACK_UNLOCK_STARS = new int[11]
         {
-            0, 30, 80, 170, 240, 300, 350, 400, 450, 500,
-            550
+#if DEBUG
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+#else
+            0, 30, 80, 170, 240, 300, 350, 400, 450, 500, 550
+#endif
         };
 
         public override NSObject init()

@@ -1840,50 +1840,47 @@ namespace CutTheRope.game
                 rotatedCircles.removeObject(rotatedCircle2);
             }
             float num19 = RTPD(20.0);
-            if (EnabledElements.Hat)
+            foreach (Sock sock3 in socks)
             {
-                foreach (Sock sock3 in socks)
+                sock3.update(delta);
+                if (Mover.moveVariableToTarget(ref sock3.idleTimeout, 0.0, 1.0, delta))
                 {
-                    sock3.update(delta);
-                    if (Mover.moveVariableToTarget(ref sock3.idleTimeout, 0.0, 1.0, delta))
+                    sock3.state = Sock.SOCK_IDLE;
+                }
+                float num20 = sock3.rotation;
+                sock3.rotation = 0f;
+                sock3.updateRotation();
+                Vector vector3 = vectRotate(star.posDelta, DEGREES_TO_RADIANS(0f - num20));
+                sock3.rotation = num20;
+                sock3.updateRotation();
+                if ((double)vector3.y >= 0.0 && (lineInRect(sock3.t1.x, sock3.t1.y, sock3.t2.x, sock3.t2.y, star.pos.x - num19, star.pos.y - num19, num19 * 2f, num19 * 2f) || lineInRect(sock3.b1.x, sock3.b1.y, sock3.b2.x, sock3.b2.y, star.pos.x - num19, star.pos.y - num19, num19 * 2f, num19 * 2f)))
+                {
+                    if (sock3.state != Sock.SOCK_IDLE || !EnabledElements.Hat)
                     {
-                        sock3.state = Sock.SOCK_IDLE;
+                        continue;
                     }
-                    float num20 = sock3.rotation;
-                    sock3.rotation = 0f;
-                    sock3.updateRotation();
-                    Vector vector3 = vectRotate(star.posDelta, DEGREES_TO_RADIANS(0f - num20));
-                    sock3.rotation = num20;
-                    sock3.updateRotation();
-                    if ((double)vector3.y >= 0.0 && (lineInRect(sock3.t1.x, sock3.t1.y, sock3.t2.x, sock3.t2.y, star.pos.x - num19, star.pos.y - num19, num19 * 2f, num19 * 2f) || lineInRect(sock3.b1.x, sock3.b1.y, sock3.b2.x, sock3.b2.y, star.pos.x - num19, star.pos.y - num19, num19 * 2f, num19 * 2f)))
+                    foreach (Sock sock4 in socks)
                     {
-                        if (sock3.state != Sock.SOCK_IDLE)
+                        if (sock4 != sock3 && sock4.group == sock3.group)
                         {
-                            continue;
+                            sock3.state = Sock.SOCK_RECEIVING;
+                            sock4.state = Sock.SOCK_THROWING;
+                            releaseAllRopes(false);
+                            savedSockSpeed = 0.9f * vectLength(star.v);
+                            savedSockSpeed *= 1.4f;
+                            targetSock = sock4;
+                            sock3.light.playTimeline(0);
+                            sock3.light.visible = true;
+                            CTRSoundMgr._playSound(45);
+                            dd.callObjectSelectorParamafterDelay(selector_teleport, null, 0.1);
+                            break;
                         }
-                        foreach (Sock sock4 in socks)
-                        {
-                            if (sock4 != sock3 && sock4.group == sock3.group)
-                            {
-                                sock3.state = Sock.SOCK_RECEIVING;
-                                sock4.state = Sock.SOCK_THROWING;
-                                releaseAllRopes(false);
-                                savedSockSpeed = 0.9f * vectLength(star.v);
-                                savedSockSpeed *= 1.4f;
-                                targetSock = sock4;
-                                sock3.light.playTimeline(0);
-                                sock3.light.visible = true;
-                                CTRSoundMgr._playSound(45);
-                                dd.callObjectSelectorParamafterDelay(selector_teleport, null, 0.1);
-                                break;
-                            }
-                        }
-                        break;
                     }
-                    if (sock3.state != Sock.SOCK_IDLE && sock3.idleTimeout == 0f)
-                    {
-                        sock3.idleTimeout = 0.8f;
-                    }
+                    break;
+                }
+                if (sock3.state != Sock.SOCK_IDLE && sock3.idleTimeout == 0f)
+                {
+                    sock3.idleTimeout = 0.8f;
                 }
             }
             foreach (Razor razor in razors)
@@ -1980,52 +1977,53 @@ namespace CutTheRope.game
                 return;
             }
 
-            if (EnabledElements.Bouncer)
+            foreach (Bouncer bouncer in bouncers)
             {
-                foreach (Bouncer bouncer in bouncers)
+                bouncer.update(delta);
+                if (!EnabledElements.Bouncer)
                 {
-                    bouncer.update(delta);
-                    float num22 = 40f;
-                    bool flag8 = false;
-                    bool flag9 = false;
-                    if (twoParts != 2)
-                    {
-                        flag8 = (lineInRect(bouncer.t1.x, bouncer.t1.y, bouncer.t2.x, bouncer.t2.y, starL.pos.x - num22, starL.pos.y - num22, num22 * 2f, num22 * 2f) || lineInRect(bouncer.b1.x, bouncer.b1.y, bouncer.b2.x, bouncer.b2.y, starL.pos.x - num22, starL.pos.y - num22, num22 * 2f, num22 * 2f)) && !noCandyL;
-                        if (flag8)
-                        {
-                            flag9 = true;
-                        }
-                        else
-                        {
-                            flag8 = (lineInRect(bouncer.t1.x, bouncer.t1.y, bouncer.t2.x, bouncer.t2.y, starR.pos.x - num22, starR.pos.y - num22, num22 * 2f, num22 * 2f) || lineInRect(bouncer.b1.x, bouncer.b1.y, bouncer.b2.x, bouncer.b2.y, starR.pos.x - num22, starR.pos.y - num22, num22 * 2f, num22 * 2f)) && !noCandyR;
-                        }
-                    }
-                    else
-                    {
-                        flag8 = (lineInRect(bouncer.t1.x, bouncer.t1.y, bouncer.t2.x, bouncer.t2.y, star.pos.x - num22, star.pos.y - num22, num22 * 2f, num22 * 2f) || lineInRect(bouncer.b1.x, bouncer.b1.y, bouncer.b2.x, bouncer.b2.y, star.pos.x - num22, star.pos.y - num22, num22 * 2f, num22 * 2f)) && !noCandy;
-                    }
+                    continue;
+                }
+                float num22 = 40f;
+                bool flag8 = false;
+                bool flag9 = false;
+                if (twoParts != 2)
+                {
+                    flag8 = (lineInRect(bouncer.t1.x, bouncer.t1.y, bouncer.t2.x, bouncer.t2.y, starL.pos.x - num22, starL.pos.y - num22, num22 * 2f, num22 * 2f) || lineInRect(bouncer.b1.x, bouncer.b1.y, bouncer.b2.x, bouncer.b2.y, starL.pos.x - num22, starL.pos.y - num22, num22 * 2f, num22 * 2f)) && !noCandyL;
                     if (flag8)
                     {
-                        if (twoParts != 2)
+                        flag9 = true;
+                    }
+                    else
+                    {
+                        flag8 = (lineInRect(bouncer.t1.x, bouncer.t1.y, bouncer.t2.x, bouncer.t2.y, starR.pos.x - num22, starR.pos.y - num22, num22 * 2f, num22 * 2f) || lineInRect(bouncer.b1.x, bouncer.b1.y, bouncer.b2.x, bouncer.b2.y, starR.pos.x - num22, starR.pos.y - num22, num22 * 2f, num22 * 2f)) && !noCandyR;
+                    }
+                }
+                else
+                {
+                    flag8 = (lineInRect(bouncer.t1.x, bouncer.t1.y, bouncer.t2.x, bouncer.t2.y, star.pos.x - num22, star.pos.y - num22, num22 * 2f, num22 * 2f) || lineInRect(bouncer.b1.x, bouncer.b1.y, bouncer.b2.x, bouncer.b2.y, star.pos.x - num22, star.pos.y - num22, num22 * 2f, num22 * 2f)) && !noCandy;
+                }
+                if (flag8)
+                {
+                    if (twoParts != 2)
+                    {
+                        if (flag9)
                         {
-                            if (flag9)
-                            {
-                                handleBouncePtDelta(bouncer, starL, delta);
-                            }
-                            else
-                            {
-                                handleBouncePtDelta(bouncer, starR, delta);
-                            }
+                            handleBouncePtDelta(bouncer, starL, delta);
                         }
                         else
                         {
-                            handleBouncePtDelta(bouncer, star, delta);
+                            handleBouncePtDelta(bouncer, starR, delta);
                         }
                     }
                     else
                     {
-                        bouncer.skip = false;
+                        handleBouncePtDelta(bouncer, star, delta);
                     }
+                }
+                else
+                {
+                    bouncer.skip = false;
                 }
             }
             float num23 = -40f;
@@ -2670,6 +2668,10 @@ namespace CutTheRope.game
 
         public virtual void handleBouncePtDelta(Bouncer b, ConstraintedPoint s, float delta)
         {
+            if (!EnabledElements.Bouncer)
+            {
+                return;
+            }
             if (!b.skip)
             {
                 b.skip = true;

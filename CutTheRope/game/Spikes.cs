@@ -168,10 +168,7 @@ namespace CutTheRope.game
             electroOn = true;
             playTimeline(1);
             electroTimer = onTime;
-            if(sndElectric == null)
-            {
-                sndElectric = CTRSoundMgr._playSoundLooped(28);
-            }
+            sndElectric ??= CTRSoundMgr._playSoundLooped(28);
         }
 
         public virtual void rotateSpikes()
@@ -198,6 +195,22 @@ namespace CutTheRope.game
         public virtual int getToggled()
         {
             return toggled;
+        }
+
+        public override void draw()
+        {
+            if (!electro)
+            {
+                if (rotateButton == null)
+                {
+                    color = new RGBAColor(1f, 1f, 1f, EnabledElements.SpikesDisable ? 0.3f : 1f);
+                }
+                else
+                {
+                    rotateButton.color = color = new RGBAColor(1f, 1f, 1f, EnabledElements.Blade == EnabledElements.BladeState.Disabled ? 0.3f : 1f);
+                }
+            }
+            base.draw();
         }
 
         public override void update(float delta)
@@ -240,7 +253,7 @@ namespace CutTheRope.game
 
         public virtual void onButtonPressed(int n)
         {
-            if (n == 0 && EnabledElements.Blade)
+            if (n == 0 && EnabledElements.Blade > EnabledElements.BladeState.NoRotate)
             {
                 delegateRotateAllSpikesWithID(toggled);
                 if (spikesNormal)

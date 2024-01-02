@@ -81,7 +81,7 @@ namespace CutTheRope.game
 
         public override void draw()
         {
-            color = new RGBAColor(1f, 1f, 1f, EnabledElements.Hat ? 1f : 0.5f);
+            color = new RGBAColor(1f, 1f, 1f, EnabledElements.Hat ? 1f : 0.3f);
             Timeline timeline = light.getCurrentTimeline();
             if (timeline != null && timeline.state == Timeline.TimelineState.TIMELINE_STOPPED)
             {

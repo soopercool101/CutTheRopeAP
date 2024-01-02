@@ -83,7 +83,7 @@ namespace CutTheRope.iframework.visual
         {
             if (IsBladeButton)
             {
-                visible = EnabledElements.Blade;
+                visible = EnabledElements.Blade > EnabledElements.BladeState.NoRotate;
             }
             base.update(delta);
         }

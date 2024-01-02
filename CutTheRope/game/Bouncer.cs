@@ -92,7 +92,7 @@ namespace CutTheRope.game
 
         public override void draw()
         {
-            color = new RGBAColor(1f, 1f, 1f, EnabledElements.Bouncer ? 1f : 0.5f);
+            color = new RGBAColor(1f, 1f, 1f, EnabledElements.Bouncer ? 1f : 0.3f);
             base.draw();
         }
     }

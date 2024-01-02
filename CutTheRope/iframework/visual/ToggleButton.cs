@@ -79,7 +79,7 @@ namespace CutTheRope.iframework.visual
         public override void draw()
         {
             if (IsGravityButton)
-                color = new RGBAColor(1f, 1f, 1f, EnabledElements.GravityButton ? 1f : 0.5f);
+                color = new RGBAColor(1f, 1f, 1f, EnabledElements.GravityButton ? 1f : 0.3f);
             base.draw();
         }
     }

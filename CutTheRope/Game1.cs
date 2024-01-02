@@ -354,7 +354,14 @@ namespace CutTheRope
             }
             if (IsKeyPressed(Keys.D9))
             {
-                EnabledElements.Blade = !EnabledElements.Blade;
+                if (EnabledElements.Blade < EnabledElements.BladeState.Disabled)
+                {
+                    EnabledElements.Blade++;
+                }
+                else
+                {
+                    EnabledElements.Blade = EnabledElements.BladeState.NoRotate;
+                }
             }
             if (IsKeyPressed(Keys.D0))
             {
@@ -382,6 +389,10 @@ namespace CutTheRope
             if (IsKeyPressed(Keys.Tab))
             {
                 EnabledElements.SpiderDisable = !EnabledElements.SpiderDisable;
+            }
+            if (IsKeyPressed(Keys.Q))
+            {
+                EnabledElements.SpikesDisable = !EnabledElements.SpikesDisable;
             }
 #endif
             if (branding != null)

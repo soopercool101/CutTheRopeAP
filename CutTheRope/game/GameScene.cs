@@ -1896,6 +1896,16 @@ namespace CutTheRope.game
                 {
                     continue;
                 }
+
+                if (spike.rotateButton == null && EnabledElements.SpikesDisable)
+                {
+                    continue;
+                }
+
+                if (spike.rotateButton != null && EnabledElements.Blade == EnabledElements.BladeState.Disabled)
+                {
+                    continue;
+                }
                 bool flag6 = false;
                 bool flag7 = false;
                 if (twoParts != 2)
@@ -1980,10 +1990,6 @@ namespace CutTheRope.game
             foreach (Bouncer bouncer in bouncers)
             {
                 bouncer.update(delta);
-                if (!EnabledElements.Bouncer)
-                {
-                    continue;
-                }
                 float num22 = 40f;
                 bool flag8 = false;
                 bool flag9 = false;

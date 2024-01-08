@@ -1066,6 +1066,7 @@ namespace CutTheRope.game
 
         public virtual void showGameFinishedPopup()
         {
+            // TODO: Add Release/Collect buttons here
             Popup popup = (Popup)new Popup().init();
             popup.setName("popup");
             Image image = Image.Image_createWithResIDQuad(49, 0);
@@ -1078,13 +1079,6 @@ namespace CutTheRope.game
             Image.setElementPositionWithQuadOffset(text, 49, 2);
             text.y -= 170f;
             image.addChild(text);
-            Text text2 = new Text().initWithFont(Application.getFont(4));
-            text2.setAlignment(2);
-            text2.setStringandWidth(Application.getString(655395), 700.0);
-            text2.anchor = 18;
-            Image.setElementPositionWithQuadOffset(text2, 49, 3);
-            text2.y += 30f;
-            image.addChild(text2);
             Button button = createButtonWithTextIDDelegate(Application.getString(655389), 15, this);
             button.anchor = 18;
             Image.setElementPositionWithQuadOffset(button, 49, 4);
@@ -1348,14 +1342,15 @@ namespace CutTheRope.game
                 packContainer.moveToScrollPointmoveMultiplier(num + 1, 0.8);
                 showNextPackStatus = true;
             }
-            //else
-            //{
-            //    replayingIntroMovie = false;
-            //    packContainer.placeToScrollPoint(cTRRootController.getPack() + 1);
-            //    CTRSoundMgr._stopMusic();
-            //    Application.sharedMovieMgr().delegateMovieMgrDelegate = this;
-            //    Application.sharedMovieMgr().playURL(NSS("outro"), !Preferences._getBooleanForKey("MUSIC_ON") && !Preferences._getBooleanForKey("SOUND_ON"));
-            //}
+            else
+            {
+                // TODO: Set AP Goal as met here
+                replayingIntroMovie = false;
+                packContainer.placeToScrollPoint(cTRRootController.getPack() + 1);
+                CTRSoundMgr._stopMusic();
+                Application.sharedMovieMgr().delegateMovieMgrDelegate = this;
+                Application.sharedMovieMgr().playURL(NSS("outro"), !Preferences._getBooleanForKey("MUSIC_ON") && !Preferences._getBooleanForKey("SOUND_ON"));
+            }
         }
 
         public override void onChildDeactivated(int n)

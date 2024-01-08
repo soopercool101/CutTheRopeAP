@@ -1158,15 +1158,6 @@ namespace CutTheRope.game
             text2.rotationCenterX -= (float)text2.width / 2f;
             text2.scaleX = (text2.scaleY = 0.7f);
             text.addChild(text2);
-            Timeline timeline7 = new Timeline().initWithMaxKeyFramesOnTrack(5);
-            timeline7.addKeyFrame(KeyFrame.makeColor(RGBAColor.transparentRGBA, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.0));
-            timeline7.addKeyFrame(KeyFrame.makeColor(RGBAColor.transparentRGBA, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
-            timeline7.addKeyFrame(KeyFrame.makeColor(RGBAColor.solidOpaqueRGBA, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
-            timeline7.addKeyFrame(KeyFrame.makeColor(RGBAColor.solidOpaqueRGBA, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 1.0));
-            timeline7.addKeyFrame(KeyFrame.makeColor(RGBAColor.transparentRGBA, KeyFrame.TransitionType.FRAME_TRANSITION_LINEAR, 0.5));
-            text.addTimelinewithID(timeline7, 0);
-            text.playTimeline(0);
-            timeline7.delegateTimelineDelegate = staticAniPool;
             staticAniPool.addChild(text);
             for (int m = 0; m < 5; m++)
             {

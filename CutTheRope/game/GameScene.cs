@@ -1897,14 +1897,17 @@ namespace CutTheRope.game
                     continue;
                 }
 
-                if (spike.rotateButton == null && EnabledElements.SpikesDisable)
+                if (!spike.electro)
                 {
-                    continue;
-                }
+                    if (spike.rotateButton == null && EnabledElements.SpikesDisable)
+                    {
+                        continue;
+                    }
 
-                if (spike.rotateButton != null && EnabledElements.Blade == EnabledElements.BladeState.Disabled)
-                {
-                    continue;
+                    if (spike.rotateButton != null && EnabledElements.Blade == EnabledElements.BladeState.Disabled)
+                    {
+                        continue;
+                    }
                 }
                 bool flag6 = false;
                 bool flag7 = false;

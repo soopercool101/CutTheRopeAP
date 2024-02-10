@@ -320,39 +320,39 @@ namespace CutTheRope
             {
                 EnabledElements.Tutorials = !EnabledElements.Tutorials;
             }
-            if (IsKeyPressed(Keys.D1))
+            if (IsKeyPressed(Keys.D1) || IsKeyPressed(Keys.NumPad1))
             {
                 EnabledElements.Bubble = !EnabledElements.Bubble;
             }
-            if (IsKeyPressed(Keys.D2))
+            if (IsKeyPressed(Keys.D2) || IsKeyPressed(Keys.NumPad2))
             {
                 EnabledElements.AutomaticGrab = !EnabledElements.AutomaticGrab;
             }
-            if (IsKeyPressed(Keys.D3))
+            if (IsKeyPressed(Keys.D3) || IsKeyPressed(Keys.NumPad3))
             {
                 EnabledElements.AirCushion = !EnabledElements.AirCushion;
             }
-            if (IsKeyPressed(Keys.D4))
+            if (IsKeyPressed(Keys.D4) || IsKeyPressed(Keys.NumPad4))
             {
                 EnabledElements.Slider = !EnabledElements.Slider;
             }
-            if (IsKeyPressed(Keys.D5))
+            if (IsKeyPressed(Keys.D5) || IsKeyPressed(Keys.NumPad5))
             {
                 EnabledElements.Hat = !EnabledElements.Hat;
             }
-            if (IsKeyPressed(Keys.D6))
+            if (IsKeyPressed(Keys.D6) || IsKeyPressed(Keys.NumPad6))
             {
                 EnabledElements.Bouncer = !EnabledElements.Bouncer;
             }
-            if (IsKeyPressed(Keys.D7))
+            if (IsKeyPressed(Keys.D7) || IsKeyPressed(Keys.NumPad7))
             {
                 EnabledElements.Wheel = !EnabledElements.Wheel;
             }
-            if (IsKeyPressed(Keys.D8))
+            if (IsKeyPressed(Keys.D8) || IsKeyPressed(Keys.NumPad8))
             {
                 EnabledElements.GravityButton = !EnabledElements.GravityButton;
             }
-            if (IsKeyPressed(Keys.D9))
+            if (IsKeyPressed(Keys.D9) || IsKeyPressed(Keys.NumPad9))
             {
                 if (EnabledElements.Blade < EnabledElements.BladeState.Disabled)
                 {
@@ -363,15 +363,15 @@ namespace CutTheRope
                     EnabledElements.Blade = EnabledElements.BladeState.NoRotate;
                 }
             }
-            if (IsKeyPressed(Keys.D0))
+            if (IsKeyPressed(Keys.D0) || IsKeyPressed(Keys.NumPad0))
             {
                 EnabledElements.Bee = !EnabledElements.Bee;
             }
-            if (IsKeyPressed(Keys.OemMinus))
+            if (IsKeyPressed(Keys.OemMinus) || IsKeyPressed(Keys.Subtract))
             {
                 EnabledElements.Record = !EnabledElements.Record;
             }
-            if (IsKeyPressed(Keys.OemPlus))
+            if (IsKeyPressed(Keys.OemPlus) || IsKeyPressed(Keys.Add))
             {
                 if (EnabledElements.ElectroTimer < EnabledElements.ElectroTimerState.AlwaysOff)
                 {
@@ -393,6 +393,32 @@ namespace CutTheRope
             if (IsKeyPressed(Keys.Q))
             {
                 EnabledElements.SpikesDisable = !EnabledElements.SpikesDisable;
+            }
+            if (IsKeyPressed(Keys.R))
+            {
+                // RESET TO DEFAULT
+
+                // Progression
+                EnabledElements.AutomaticGrab = false;
+                EnabledElements.Bubble = false;
+                EnabledElements.SpikesDisable = false;
+                EnabledElements.AirCushion = false;
+                EnabledElements.Slider = false;
+                EnabledElements.ElectroTimer = EnabledElements.ElectroTimerState.AlwaysOn;
+                EnabledElements.Hat = false;
+                EnabledElements.Bouncer = false;
+                EnabledElements.Wheel = false;
+                EnabledElements.GravityButton = false;
+                EnabledElements.Blade = EnabledElements.BladeState.NoRotate;
+                EnabledElements.Bee = false;
+                EnabledElements.Record = false;
+
+                // Useful
+                EnabledElements.TimedStarDisable = false;
+                EnabledElements.SpiderDisable = false;
+
+                // Filler
+                EnabledElements.Tutorials = false;
             }
 #endif
             if (branding != null)

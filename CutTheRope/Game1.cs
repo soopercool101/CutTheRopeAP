@@ -416,9 +416,6 @@ namespace CutTheRope
                 // Useful
                 EnabledElements.TimedStarDisable = false;
                 EnabledElements.SpiderDisable = false;
-
-                // Filler
-                EnabledElements.Tutorials = false;
             }
 #endif
             if (branding != null)

@@ -116,8 +116,8 @@ namespace CutTheRope.game
             VBox vBox = new VBox().initWithOffsetAlignWidth(5.0, 2, SCREEN_WIDTH);
             Button c = MenuController.createButtonWithTextIDDelegate(Application.getString(655397), 0, this);
             vBox.addChild(c);
-            Button c2 = MenuController.createButtonWithTextIDDelegate(Application.getString(655398), 2, this);
-            vBox.addChild(c2);
+            //Button c2 = MenuController.createButtonWithTextIDDelegate(Application.getString(655398), 2, this);
+            //vBox.addChild(c2);
             // TODO: Disable button "c2" (Skip Level) when on final world. Maybe make skip level disabled entirely?
             Button c3 = MenuController.createButtonWithTextIDDelegate(Application.getString(655399), 3, this);
             vBox.addChild(c3);

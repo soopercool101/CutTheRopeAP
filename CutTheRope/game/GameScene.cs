@@ -528,7 +528,13 @@ namespace CutTheRope.game
         public virtual bool shouldSkipTutorialElement(XMLNode c)
         {
             CTRRootController cTRRootController = (CTRRootController)Application.sharedRootController();
+            // Skipped in vanilla, mobile-exclusive tutorial
             if (cTRRootController.getPack() == 0 && cTRRootController.getLevel() == 1)
+            {
+                return true;
+            }
+            // Skip level tutorial. Skip level is disabled by AP
+            if (cTRRootController.getPack() == 0 && cTRRootController.getLevel() == 13)
             {
                 return true;
             }

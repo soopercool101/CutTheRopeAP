@@ -209,6 +209,8 @@ namespace CutTheRope.game
 
         private DynamicArray tutorials;
 
+        private DynamicArray starTexts;
+
         private GameObject candyL;
 
         private GameObject candyR;
@@ -584,6 +586,7 @@ namespace CutTheRope.game
             bouncers = (DynamicArray)new DynamicArray().init();
             rotatedCircles = (DynamicArray)new DynamicArray().init();
             pollenDrawer = (PollenDrawer)new PollenDrawer().init();
+            starTexts = (DynamicArray)new DynamicArray().init();
             this.star = (ConstraintedPoint)new ConstraintedPoint().init();
             this.star.setWeight(1f);
             starL = (ConstraintedPoint)new ConstraintedPoint().init();
@@ -711,6 +714,8 @@ namespace CutTheRope.game
                     }
                 }
             }
+
+            var starCount = 0;
             foreach (XMLNode item3 in list)
             {
                 List<XMLNode> list3 = item3.childs();
@@ -737,6 +742,13 @@ namespace CutTheRope.game
                         star.parseMover(item4);
                         star.update(0f);
                         stars.addObject(star);
+                        var starText = new Text().initWithFont(Application.getFont(4));
+                        starText.color = RGBAColor.MakeRGBA(1.0, 1.0, 1.0, 0.9);
+                        starText.x = (float)item4["x"].intValue() * num + num3 + (float)num4;
+                        starText.y = (float)item4["y"].intValue() * num + num2 + (float)num5;
+                        starText.setAlignment(1);
+                        starText.setStringandWidth(new NSString($"{starCount++}"), 5);
+                        starTexts.addObject(starText);
                     }
                     else if (item4.Name == "tutorialText")
                     {
@@ -1309,6 +1321,7 @@ namespace CutTheRope.game
             support.release();
             tutorialImages.release();
             tutorials.release();
+            starTexts.release();
             candyL = null;
             candyR = null;
             starL = null;
@@ -2489,6 +2502,12 @@ namespace CutTheRope.game
             {
                 star.draw();
             }
+#if DEBUG
+            foreach (Text starText in starTexts)
+            {
+                starText.draw();
+            }
+#endif
             if (!noCandy && targetSock == null)
             {
                 candy.x = star.pos.x;

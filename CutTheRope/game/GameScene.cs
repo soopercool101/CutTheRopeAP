@@ -745,10 +745,10 @@ namespace CutTheRope.game
                         var starText = new Text().initWithFont(Application.getFont(4));
                         starText.color = RGBAColor.MakeRGBA(1.0, 1.0, 1.0, 0.9);
                         starText.x = (float)item4["x"].intValue() * num + num3 + (float)num4;
-                        starText.y = (float)item4["y"].intValue() * num + num2 + (float)num5;
-                        starText.setAlignment(1);
+                        starText.y = (float)(item4["y"].intValue() - 25) * num + num2 + (float)num5;
+                        starText.setAlignment(2);
                         starText.setStringandWidth(new NSString($"{starCount++}"), 5);
-                        starTexts.addObject(starText);
+                        star.addChild(starText);
                     }
                     else if (item4.Name == "tutorialText")
                     {

@@ -1,3 +1,4 @@
+using CutTheRope.archipelago;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -16,6 +17,8 @@ namespace CutTheRope.windows
         private static MouseCursor mouseCursor_ = new MouseCursor();
 
         private static Game1 game_;
+
+        public static ArchipelagoClient ApClient;
 
         public static SpriteBatch SpriteBatch
         {

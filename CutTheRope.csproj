@@ -5,7 +5,7 @@
     <TargetFramework>net8.0-windows7.0</TargetFramework>
     <PlatformTarget>x86</PlatformTarget>
 
-    <AssemblyName>CutTheRope</AssemblyName>
+    <AssemblyName>CutTheRopeArchipelago</AssemblyName>
     <AssemblyTitle>Cut The Rope</AssemblyTitle>
     <Product>Cut The Rope</Product>
     <ProductName>$(Product)</ProductName>
@@ -37,6 +37,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="content/**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="apconnectioninfo.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="content\PLACE THE CONTENTS OF THE CONTENT DIRECTORY FROM STEAM HERE">

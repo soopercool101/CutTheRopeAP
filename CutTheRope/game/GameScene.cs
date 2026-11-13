@@ -209,8 +209,6 @@ namespace CutTheRope.game
 
         private DynamicArray tutorials;
 
-        private DynamicArray starTexts;
-
         private GameObject candyL;
 
         private GameObject candyR;
@@ -586,7 +584,6 @@ namespace CutTheRope.game
             bouncers = (DynamicArray)new DynamicArray().init();
             rotatedCircles = (DynamicArray)new DynamicArray().init();
             pollenDrawer = (PollenDrawer)new PollenDrawer().init();
-            starTexts = (DynamicArray)new DynamicArray().init();
             this.star = (ConstraintedPoint)new ConstraintedPoint().init();
             this.star.setWeight(1f);
             starL = (ConstraintedPoint)new ConstraintedPoint().init();
@@ -742,6 +739,8 @@ namespace CutTheRope.game
                         star.parseMover(item4);
                         star.update(0f);
                         stars.addObject(star);
+#if DEBUG
+                        // Debug only: Star labels to help construct starsanity logic
                         var starText = new Text().initWithFont(Application.getFont(4));
                         starText.color = RGBAColor.MakeRGBA(1.0, 1.0, 1.0, 0.9);
                         starText.x = (float)item4["x"].intValue() * num + num3 + (float)num4;
@@ -749,6 +748,7 @@ namespace CutTheRope.game
                         starText.setAlignment(2);
                         starText.setStringandWidth(new NSString($"{starCount++}"), 5);
                         star.addChild(starText);
+#endif
                     }
                     else if (item4.Name == "tutorialText")
                     {
@@ -1321,7 +1321,6 @@ namespace CutTheRope.game
             support.release();
             tutorialImages.release();
             tutorials.release();
-            starTexts.release();
             candyL = null;
             candyR = null;
             starL = null;
@@ -2502,12 +2501,6 @@ namespace CutTheRope.game
             {
                 star.draw();
             }
-#if DEBUG
-            foreach (Text starText in starTexts)
-            {
-                starText.draw();
-            }
-#endif
             if (!noCandy && targetSock == null)
             {
                 candy.x = star.pos.x;

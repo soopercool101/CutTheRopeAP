@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using CutTheRope.archipelago;
 using CutTheRope.ctr_commons;
 using CutTheRope.iframework;
 using CutTheRope.iframework.core;
@@ -828,27 +829,30 @@ namespace CutTheRope.game
             if (flag)
             {
                 baseElement.addChild(image);
-                int num = CTRPreferences.packUnlockStars(n);
                 Image image2 = Image.Image_createWithResIDQuad(52, 2);
                 image2.doRestoreCutTransparency();
                 image2.anchor = (image2.parentAnchor = 9);
                 image.addChild(image2);
-                HBox hBox = createTextWithStar(NSS(num.ToString()));
-                hBox.anchor = (hBox.parentAnchor = 18);
-                hBox.y = 110f;
-                image2.addChild(hBox);
-                Text text = new Text().initWithFont(Application.getFont(4));
-                string text2 = Application.getString(655390).ToString();
-                text2 = text2.Replace("%d", num.ToString());
-                NSString newString = NSS(text2);
-                text.setAlignment(2);
-                text.anchor = 10;
-                text.parentAnchor = 34;
-                text.setStringandWidth(newString, 700f);
-                text.y = -70f;
-                text.scaleX = (text.scaleY = 0.7f);
-                text.rotationCenterY = -text.height / 2;
-                touchBaseElement.addChild(text);
+                if (n == SlotData.GoalBox - 1)
+                {
+                    int num = SlotData.GoalBoxStarRequirement;
+                    HBox hBox = createTextWithStar(NSS(num.ToString()));
+                    hBox.anchor = (hBox.parentAnchor = 18);
+                    hBox.y = 110f;
+                    image2.addChild(hBox);
+                    Text text = new Text().initWithFont(Application.getFont(4));
+                    string text2 = Application.getString(655390).ToString();
+                    text2 = text2.Replace("%d", num.ToString());
+                    NSString newString = NSS(text2);
+                    text.setAlignment(2);
+                    text.anchor = 10;
+                    text.parentAnchor = 34;
+                    text.setStringandWidth(newString, 700f);
+                    text.y = -70f;
+                    text.scaleX = (text.scaleY = 0.7f);
+                    text.rotationCenterY = -text.height / 2;
+                    touchBaseElement.addChild(text);
+                }
             }
             else
             {
@@ -954,7 +958,7 @@ namespace CutTheRope.game
             baseElement2.height = (int)texture.preCutSize.y;
             hBox2.addChild(baseElement2);
             float num3 = 0f + getPackOffset();
-            for (int i = 0; i < CTRPreferences.getPacksCount() + 1; i++)
+            for (int i = 0; i < CTRPreferences.getPacksCount(); i++)
             {
                 TouchBaseElement touchBaseElement = (TouchBaseElement)createPackElementforContainer(i, packContainer);
                 boxes[i] = touchBaseElement;

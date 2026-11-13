@@ -1,4 +1,5 @@
 using System;
+using CutTheRope.archipelago;
 using CutTheRope.ctr_commons;
 using CutTheRope.iframework.core;
 using CutTheRope.iframework.helpers;
@@ -288,15 +289,12 @@ namespace CutTheRope.game
 
         public static int getPacksCount()
         {
-            if (!isLiteVersion())
-            {
-                return 11;
-            }
-            return 2;
+            return SlotData.GoalBox;
         }
 
         public static int getLevelsInPackCount()
         {
+            // TODO: Possibly use this functionality
             if (!isLiteVersion())
             {
                 return 25;
@@ -317,6 +315,11 @@ namespace CutTheRope.game
                 }
             }
             return num;
+        }
+
+        public static bool packUnlocked(int n)
+        {
+            return false;
         }
 
         public static int packUnlockStars(int n)

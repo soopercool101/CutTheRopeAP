@@ -8,7 +8,7 @@ namespace CutTheRope.archipelago;
 public class ArchipelagoData
 {
     public static string GameDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-    public static string LoginDetailsFile = Path.Combine(GameDirectory, "login.txt");
+    public static string LoginDetailsFile = Path.Combine(GameDirectory, "apconnectioninfo.txt");
 
     private string _uri;
     public string Uri
@@ -79,7 +79,10 @@ public class ArchipelagoData
 
     public ArchipelagoData()
     {
-        var fileRead = false;
+        Uri = "archipelago.gg:";
+        SlotName = "Player1";
+        Password = string.Empty;
+
         try
         {
             if (File.Exists(LoginDetailsFile))
@@ -88,19 +91,15 @@ public class ArchipelagoData
                 Uri = lines[0];
                 SlotName = lines[1];
                 Password = lines.Length > 2 ? lines[2] : string.Empty;
-                fileRead = true;
+            }
+            else
+            {
+                File.WriteAllLines(LoginDetailsFile, [Uri, SlotName, Password]);
             }
         }
         catch
         {
-            fileRead = false;
-        }
-
-        if (!fileRead)
-        {
-            Uri = "archipelago.gg:";
-            SlotName = "Player1";
-            Password = string.Empty;
+            // ignored
         }
 
         //CheckedLocations = [];

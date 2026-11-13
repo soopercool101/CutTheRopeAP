@@ -3,8 +3,8 @@
     public static class EnabledElements
     {
         // Progression
-        public static bool AutomaticGrab { get; set; } = false;
         public static bool Bubble { get; set; } = false;
+        public static bool AutomaticGrab { get; set; } = false;
         public static bool SpikesDisable { get; set; } = false;
         public static bool AirCushion { get; set; } = false;
         public static bool Slider { get; set; } = false;

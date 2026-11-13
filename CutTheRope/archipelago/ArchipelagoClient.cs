@@ -29,9 +29,9 @@ public class ArchipelagoClient
     /// call to connect to an Archipelago session. Connection info should already be set up on ServerData
     /// </summary>
     /// <returns></returns>
-    public void Connect()
+    public bool Connect()
     {
-        if (Authenticated || AttemptingConnection) return;
+        if (Authenticated || AttemptingConnection) return false;
 
         FrameworkTypes._LOG("Connecting");
         AttemptingConnection = true;
@@ -47,7 +47,7 @@ public class ArchipelagoClient
         }
 
         FrameworkTypes._LOG("Attempting Connection");
-        TryConnect();
+        return TryConnect();
     }
 
     /// <summary>
@@ -64,13 +64,13 @@ public class ArchipelagoClient
     /// <summary>
     /// attempt to connect to the server with our connection info
     /// </summary>
-    private void TryConnect()
+    private bool TryConnect()
     {
         try
         {
-            // it's safe to thread this function call but unity notoriously hates threading so do not use excessively
-            ThreadPool.QueueUserWorkItem(_ =>
-            {
+            // For now, do this fully synchronously
+            //ThreadPool.QueueUserWorkItem(_ =>
+            //{
                 try
                 {
                     FrameworkTypes._LOG("Beginning TryConnect (Inner)");
@@ -83,6 +83,7 @@ public class ArchipelagoClient
                         requestSlotData: true // ServerData.NeedSlotData
                     ));
                     FrameworkTypes._LOG("Finishing TryConnect (Inner)");
+                    return Authenticated && SlotData.Loaded;
                 }
                 catch (Exception e)
                 {
@@ -91,7 +92,7 @@ public class ArchipelagoClient
                     FrameworkTypes._LOG(e.Message);
                     HandleConnectResult(new LoginFailure(e.ToString()));
                 }
-            });
+            //});
         }
         catch (Exception e)
         {
@@ -100,6 +101,8 @@ public class ArchipelagoClient
             FrameworkTypes._LOG(e.Message);
             HandleConnectResult(new LoginFailure(e.ToString()));
         }
+
+        return false;
     }
 
     /// <summary>
@@ -115,7 +118,7 @@ public class ArchipelagoClient
             {
                 var success = (LoginSuccessful) result;
 
-                //Plugin.SlotData = new YTGVSlotData(success.SlotData);
+                SlotData.LoadSlotData(success.SlotData);
                 ServerData.SetupSession(success.SlotData, Session.RoomState.Seed);
                 Authenticated = true;
 
@@ -130,10 +133,10 @@ public class ArchipelagoClient
                 }
 
                 var tags = new List<string>();
-                //if (Plugin.SlotData.DeathLink)
-                //{
-                //    tags.Add("DeathLink");
-                //}
+                if (SlotData.DeathLink)
+                {
+                    tags.Add("DeathLink");
+                }
                 //if (Plugin.SlotData.RingLink)
                 //{
                 //    tags.Add("RingLink");

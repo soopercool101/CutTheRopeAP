@@ -8,7 +8,7 @@ namespace CutTheRope.archipelago;
 
 public class DeathLinkHandler
 {
-    private static bool deathLinkEnabled;
+    private static bool deathLinkEnabled => SlotData.DeathLink;
     private string slotName;
     private readonly DeathLinkService service;
     private readonly Queue<DeathLink> deathLinks = new();
@@ -24,7 +24,6 @@ public class DeathLinkHandler
         service = deathLinkService;
         service.OnDeathLinkReceived += DeathLinkReceived;
         slotName = name;
-        deathLinkEnabled = enableDeathLink;
 
         if (deathLinkEnabled)
         {
@@ -34,23 +33,6 @@ public class DeathLinkHandler
         else
         {
             FrameworkTypes._LOG("DeathLink disabled");
-        }
-    }
-
-    /// <summary>
-    /// enables/disables death link
-    /// </summary>
-    public void ToggleDeathLink()
-    {
-        deathLinkEnabled = !deathLinkEnabled;
-
-        if (deathLinkEnabled)
-        {
-            service.EnableDeathLink();
-        }
-        else
-        {
-            service.DisableDeathLink();
         }
     }
 
@@ -68,15 +50,17 @@ public class DeathLinkHandler
             : deathLink.Cause);
     }
 
+    public static bool DeathLinkQueued = false;
+
     /// <summary>
     /// can be called when in a valid state to kill the player, dequeueing and immediately killing the player with a
     /// message if we have a death link in the queue
     /// </summary>
-    public void KillPlayer()
+    public void HandleDeathLink()
     {
         try
         {
-            if (deathLinks.Count < 1) return;
+            if (deathLinks.Count < 1 || !deathLinkEnabled) return;
 
             var deathLink = deathLinks.Dequeue();
             var cause = string.IsNullOrWhiteSpace(deathLink.Cause)
@@ -94,6 +78,7 @@ public class DeathLinkHandler
             }
 
             // TODO: Kill player
+            DeathLinkQueued = true;
         }
         catch (Exception e)
         {
@@ -112,23 +97,32 @@ public class DeathLinkHandler
     }
 
     public static int DeathLinkCount = 0;
-    public static int DeathLinkAmnesty = 0;
     /// <summary>
     /// called to send a death link to the multiworld
     /// </summary>
-    public void SendDeathLink()
+    public void SendDeathLink(string cause = null)
     {
         try
         {
+            if (DeathLinkQueued)
+            {
+                DeathLinkQueued = false;
+                return;
+            }
+
             if (!deathLinkEnabled) return;
 
-            // DeathLinkCount is incremented earlier in Die() for text purposes
-            if (DeathLinkCount >= DeathLinkAmnesty)
+            if (string.IsNullOrEmpty(cause))
+            {
+                cause = $"{Global.ApClient.Player} lost the candy...";
+            }
+
+            if (++DeathLinkCount >= SlotData.DeathLinkAmnesty)
             {
                 DeathLinkCount = 0;
                 FrameworkTypes._LOG("Sending Death Link...");
 
-                var linkToSend = new DeathLink(slotName, $"{Global.ApClient.Player} timed out!");
+                var linkToSend = new DeathLink(slotName, cause);
 
                 service.SendDeathLink(linkToSend);
             }

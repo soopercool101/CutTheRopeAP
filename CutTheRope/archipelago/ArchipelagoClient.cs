@@ -222,7 +222,10 @@ public class ArchipelagoClient
                 return;
             }
             LevelsCompletePerBox[box] = level;
-            Session.DataStorage[Scope.Slot, $"Box{box}Level"] = level;
+            if (level > 0)
+            {
+                Session.DataStorage[Scope.Slot, $"Box{box}Level"] = level;
+            }
         }
     }
 

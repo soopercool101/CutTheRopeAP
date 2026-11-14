@@ -784,8 +784,8 @@ namespace CutTheRope.game
                         starText.y = (float)(item4["y"].intValue() - 25) * num + num2 + (float)num5;
                         starText.setAlignment(2);
                         starText.setStringandWidth(new NSString($"{starCount}"), 5);
-                        //star.starText = starText;
-                        //star.addChild(starText);
+                        star.starText = starText;
+                        star.addChild(starText);
 #endif
                         starCount++;
                     }
@@ -1942,6 +1942,13 @@ namespace CutTheRope.game
                 razor.update(delta);
                 cutWithRazorOrLine1Line2Immediate(razor, vectZero, vectZero, false);
             }
+
+            ArchipelagoClient.DeathLinkHandler.HandleDeathLink();
+            if (DeathLinkHandler.DeathLinkQueued && !((twoParts == 2 && noCandyL && noCandyR) || noCandy))
+            {
+                DestroyCandy(true);
+                return;
+            }
             foreach (Spikes spike in spikes)
             {
                 spike.update(delta);
@@ -1985,62 +1992,7 @@ namespace CutTheRope.game
                 {
                     continue;
                 }
-                if (twoParts != 2)
-                {
-                    if (flag7)
-                    {
-                        if (candyBubbleL != null)
-                        {
-                            popCandyBubble(true);
-                        }
-                    }
-                    else if (candyBubbleR != null)
-                    {
-                        popCandyBubble(false);
-                    }
-                }
-                else if (candyBubble != null)
-                {
-                    popCandyBubble(false);
-                }
-                Image image2 = Image.Image_createWithResID(63);
-                image2.doRestoreCutTransparency();
-                CandyBreak candyBreak = (CandyBreak)new CandyBreak().initWithTotalParticlesandImageGrid(5, image2);
-                if (gravityButton != null && !gravityNormal)
-                {
-                    candyBreak.gravity.y = -500f;
-                    candyBreak.angle = 90f;
-                }
-                candyBreak.particlesDelegate = aniPool.particlesFinished;
-                if (twoParts != 2)
-                {
-                    if (flag7)
-                    {
-                        candyBreak.x = candyL.x;
-                        candyBreak.y = candyL.y;
-                        noCandyL = true;
-                    }
-                    else
-                    {
-                        candyBreak.x = candyR.x;
-                        candyBreak.y = candyR.y;
-                        noCandyR = true;
-                    }
-                }
-                else
-                {
-                    candyBreak.x = candy.x;
-                    candyBreak.y = candy.y;
-                    noCandy = true;
-                }
-                candyBreak.startSystem(5);
-                aniPool.addChild(candyBreak);
-                CTRSoundMgr._playSound(14);
-                releaseAllRopes(flag7);
-                if (restartState != 0 && (twoParts == 2 || !noCandyL || !noCandyR))
-                {
-                    dd.callObjectSelectorParamafterDelay(selector_gameLost, null, 0.3);
-                }
+                DestroyCandy(flag7);
                 return;
             }
 
@@ -2343,6 +2295,66 @@ namespace CutTheRope.game
             }
         }
 
+        public void DestroyCandy(bool flag7)
+        {
+            if (twoParts != 2)
+            {
+                if (flag7)
+                {
+                    if (candyBubbleL != null)
+                    {
+                        popCandyBubble(true);
+                    }
+                }
+                else if (candyBubbleR != null)
+                {
+                    popCandyBubble(false);
+                }
+            }
+            else if (candyBubble != null)
+            {
+                popCandyBubble(false);
+            }
+            Image image2 = Image.Image_createWithResID(63);
+            image2.doRestoreCutTransparency();
+            CandyBreak candyBreak = (CandyBreak)new CandyBreak().initWithTotalParticlesandImageGrid(5, image2);
+            if (gravityButton != null && !gravityNormal)
+            {
+                candyBreak.gravity.y = -500f;
+                candyBreak.angle = 90f;
+            }
+            candyBreak.particlesDelegate = aniPool.particlesFinished;
+            if (twoParts != 2)
+            {
+                if (flag7)
+                {
+                    candyBreak.x = candyL.x;
+                    candyBreak.y = candyL.y;
+                    noCandyL = true;
+                }
+                else
+                {
+                    candyBreak.x = candyR.x;
+                    candyBreak.y = candyR.y;
+                    noCandyR = true;
+                }
+            }
+            else
+            {
+                candyBreak.x = candy.x;
+                candyBreak.y = candy.y;
+                noCandy = true;
+            }
+            candyBreak.startSystem(5);
+            aniPool.addChild(candyBreak);
+            CTRSoundMgr._playSound(14);
+            releaseAllRopes(flag7);
+            if (restartState != 0 && (twoParts == 2 || !noCandyL || !noCandyR))
+            {
+                dd.callObjectSelectorParamafterDelay(selector_gameLost, null, 0.3);
+            }
+        }
+
         public virtual void teleport()
         {
             if (targetSock != null)
@@ -2439,6 +2451,7 @@ namespace CutTheRope.game
             CTRSoundMgr._playSound(18);
             dd.callObjectSelectorParamafterDelay(selector_animateLevelRestart, null, 1.0);
             gameSceneDelegate.gameLost();
+            ArchipelagoClient.DeathLinkHandler.SendDeathLink();
         }
 
         public override void draw()

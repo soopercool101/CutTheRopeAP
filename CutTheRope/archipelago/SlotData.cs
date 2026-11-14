@@ -97,6 +97,10 @@ namespace CutTheRope.archipelago
             GoalBoxStarRequirement = (int)(long)slotData["goal_box_star_requirement"];
             BoxLockingMode = (BoxLockingType)(long)slotData["box_locking_mode"];
             StarsanityMode = (StarsanityType)(long)slotData["starsanity_mode"];
+            if (!(bool)slotData["tutorials_item"])
+            {
+                ReceivedItems.Tutorials = true;
+            }
 
             Loaded = true;
             return true;

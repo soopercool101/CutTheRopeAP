@@ -1331,6 +1331,11 @@ namespace CutTheRope.game
                 currentPack = pack;
                 preLevelSelect();
             }
+            // Goal video
+            if (viewToShow == 7)
+            {
+                Global.ApClient.Win();
+            }
             showView(viewToShow);
             CTRSoundMgr._stopMusic();
             CTRSoundMgr._playMusic(145);

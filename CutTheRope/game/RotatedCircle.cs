@@ -209,7 +209,7 @@ namespace CutTheRope.game
             }
             vinilHighlightL.color = color;
             vinilHighlightR.color = color;
-            vinilControllerL.visible = vinilControllerR.visible = EnabledElements.Record;
+            vinilControllerL.visible = vinilControllerR.visible = ReceivedItems.Record;
             vinilControllerL.color = color;
             vinilControllerR.color = color;
             vinil.color = color;

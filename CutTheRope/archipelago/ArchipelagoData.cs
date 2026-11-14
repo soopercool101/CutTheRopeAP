@@ -82,6 +82,12 @@ public class ArchipelagoData
         Uri = "archipelago.gg:";
         SlotName = "Player1";
         Password = string.Empty;
+#if DEBUG
+        // because why not make this the default
+        Uri = "localhost:38281";
+        SlotName = "sooperCutTheRope";
+        Password = string.Empty;
+#endif
 
         try
         {

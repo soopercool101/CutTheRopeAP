@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using Archipelago.MultiClient.Net.Enums;
@@ -9,6 +8,7 @@ using Archipelago.MultiClient.Net.Helpers;
 using Archipelago.MultiClient.Net.Models;
 using Archipelago.MultiClient.Net.Packets;
 using CutTheRope.iframework;
+using Newtonsoft.Json.Linq;
 
 namespace CutTheRope.archipelago;
 
@@ -153,8 +153,23 @@ public class ArchipelagoClient
                 Session.Socket.PacketReceived += Socket_PacketReceived;
 
                 //Session.Locations.CompleteLocationChecksAsync(ServerData.CheckedLocations.ToArray());
-                
-                // TODO: Datastorage if needed? Scouting if needed?
+
+                for (var i = 0; i < SlotData.GoalBox; i++)
+                {
+                    var box = i;
+                    Session.DataStorage[Scope.Slot, $"Box{box}Level"].GetAsync().ContinueWith(x =>
+                    {
+                        try
+                        {
+                            SetLevelUnlocked(box, x.Result.ToObject<int>());
+                        }
+                        catch
+                        {
+                            SetLevelUnlocked(box, 0);
+                        }
+                    });
+                    Session.DataStorage[Scope.Slot, $"Box{box}Level"].OnValueChanged += UpdateBoxData[box];
+                }
             }
             else
             {
@@ -182,10 +197,112 @@ public class ArchipelagoClient
         }
     }
 
+    private static Dictionary<int, int> LevelsCompletePerBox = new();
+
+    private object LevelUnlockLock = new();
+    public bool GetLevelUnlocked(int box, int level)
+    {
+        lock (LevelUnlockLock)
+        {
+            if (LevelsCompletePerBox.TryGetValue(box, out var value))
+            {
+                return value >= level;
+            }
+
+            return false;
+        }
+    }
+
+    public void SetLevelUnlocked(int box, int level)
+    {
+        lock (LevelUnlockLock)
+        {
+            if (LevelsCompletePerBox.TryGetValue(box, out var oldLevel) && oldLevel >= level)
+            {
+                return;
+            }
+            LevelsCompletePerBox[box] = level;
+            Session.DataStorage[Scope.Slot, $"Box{box}Level"] = level;
+        }
+    }
+
+    private static readonly DataStorageHelper.DataStorageUpdatedHandler[] UpdateBoxData = [
+        Box0_OnLevelCountChanged,
+        Box1_OnLevelCountChanged,
+        Box2_OnLevelCountChanged,
+        Box3_OnLevelCountChanged,
+        Box4_OnLevelCountChanged,
+        Box5_OnLevelCountChanged,
+        Box6_OnLevelCountChanged,
+        Box7_OnLevelCountChanged,
+        Box8_OnLevelCountChanged,
+        Box9_OnLevelCountChanged,
+        Box10_OnLevelCountChanged,
+    ];
+
+    public static void Box_OnLevelCountChanged(int box, int newValue)
+    {
+        LevelsCompletePerBox[box] = newValue;
+    }
+
+    private static void Box0_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    {
+        Box_OnLevelCountChanged(0, newValue.ToObject<int>());
+    }
+
+    private static void Box1_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    {
+        Box_OnLevelCountChanged(1, newValue.ToObject<int>());
+    }
+
+    private static void Box2_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    {
+        Box_OnLevelCountChanged(2, newValue.ToObject<int>());
+    }
+
+    private static void Box3_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    {
+        Box_OnLevelCountChanged(3, newValue.ToObject<int>());
+    }
+
+    private static void Box4_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    {
+        Box_OnLevelCountChanged(4, newValue.ToObject<int>());
+    }
+
+    private static void Box5_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    {
+        Box_OnLevelCountChanged(5, newValue.ToObject<int>());
+    }
+
+    private static void Box6_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    {
+        Box_OnLevelCountChanged(6, newValue.ToObject<int>());
+    }
+
+    private static void Box7_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    {
+        Box_OnLevelCountChanged(7, newValue.ToObject<int>());
+    }
+
+    private static void Box8_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    {
+        Box_OnLevelCountChanged(8, newValue.ToObject<int>());
+    }
+
+    private static void Box9_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    {
+        Box_OnLevelCountChanged(9, newValue.ToObject<int>());
+    }
+
+    private static void Box10_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    {
+        Box_OnLevelCountChanged(10, newValue.ToObject<int>());
+    }
+
     private void UpdateHasWon(ArchipelagoClientState state)
     {
         HasWon = state == ArchipelagoClientState.ClientGoal;
-        //APTVManager.FlagTvNeedsUpdate();
     }
 
     private void Socket_PacketReceived(ArchipelagoPacketBase packet)
@@ -273,7 +390,79 @@ public class ArchipelagoClient
 
         switch (receivedItem.ItemId)
         {
+            case 1:
+                // star
+                ReceivedItems.StarCount++;
+                break;
+            case 2:
+            case 3:
+                // filler, do nothing
+                break;
+            case 100:
+                ReceivedItems.Tutorials = true;
+                break;
+            case 101:
+                ReceivedItems.Bubble = true;
+                break;
+            case 102:
+                ReceivedItems.AutomaticGrab = true;
+                break;
+            case 103:
+                ReceivedItems.AirCushion = true;
+                break;
+            case 104:
+                ReceivedItems.Slider = true;
+                break;
+            case 105:
+                // Don't go down if electro timer is cheated in, but don't go to always off territory if multiple cheated in
+                ReceivedItems.ElectroTimer = (ReceivedItems.ElectroTimerState)Math.Max((byte)ReceivedItems.ElectroTimer, (byte)ReceivedItems.ElectroTimerState.Normal);
+                break;
+            case 205:
+                if (ReceivedItems.ElectroTimer < ReceivedItems.ElectroTimerState.AlwaysOff)
+                    ReceivedItems.ElectroTimer++;
+                break;
+            case 106:
+                ReceivedItems.Hat = true;
+                break;
+            case 107:
+                ReceivedItems.Bouncer = true;
+                break;
+            case 108:
+                ReceivedItems.Wheel = true;
+                break;
+            case 109:
+                ReceivedItems.GravityButton = true;
+                break;
+            case 110:
+                // Don't go down if blade is cheated in, but don't go to always off territory if multiple cheated in
+                ReceivedItems.Blade = (ReceivedItems.BladeState)Math.Max((byte)ReceivedItems.Blade, (byte)ReceivedItems.BladeState.RotateAllowed);
+                break;
+            case 210:
+                if (ReceivedItems.Blade < ReceivedItems.BladeState.Disabled)
+                    ReceivedItems.Blade++;
+                break;
+            case 111:
+                ReceivedItems.Bee = true;
+                break;
+            case 112:
+                ReceivedItems.Record = true;
+                break;
+            case 200:
+                ReceivedItems.SpikesDisable = true;
+                break;
+            case 201:
+                ReceivedItems.TimedStarDisable = true;
+                break;
+            case 202:
+                ReceivedItems.SpiderDisable = true;
+                break;
             default:
+                // Box
+                if (receivedItem.ItemId is > 10_00 and < 10_99)
+                {
+                    ReceivedItems.ReceivedBoxItems.Add((int)(receivedItem.ItemId - 10_01));
+                    break;
+                }
                 FrameworkTypes._LOG($"Error: Unknown item ID: {receivedItem.ItemId}");
                 throw new ArgumentOutOfRangeException();
         }

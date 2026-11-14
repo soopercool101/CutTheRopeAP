@@ -1,9 +1,11 @@
 using System;
+using System.Linq;
 using CutTheRope.archipelago;
 using CutTheRope.ctr_commons;
 using CutTheRope.iframework.core;
 using CutTheRope.iframework.helpers;
 using CutTheRope.ios;
+using CutTheRope.windows;
 
 namespace CutTheRope.game
 {
@@ -279,11 +281,63 @@ namespace CutTheRope.game
 
         public static int getStarsForPackLevel(int p, int l)
         {
+            // TODO: Level shuffle, translate this to the target level
+            var base_id = (p + 1) * 10000 + (l + 1) * 100;
+            if (SlotData.StarsanityMode == SlotData.StarsanityType.PerLevel)
+            {
+                for (var i = 1; i <= 3; i++)
+                {
+                    if (!Global.ApClient.AllClearedLocations.Contains(base_id + 10 + i))
+                    {
+                        return i - 1;
+                    }
+                }
+
+                return 3;
+            }
+            else if (SlotData.StarsanityMode == SlotData.StarsanityType.Individual)
+            {
+                var stars = 0;
+                for (var i = 0; i < 3; i++)
+                {
+                    if (Global.ApClient.AllClearedLocations.Contains(base_id + 20 + i))
+                    {
+                        stars++;
+                    }
+                }
+
+                return stars;
+            }
+
             return _getIntForKey(getPackLevelKey("STARS_", p, l));
         }
 
         public static UNLOCKED_STATE getUnlockedForPackLevel(int p, int l)
         {
+            if (l == 0)
+            {
+                // TODO: starting box handling
+                if (p == 0)
+                {
+                    return UNLOCKED_STATE.UNLOCKED_STATE_UNLOCKED;
+                }
+                else if (p + 1 == SlotData.GoalBox)
+                {
+                    return SlotData.GoalBoxStarRequirement <= ReceivedItems.StarCount
+                        ? UNLOCKED_STATE.UNLOCKED_STATE_UNLOCKED
+                        : UNLOCKED_STATE.UNLOCKED_STATE_LOCKED;
+                }
+                else
+                {
+                    if (SlotData.BoxLockingMode == SlotData.BoxLockingType.OpenWorld)
+                        return UNLOCKED_STATE.UNLOCKED_STATE_UNLOCKED;
+                    return ReceivedItems.ReceivedBoxItems.Contains(p) ? UNLOCKED_STATE.UNLOCKED_STATE_UNLOCKED : UNLOCKED_STATE.UNLOCKED_STATE_LOCKED;
+                }
+            }
+            else
+            {
+                return Global.ApClient.GetLevelUnlocked(p, l) ? UNLOCKED_STATE.UNLOCKED_STATE_UNLOCKED : UNLOCKED_STATE.UNLOCKED_STATE_LOCKED;
+            }
             return (UNLOCKED_STATE)_getIntForKey(getPackLevelKey("UNLOCKED_", p, l));
         }
 
@@ -304,6 +358,7 @@ namespace CutTheRope.game
 
         public static int getTotalStars()
         {
+            return ReceivedItems.StarCount;
             int num = 0;
             int i = 0;
             for (int packsCount = getPacksCount(); i < packsCount; i++)
@@ -338,7 +393,9 @@ namespace CutTheRope.game
 
         public static void setUnlockedForPackLevel(UNLOCKED_STATE s, int p, int l)
         {
-            _setIntforKey((int)s, getPackLevelKey("UNLOCKED_", p, l), true);
+            if (l == 0)
+                return;
+            Global.ApClient.SetLevelUnlocked(p, l);
         }
 
         public static int sharewareFreeLevels()

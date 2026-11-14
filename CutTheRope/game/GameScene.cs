@@ -273,7 +273,30 @@ namespace CutTheRope.game
 
         private bool clickToCut;
 
-        public int starsCollected;
+        private int _starsCollected;
+        public int starsCollected
+        {
+            get
+            {
+                if (SlotData.StarsanityMode == SlotData.StarsanityType.Individual)
+                {
+                    var cTRRootController = (CTRRootController)Application.sharedRootController();
+                    var baseId = (cTRRootController.getPack() + 1) * 10000 +
+                             (cTRRootController.getLevel() + 1) * 100 + 20;
+                    var starCount = 0;
+                    for (var i = 0; i < 3; i++)
+                    {
+                        if (Global.ApClient.AllClearedLocations.Contains(baseId + i))
+                            starCount++;
+                    }
+
+                    return starCount;
+                }
+
+                return _starsCollected;
+            }
+            set => _starsCollected = value;
+        }
 
         public int starBonus;
 
@@ -712,7 +735,8 @@ namespace CutTheRope.game
                 }
             }
 
-            var starCount = 0;
+            byte starCount = 0;
+            byte starsPrecollected = 0;
             foreach (XMLNode item3 in list)
             {
                 List<XMLNode> list3 = item3.childs();
@@ -730,6 +754,18 @@ namespace CutTheRope.game
                     }
                     else if (item4.Name == "star")
                     {
+                        if (SlotData.StarsanityMode == SlotData.StarsanityType.Individual)
+                        {
+                            // TODO: Maybe keep individual starsanity stars if I do anything with score
+                            var id = (cTRRootController.getPack() + 1) * 10000 +
+                                         (cTRRootController.getLevel() + 1) * 100 + 20 + starCount;
+                            if (Global.ApClient.AllClearedLocations.Contains(id))
+                            {
+                                starCount++;
+                                hudStar[starsPrecollected++].playTimeline(0);
+                                continue;
+                            }
+                        }
                         Star star = Star.Star_createWithResID(78);
                         star.x = (float)item4["x"].intValue() * num + num3 + (float)num4;
                         star.y = (float)item4["y"].intValue() * num + num2 + (float)num5;
@@ -738,6 +774,7 @@ namespace CutTheRope.game
                         star.bb = MakeRectangle(70.0, 64.0, 82.0, 82.0);
                         star.parseMover(item4);
                         star.update(0f);
+                        star.id = starCount;
                         stars.addObject(star);
 #if DEBUG
                         // Debug only: Star labels to help construct starsanity logic
@@ -746,9 +783,11 @@ namespace CutTheRope.game
                         starText.x = (float)item4["x"].intValue() * num + num3 + (float)num4;
                         starText.y = (float)(item4["y"].intValue() - 25) * num + num2 + (float)num5;
                         starText.setAlignment(2);
-                        starText.setStringandWidth(new NSString($"{starCount++}"), 5);
-                        star.addChild(starText);
+                        starText.setStringandWidth(new NSString($"{starCount}"), 5);
+                        //star.starText = starText;
+                        //star.addChild(starText);
 #endif
+                        starCount++;
                     }
                     else if (item4.Name == "tutorialText")
                     {
@@ -1424,7 +1463,7 @@ namespace CutTheRope.game
                             grab.reCalcCircle();
                         }
                     }
-                    if (grab.hasSpider && EnabledElements.SpiderDisable)
+                    if (grab.hasSpider && ReceivedItems.SpiderDisable)
                     {
                         grab.updateSpider(delta);
                     }
@@ -1686,7 +1725,7 @@ namespace CutTheRope.game
                 foreach (Star star in stars)
                 {
                     star.update(delta);
-                    if ((double)star.timeout > 0.0 && (double)star.time == 0.0 && !EnabledElements.TimedStarDisable && star.getTimeline(1) != null)
+                    if ((double)star.timeout > 0.0 && (double)star.time == 0.0 && !ReceivedItems.TimedStarDisable && star.getTimeline(1) != null)
                     {
                         star.getTimeline(1).delegateTimelineDelegate = aniPool;
                         aniPool.addChild(star);
@@ -1699,8 +1738,7 @@ namespace CutTheRope.game
                     if ((twoParts == 2) ? (GameObject.objectsIntersect(candy, star) && !noCandy) : ((GameObject.objectsIntersect(candyL, star) && !noCandyL) || (GameObject.objectsIntersect(candyR, star) && !noCandyR)))
                     {
                         candyBlink.playTimeline(1);
-                        starsCollected++;
-                        hudStar[starsCollected - 1].playTimeline(0);
+                        hudStar[starsCollected++].playTimeline(0);
                         Animation animation2 = Animation.Animation_createWithResID(71);
                         animation2.doRestoreCutTransparency();
                         animation2.x = star.x;
@@ -1710,6 +1748,13 @@ namespace CutTheRope.game
                         animation2.getTimeline(n2).delegateTimelineDelegate = aniPool;
                         animation2.playTimeline(0);
                         aniPool.addChild(animation2);
+                        if (SlotData.StarsanityMode == SlotData.StarsanityType.Individual)
+                        {
+                            var cTRRootController = (CTRRootController)Application.sharedRootController();
+                            var id = (cTRRootController.getPack() + 1) * 10000 +
+                                     (cTRRootController.getLevel() + 1) * 100 + 20 + star.id;
+                            Global.ApClient.SendLocation(id);
+                        }
                         stars.removeObject(star);
                         CTRSoundMgr._playSound(25 + starsCollected - 1);
                         if (target.getCurrentTimelineIndex() == 0)
@@ -1721,7 +1766,7 @@ namespace CutTheRope.game
                 }
             }
 
-            if (EnabledElements.Bubble)
+            if (ReceivedItems.Bubble)
             {
                 foreach (Bubble bubble3 in bubbles)
                 {
@@ -1784,7 +1829,7 @@ namespace CutTheRope.game
                 }
             }
 
-            if (EnabledElements.Tutorials)
+            if (ReceivedItems.Tutorials)
             {
                 foreach (Text tutorial in tutorials)
                 {
@@ -1796,7 +1841,7 @@ namespace CutTheRope.game
                 }
             }
 
-            if (EnabledElements.AirCushion)
+            if (ReceivedItems.AirCushion)
             {
                 foreach (Pump pump in pumps)
                 {
@@ -1864,7 +1909,7 @@ namespace CutTheRope.game
                 sock3.updateRotation();
                 if ((double)vector3.y >= 0.0 && (lineInRect(sock3.t1.x, sock3.t1.y, sock3.t2.x, sock3.t2.y, star.pos.x - num19, star.pos.y - num19, num19 * 2f, num19 * 2f) || lineInRect(sock3.b1.x, sock3.b1.y, sock3.b2.x, sock3.b2.y, star.pos.x - num19, star.pos.y - num19, num19 * 2f, num19 * 2f)))
                 {
-                    if (sock3.state != Sock.SOCK_IDLE || !EnabledElements.Hat)
+                    if (sock3.state != Sock.SOCK_IDLE || !ReceivedItems.Hat)
                     {
                         continue;
                     }
@@ -1908,12 +1953,12 @@ namespace CutTheRope.game
 
                 if (!spike.electro)
                 {
-                    if (spike.rotateButton == null && EnabledElements.SpikesDisable)
+                    if (spike.rotateButton == null && ReceivedItems.SpikesDisable)
                     {
                         continue;
                     }
 
-                    if (spike.rotateButton != null && EnabledElements.Blade == EnabledElements.BladeState.Disabled)
+                    if (spike.rotateButton != null && ReceivedItems.Blade == ReceivedItems.BladeState.Disabled)
                     {
                         continue;
                     }
@@ -2177,7 +2222,7 @@ namespace CutTheRope.game
             if (special != 0 && special == 1 && !noCandy && candyBubble != null && candy.y < 400f && candy.x > 1200f)
             {
                 special = 0;
-                if (EnabledElements.Tutorials)
+                if (ReceivedItems.Tutorials)
                 {
                     foreach (TutorialText tutorial2 in tutorials)
                     {
@@ -2686,7 +2731,7 @@ namespace CutTheRope.game
 
         public virtual void handleBouncePtDelta(Bouncer b, ConstraintedPoint s, float delta)
         {
-            if (!EnabledElements.Bouncer)
+            if (!ReceivedItems.Bouncer)
             {
                 return;
             }
@@ -2790,7 +2835,7 @@ namespace CutTheRope.game
 
         public virtual void spiderBusted(Grab g)
         {
-            if (EnabledElements.SpiderDisable)
+            if (ReceivedItems.SpiderDisable)
             {
                 g.hasSpider = false;
                 return;
@@ -3030,7 +3075,7 @@ namespace CutTheRope.game
             {
                 return true;
             }
-            if (gravityButton != null && EnabledElements.GravityButton)
+            if (gravityButton != null && ReceivedItems.GravityButton)
             {
                 Button button = (Button)gravityButton.getChild(gravityButton.on() ? 1 : 0);
                 if (button.isInTouchZoneXYforTouchDown(tx + camera.pos.x, ty + camera.pos.y, true))
@@ -3067,7 +3112,7 @@ namespace CutTheRope.game
                     return true;
                 }
             }
-            if (EnabledElements.AirCushion)
+            if (ReceivedItems.AirCushion)
             {
                 foreach (Pump pump in pumps)
                 {
@@ -3082,7 +3127,7 @@ namespace CutTheRope.game
             RotatedCircle rotatedCircle = null;
             bool flag = false;
             bool flag2 = false;
-            if (EnabledElements.Record)
+            if (ReceivedItems.Record)
             {
                 foreach (RotatedCircle rotatedCircle5 in rotatedCircles)
                 {
@@ -3141,12 +3186,12 @@ namespace CutTheRope.game
             }
             foreach (Grab bungee in bungees)
             {
-                if (EnabledElements.Wheel && bungee.wheel && pointInRect(tx + camera.pos.x, ty + camera.pos.y, bungee.x - 110f, bungee.y - 110f, 220f, 220f))
+                if (ReceivedItems.Wheel && bungee.wheel && pointInRect(tx + camera.pos.x, ty + camera.pos.y, bungee.x - 110f, bungee.y - 110f, 220f, 220f))
                 {
                     bungee.handleWheelTouch(vect(tx + camera.pos.x, ty + camera.pos.y));
                     bungee.wheelOperating = ti;
                 }
-                if (EnabledElements.Slider && (double)bungee.moveLength > 0.0 && pointInRect(tx + camera.pos.x, ty + camera.pos.y, bungee.x - 65f, bungee.y - 65f, 130f, 130f))
+                if (ReceivedItems.Slider && (double)bungee.moveLength > 0.0 && pointInRect(tx + camera.pos.x, ty + camera.pos.y, bungee.x - 65f, bungee.y - 65f, 130f, 130f))
                 {
                     bungee.moverDragging = ti;
                     return true;

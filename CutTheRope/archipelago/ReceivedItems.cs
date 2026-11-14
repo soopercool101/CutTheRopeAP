@@ -1,14 +1,20 @@
-﻿namespace CutTheRope.archipelago
+﻿using System.Collections.Generic;
+
+namespace CutTheRope.archipelago
 {
-    public static class EnabledElements
+    public static class ReceivedItems
     {
+        public static int StarCount { get; set; }
+
+        public static List<int> ReceivedBoxItems = [];
+
         // Progression
         public static bool Bubble { get; set; } = false;
         public static bool AutomaticGrab { get; set; } = false;
         public static bool SpikesDisable { get; set; } = false;
         public static bool AirCushion { get; set; } = false;
         public static bool Slider { get; set; } = false;
-        public enum ElectroTimerState
+        public enum ElectroTimerState : byte
         {
             AlwaysOn = 0,
             Normal = 1,
@@ -19,7 +25,7 @@
         public static bool Bouncer { get; set; } = false;
         public static bool Wheel { get; set; } = false;
         public static bool GravityButton { get; set; } = false;
-        public enum BladeState
+        public enum BladeState : byte
         {
             NoRotate = 0,
             RotateAllowed = 1,

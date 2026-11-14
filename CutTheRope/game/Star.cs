@@ -1,3 +1,4 @@
+using System;
 using CutTheRope.archipelago;
 using CutTheRope.iframework;
 using CutTheRope.iframework.core;
@@ -12,6 +13,10 @@ namespace CutTheRope.game
         public float time;
 
         public float timeout;
+
+        public byte id;
+
+        public Text starText;
 
         public Animation timedAnim;
 
@@ -48,11 +53,16 @@ namespace CutTheRope.game
                 Mover.moveVariableToTarget(ref time, 0f, 1f, delta);
             }
             base.update(delta);
+            if (starText != null)
+            {
+                starText.x = x - 5;
+                starText.y = y - 90;
+            }
         }
 
         public override void draw()
         {
-            if (timedAnim != null && !EnabledElements.TimedStarDisable)
+            if (timedAnim != null && !ReceivedItems.TimedStarDisable)
             {
                 timedAnim.draw();
             }
@@ -61,7 +71,7 @@ namespace CutTheRope.game
 
         public virtual void createAnimations()
         {
-            if (!((double)timeout <= 0.0) && !EnabledElements.TimedStarDisable)
+            if (!((double)timeout <= 0.0) && !ReceivedItems.TimedStarDisable)
             {
                 timedAnim = Animation_createWithResID(78);
                 timedAnim.anchor = (timedAnim.parentAnchor = 18);

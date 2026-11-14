@@ -32,7 +32,7 @@ namespace CutTheRope.game
 
         public float radius
         {
-            get => EnabledElements.AutomaticGrab ? _radius : -1;
+            get => ReceivedItems.AutomaticGrab ? _radius : -1;
             set => _radius = value;
         }
 
@@ -223,7 +223,7 @@ namespace CutTheRope.game
             }
             if (bee != null)
             {
-                if (EnabledElements.Bee)
+                if (ReceivedItems.Bee)
                 {
                     bee.visible = true;
                     mover.unpause();
@@ -260,7 +260,7 @@ namespace CutTheRope.game
 
         public virtual void updateSpider(float delta)
         {
-            if (hasSpider && EnabledElements.SpiderDisable)
+            if (hasSpider && ReceivedItems.SpiderDisable)
             {
                 spider.scaleX = spider.scaleY = 0f;
                 return;
@@ -369,7 +369,7 @@ namespace CutTheRope.game
             }
             OpenGL.glColor4f(Color.White);
             OpenGL.glEnable(0);
-            if ((double)moveLength <= 0.0 || !EnabledElements.Slider)
+            if ((double)moveLength <= 0.0 || !ReceivedItems.Slider)
             {
                 front.draw();
             }
@@ -383,7 +383,7 @@ namespace CutTheRope.game
             }
             if (wheel)
             {
-                wheelImage2.color = new RGBAColor(1f, 1f, 1f, EnabledElements.Wheel ? 1f : 0.3f);
+                wheelImage2.color = new RGBAColor(1f, 1f, 1f, ReceivedItems.Wheel ? 1f : 0.3f);
                 wheelImage2.draw();
             }
             base.postDraw();

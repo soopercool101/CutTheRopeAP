@@ -318,104 +318,104 @@ namespace CutTheRope
 #if DEBUG
             if (IsKeyPressed(Keys.OemTilde))
             {
-                EnabledElements.Tutorials = !EnabledElements.Tutorials;
+                ReceivedItems.Tutorials = !ReceivedItems.Tutorials;
             }
             if (IsKeyPressed(Keys.D1) || IsKeyPressed(Keys.NumPad1))
             {
-                EnabledElements.Bubble = !EnabledElements.Bubble;
+                ReceivedItems.Bubble = !ReceivedItems.Bubble;
             }
             if (IsKeyPressed(Keys.D2) || IsKeyPressed(Keys.NumPad2))
             {
-                EnabledElements.AutomaticGrab = !EnabledElements.AutomaticGrab;
+                ReceivedItems.AutomaticGrab = !ReceivedItems.AutomaticGrab;
             }
             if (IsKeyPressed(Keys.D3) || IsKeyPressed(Keys.NumPad3))
             {
-                EnabledElements.AirCushion = !EnabledElements.AirCushion;
+                ReceivedItems.AirCushion = !ReceivedItems.AirCushion;
             }
             if (IsKeyPressed(Keys.D4) || IsKeyPressed(Keys.NumPad4))
             {
-                EnabledElements.Slider = !EnabledElements.Slider;
+                ReceivedItems.Slider = !ReceivedItems.Slider;
             }
             if (IsKeyPressed(Keys.D5) || IsKeyPressed(Keys.NumPad5))
             {
-                EnabledElements.Hat = !EnabledElements.Hat;
+                ReceivedItems.Hat = !ReceivedItems.Hat;
             }
             if (IsKeyPressed(Keys.D6) || IsKeyPressed(Keys.NumPad6))
             {
-                EnabledElements.Bouncer = !EnabledElements.Bouncer;
+                ReceivedItems.Bouncer = !ReceivedItems.Bouncer;
             }
             if (IsKeyPressed(Keys.D7) || IsKeyPressed(Keys.NumPad7))
             {
-                EnabledElements.Wheel = !EnabledElements.Wheel;
+                ReceivedItems.Wheel = !ReceivedItems.Wheel;
             }
             if (IsKeyPressed(Keys.D8) || IsKeyPressed(Keys.NumPad8))
             {
-                EnabledElements.GravityButton = !EnabledElements.GravityButton;
+                ReceivedItems.GravityButton = !ReceivedItems.GravityButton;
             }
             if (IsKeyPressed(Keys.D9) || IsKeyPressed(Keys.NumPad9))
             {
-                if (EnabledElements.Blade < EnabledElements.BladeState.Disabled)
+                if (ReceivedItems.Blade < ReceivedItems.BladeState.Disabled)
                 {
-                    EnabledElements.Blade++;
+                    ReceivedItems.Blade++;
                 }
                 else
                 {
-                    EnabledElements.Blade = EnabledElements.BladeState.NoRotate;
+                    ReceivedItems.Blade = ReceivedItems.BladeState.NoRotate;
                 }
             }
             if (IsKeyPressed(Keys.D0) || IsKeyPressed(Keys.NumPad0))
             {
-                EnabledElements.Bee = !EnabledElements.Bee;
+                ReceivedItems.Bee = !ReceivedItems.Bee;
             }
             if (IsKeyPressed(Keys.OemMinus) || IsKeyPressed(Keys.Subtract))
             {
-                EnabledElements.Record = !EnabledElements.Record;
+                ReceivedItems.Record = !ReceivedItems.Record;
             }
             if (IsKeyPressed(Keys.OemPlus) || IsKeyPressed(Keys.Add))
             {
-                if (EnabledElements.ElectroTimer < EnabledElements.ElectroTimerState.AlwaysOff)
+                if (ReceivedItems.ElectroTimer < ReceivedItems.ElectroTimerState.AlwaysOff)
                 {
-                    EnabledElements.ElectroTimer++;
+                    ReceivedItems.ElectroTimer++;
                 }
                 else
                 {
-                    EnabledElements.ElectroTimer = EnabledElements.ElectroTimerState.AlwaysOn;
+                    ReceivedItems.ElectroTimer = ReceivedItems.ElectroTimerState.AlwaysOn;
                 }
             }
             if (IsKeyPressed(Keys.Back))
             {
-                EnabledElements.TimedStarDisable = !EnabledElements.TimedStarDisable;
+                ReceivedItems.TimedStarDisable = !ReceivedItems.TimedStarDisable;
             }
             if (IsKeyPressed(Keys.Tab))
             {
-                EnabledElements.SpiderDisable = !EnabledElements.SpiderDisable;
+                ReceivedItems.SpiderDisable = !ReceivedItems.SpiderDisable;
             }
             if (IsKeyPressed(Keys.Q))
             {
-                EnabledElements.SpikesDisable = !EnabledElements.SpikesDisable;
+                ReceivedItems.SpikesDisable = !ReceivedItems.SpikesDisable;
             }
             if (IsKeyPressed(Keys.R))
             {
                 // RESET TO DEFAULT
 
                 // Progression
-                EnabledElements.AutomaticGrab = false;
-                EnabledElements.Bubble = false;
-                EnabledElements.SpikesDisable = false;
-                EnabledElements.AirCushion = false;
-                EnabledElements.Slider = false;
-                EnabledElements.ElectroTimer = EnabledElements.ElectroTimerState.AlwaysOn;
-                EnabledElements.Hat = false;
-                EnabledElements.Bouncer = false;
-                EnabledElements.Wheel = false;
-                EnabledElements.GravityButton = false;
-                EnabledElements.Blade = EnabledElements.BladeState.NoRotate;
-                EnabledElements.Bee = false;
-                EnabledElements.Record = false;
+                ReceivedItems.AutomaticGrab = false;
+                ReceivedItems.Bubble = false;
+                ReceivedItems.SpikesDisable = false;
+                ReceivedItems.AirCushion = false;
+                ReceivedItems.Slider = false;
+                ReceivedItems.ElectroTimer = ReceivedItems.ElectroTimerState.AlwaysOn;
+                ReceivedItems.Hat = false;
+                ReceivedItems.Bouncer = false;
+                ReceivedItems.Wheel = false;
+                ReceivedItems.GravityButton = false;
+                ReceivedItems.Blade = ReceivedItems.BladeState.NoRotate;
+                ReceivedItems.Bee = false;
+                ReceivedItems.Record = false;
 
                 // Useful
-                EnabledElements.TimedStarDisable = false;
-                EnabledElements.SpiderDisable = false;
+                ReceivedItems.TimedStarDisable = false;
+                ReceivedItems.SpiderDisable = false;
             }
 #endif
             if (branding != null)

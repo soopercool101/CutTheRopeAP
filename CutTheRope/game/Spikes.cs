@@ -203,11 +203,11 @@ namespace CutTheRope.game
             {
                 if (rotateButton == null)
                 {
-                    color = new RGBAColor(1f, 1f, 1f, EnabledElements.SpikesDisable ? 0.3f : 1f);
+                    color = new RGBAColor(1f, 1f, 1f, ReceivedItems.SpikesDisable ? 0.3f : 1f);
                 }
                 else
                 {
-                    rotateButton.color = color = new RGBAColor(1f, 1f, 1f, EnabledElements.Blade == EnabledElements.BladeState.Disabled ? 0.3f : 1f);
+                    rotateButton.color = color = new RGBAColor(1f, 1f, 1f, ReceivedItems.Blade == ReceivedItems.BladeState.Disabled ? 0.3f : 1f);
                 }
             }
             base.draw();
@@ -224,18 +224,18 @@ namespace CutTheRope.game
             {
                 return;
             }
-            if (electroOn && EnabledElements.ElectroTimer != EnabledElements.ElectroTimerState.AlwaysOn)
+            if (electroOn && ReceivedItems.ElectroTimer != ReceivedItems.ElectroTimerState.AlwaysOn)
             {
                 Mover.moveVariableToTarget(ref electroTimer, 0f, 1f, delta);
-                if ((double)electroTimer == 0.0 || EnabledElements.ElectroTimer == EnabledElements.ElectroTimerState.AlwaysOff)
+                if ((double)electroTimer == 0.0 || ReceivedItems.ElectroTimer == ReceivedItems.ElectroTimerState.AlwaysOff)
                 {
                     turnElectroOff();
                 }
             }
-            else if (!electroOn && EnabledElements.ElectroTimer != EnabledElements.ElectroTimerState.AlwaysOff)
+            else if (!electroOn && ReceivedItems.ElectroTimer != ReceivedItems.ElectroTimerState.AlwaysOff)
             {
                 Mover.moveVariableToTarget(ref electroTimer, 0f, 1f, delta);
-                if ((double)electroTimer == 0.0 || EnabledElements.ElectroTimer == EnabledElements.ElectroTimerState.AlwaysOn)
+                if ((double)electroTimer == 0.0 || ReceivedItems.ElectroTimer == ReceivedItems.ElectroTimerState.AlwaysOn)
                 {
                     turnElectroOn();
                 }
@@ -253,7 +253,7 @@ namespace CutTheRope.game
 
         public virtual void onButtonPressed(int n)
         {
-            if (n == 0 && EnabledElements.Blade > EnabledElements.BladeState.NoRotate)
+            if (n == 0 && ReceivedItems.Blade > ReceivedItems.BladeState.NoRotate)
             {
                 delegateRotateAllSpikesWithID(toggled);
                 if (spikesNormal)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CutTheRope.archipelago;
 using CutTheRope.ctr_commons;
 using CutTheRope.iframework;
 using CutTheRope.iframework.core;
@@ -304,25 +305,16 @@ namespace CutTheRope.game
             view.getChild(1).touchable = false;
             int pack = cTRRootController.getPack();
             int level = cTRRootController.getLevel();
-            int scoreForPackLevel = CTRPreferences.getScoreForPackLevel(pack, level);
-            int starsForPackLevel = CTRPreferences.getStarsForPackLevel(pack, level);
+            var baseId = (pack + 1) * 10000 + (level + 1) * 100;
+            Global.ApClient.SendLocation(baseId);
+            if (SlotData.StarsanityMode == SlotData.StarsanityType.PerLevel)
+            {
+                for (var i = 1; i <= gameScene.starsCollected; i++)
+                {
+                    Global.ApClient.SendLocation(baseId + 10 + i);
+                }
+            }
             boxOpenClose.shouldShowImprovedResult = false;
-            if (gameScene.score > scoreForPackLevel)
-            {
-                CTRPreferences.setScoreForPackLevel(gameScene.score, pack, level);
-                if (scoreForPackLevel > 0)
-                {
-                    boxOpenClose.shouldShowImprovedResult = true;
-                }
-            }
-            if (gameScene.starsCollected > starsForPackLevel)
-            {
-                CTRPreferences.setStarsForPackLevel(gameScene.starsCollected, pack, level);
-                if (starsForPackLevel > 0)
-                {
-                    boxOpenClose.shouldShowImprovedResult = true;
-                }
-            }
             boxOpenClose.shouldShowConfetti = gameScene.starsCollected == 3;
             boxOpenClose.levelWon();
             unlockNextLevel();

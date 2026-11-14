@@ -50,7 +50,7 @@ namespace CutTheRope.game
                     drawQuad(quadToDraw);
                 }
             }
-            if(EnabledElements.Bubble)
+            if(ReceivedItems.Bubble)
                 base.postDraw();
         }
     }

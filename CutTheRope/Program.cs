@@ -8,15 +8,12 @@ namespace CutTheRope
     {
         private static void Main(string[] args)
         {
-            Global.ApClient = new ArchipelagoClient();
-            if (!Global.ApClient.Connect())
+            if (new ConnectionWindow().ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show("Could not successfully connect to Archipelago, double-check the apconnectioninfo.txt!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            using (Game1 game = new Game1())
-            {
-                game.Run();
+                using (Game1 game = new Game1())
+                {
+                    game.Run();
+                }
             }
         }
     }

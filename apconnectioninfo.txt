@@ -1,2 +1,2 @@
-archipelago.gg:
-Player1
+localhost:38281
+sooperCutTheRope

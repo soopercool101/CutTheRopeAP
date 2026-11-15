@@ -79,35 +79,6 @@ public class ArchipelagoData
 
     public ArchipelagoData()
     {
-        Uri = "archipelago.gg:";
-        SlotName = "Player1";
-        Password = string.Empty;
-#if DEBUG
-        // because why not make this the default
-        Uri = "localhost:38281";
-        SlotName = "sooperCutTheRope";
-        Password = string.Empty;
-#endif
-
-        try
-        {
-            if (File.Exists(LoginDetailsFile))
-            {
-                var lines = File.ReadAllLines(LoginDetailsFile);
-                Uri = lines[0];
-                SlotName = lines[1];
-                Password = lines.Length > 2 ? lines[2] : string.Empty;
-            }
-            else
-            {
-                File.WriteAllLines(LoginDetailsFile, [Uri, SlotName, Password]);
-            }
-        }
-        catch
-        {
-            // ignored
-        }
-
         //CheckedLocations = [];
     }
 

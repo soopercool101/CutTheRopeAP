@@ -18,7 +18,7 @@ namespace CutTheRope.windows
 
         private static Game1 game_;
 
-        public static ArchipelagoClient ApClient;
+        public static ArchipelagoClient ApClient = new ArchipelagoClient();
 
         public static SpriteBatch SpriteBatch
         {

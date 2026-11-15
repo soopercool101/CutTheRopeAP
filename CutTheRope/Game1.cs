@@ -82,7 +82,7 @@ namespace CutTheRope
                 Global.GraphicsDeviceManager.ApplyChanges();
             }
             Global.GraphicsDeviceManager.PreparingDeviceSettings += GraphicsDeviceManager_PreparingDeviceSettings;
-            TargetElapsedTime = TimeSpan.FromMilliseconds(11.11106666666667 / gameSpeedMult);
+            TargetElapsedTime = TimeSpan.FromMilliseconds(11.11106666666667 / GameSpeedMult);
             IsFixedTimeStep = true;
             InactiveSleepTime = TimeSpan.FromTicks(500000L);
             IsMouseVisible = true;
@@ -293,7 +293,7 @@ namespace CutTheRope
             return keyboardStateXna.IsKeyDown(key);
         }
 
-        private float gameSpeedMult = 1f;
+        public static double GameSpeedMult = 1f;
         protected override void Update(GameTime gameTime)
         {
             elapsedTime += gameTime.ElapsedGameTime;
@@ -441,7 +441,7 @@ namespace CutTheRope
             }
             MouseState mouseState = windows.MouseCursor.GetMouseState();
             iframework.core.Application.sharedRootController().mouseMoved(CtrRenderer.transformX(mouseState.X), CtrRenderer.transformY(mouseState.Y));
-            CtrRenderer.update((float)gameTime.ElapsedGameTime.TotalSeconds * 1.5f * gameSpeedMult);
+            CtrRenderer.update((float)gameTime.ElapsedGameTime.TotalSeconds * 1.5f * (float)GameSpeedMult);
             base.Update(gameTime);
         }
 

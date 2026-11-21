@@ -7,9 +7,6 @@ namespace CutTheRope.archipelago;
 
 public class ArchipelagoData
 {
-    public static string GameDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-    public static string LoginDetailsFile = Path.Combine(GameDirectory, "apconnectioninfo.txt");
-
     private string _uri;
     public string Uri
     {

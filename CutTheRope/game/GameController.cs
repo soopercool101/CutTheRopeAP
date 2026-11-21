@@ -117,11 +117,12 @@ namespace CutTheRope.game
             VBox vBox = new VBox().initWithOffsetAlignWidth(5.0, 2, SCREEN_WIDTH);
             Button c = MenuController.createButtonWithTextIDDelegate(Application.getString(655397), 0, this);
             vBox.addChild(c);
-#if DEBUG
-            // Skip level
-            Button c2 = MenuController.createButtonWithTextIDDelegate(Application.getString(655398), 2, this);
-            vBox.addChild(c2);
-#endif
+            if (SlotData.BoxLockingMode == SlotData.BoxLockingType.BoxItemsWithSkips && cTRRootController.getPack() != SlotData.GoalBox)
+            {
+                // Skip level
+                Button c2 = MenuController.createButtonWithTextIDDelegate(Application.getString(655398), 2, this);
+                vBox.addChild(c2);
+            }
             Button c3 = MenuController.createButtonWithTextIDDelegate(Application.getString(655399), 3, this);
             vBox.addChild(c3);
             Button c4 = MenuController.createButtonWithTextIDDelegate(Application.getString(655400), 4, this);

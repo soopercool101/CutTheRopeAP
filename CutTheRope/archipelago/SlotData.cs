@@ -45,6 +45,7 @@ namespace CutTheRope.archipelago
         {
             OpenWorld = 0,
             BoxItems = 1,
+            BoxItemsWithSkips = 2,
         }
 
         public static BoxLockingType BoxLockingMode { get; private set; }
@@ -56,6 +57,8 @@ namespace CutTheRope.archipelago
         }
 
         public static StarsanityType StarsanityMode { get; private set; }
+
+        public static byte StartingBox { get; private set; }
 
         public static bool LoadSlotData(Dictionary<string, object> slotData)
         {
@@ -102,6 +105,7 @@ namespace CutTheRope.archipelago
                 ReceivedItems.Tutorials = true;
             }
 
+            StartingBox = (byte)(long)slotData["starting_box"];
             Loaded = true;
             return true;
         }

@@ -1188,6 +1188,11 @@ namespace CutTheRope.game
                 text.setString(@string);
                 text.anchor = (text.parentAnchor = 18);
                 text.y -= 5f;
+                // Ungoaled levels appear greyed out
+                if (!CTRPreferences.getGoaledForPackLevel(p, l))
+                {
+                    text.color = new RGBAColor(1, 1, 1, 0.5);
+                }
                 image.addChild(text);
                 Image image2 = Image.Image_createWithResIDQuad(51, 2 + starsForPackLevel);
                 image2.doRestoreCutTransparency();

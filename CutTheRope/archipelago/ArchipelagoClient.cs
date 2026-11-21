@@ -204,6 +204,10 @@ public class ArchipelagoClient
     {
         lock (LevelUnlockLock)
         {
+            if (SlotData.BoxLockingMode == SlotData.BoxLockingType.BoxItemsWithSkips && box != SlotData.GoalBox)
+            {
+                return true;
+            }
             if (LevelsCompletePerBox.TryGetValue(box, out var value))
             {
                 return value >= level;
@@ -218,6 +222,11 @@ public class ArchipelagoClient
         lock (LevelUnlockLock)
         {
             if (LevelsCompletePerBox.TryGetValue(box, out var oldLevel) && oldLevel >= level)
+            {
+                return;
+            }
+
+            if (SlotData.BoxLockingMode == SlotData.BoxLockingType.BoxItemsWithSkips && box != SlotData.GoalBox)
             {
                 return;
             }

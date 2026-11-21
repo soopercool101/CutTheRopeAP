@@ -30,9 +30,9 @@ namespace CutTheRope.archipelago
 
             try
             {
-                if (File.Exists(ArchipelagoData.LoginDetailsFile))
+                if (File.Exists(Program.LoginDetailsFile))
                 {
-                    var lines = File.ReadAllLines(ArchipelagoData.LoginDetailsFile);
+                    var lines = File.ReadAllLines(Program.LoginDetailsFile);
                     uri = lines[0];
                     slotName = lines[1];
                     password = lines.Length > 2 ? lines[2] : string.Empty;
@@ -40,7 +40,7 @@ namespace CutTheRope.archipelago
                 }
                 else
                 {
-                    File.WriteAllLines(ArchipelagoData.LoginDetailsFile, [uri, slotName, password, "100"]);
+                    File.WriteAllLines(Program.LoginDetailsFile, [uri, slotName, password, "100"]);
                 }
             }
             catch
@@ -62,9 +62,9 @@ namespace CutTheRope.archipelago
             if (Global.ApClient.Connect())
             {
                 DialogResult = DialogResult.OK;
-                if (File.Exists(ArchipelagoData.LoginDetailsFile))
-                    File.Delete(ArchipelagoData.LoginDetailsFile);
-                File.WriteAllLines(ArchipelagoData.LoginDetailsFile,
+                if (File.Exists(Program.LoginDetailsFile))
+                    File.Delete(Program.LoginDetailsFile);
+                File.WriteAllLines(Program.LoginDetailsFile,
                 [
                     ArchipelagoClient.ServerData.Uri, ArchipelagoClient.ServerData.SlotName,
                     ArchipelagoClient.ServerData.Password, numericUpDown1.Value.ToString(CultureInfo.InvariantCulture)

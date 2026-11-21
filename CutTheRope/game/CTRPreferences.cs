@@ -312,12 +312,17 @@ namespace CutTheRope.game
             return _getIntForKey(getPackLevelKey("STARS_", p, l));
         }
 
+        public static bool getGoaledForPackLevel(int p, int l)
+        {
+            return Global.ApClient.AllClearedLocations.Contains((p + 1) * 10000 + (l + 1) * 100);
+        }
+
         public static UNLOCKED_STATE getUnlockedForPackLevel(int p, int l)
         {
             if (l == 0)
             {
                 // TODO: starting box handling
-                if (p == 0)
+                if (p + 1 == SlotData.StartingBox)
                 {
                     return UNLOCKED_STATE.UNLOCKED_STATE_UNLOCKED;
                 }

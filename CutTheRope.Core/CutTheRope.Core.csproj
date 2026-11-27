@@ -2,7 +2,7 @@
   <PropertyGroup>
     <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
     <OutputType>Library</OutputType>
-    <TargetFramework>net10.0-windows7.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
 
     <AssemblyTitle>Cut The Rope</AssemblyTitle>
     <Product>Cut The Rope</Product>

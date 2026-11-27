@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CutTheRope.Core", "CutTheRo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CutTheRope.Windows", "CutTheRope.Windows\CutTheRope.Windows.csproj", "{2EFBE121-DAF1-482E-8740-A2A5BA6B07AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CutTheRope.Linux", "CutTheRope.Linux\CutTheRope.Linux.csproj", "{0B1A0AA6-2F57-4DE1-AA5C-2FF76F0BBF34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2EFBE121-DAF1-482E-8740-A2A5BA6B07AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EFBE121-DAF1-482E-8740-A2A5BA6B07AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EFBE121-DAF1-482E-8740-A2A5BA6B07AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B1A0AA6-2F57-4DE1-AA5C-2FF76F0BBF34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B1A0AA6-2F57-4DE1-AA5C-2FF76F0BBF34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B1A0AA6-2F57-4DE1-AA5C-2FF76F0BBF34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B1A0AA6-2F57-4DE1-AA5C-2FF76F0BBF34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

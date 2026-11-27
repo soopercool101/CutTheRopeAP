@@ -20,6 +20,7 @@ namespace CutTheRope.windows
         private int _gameWidth;
 
         private int _gameHeight;
+        private readonly IPlatform _platform;
 
         private double _gameAspectRatio;
 
@@ -145,12 +146,9 @@ namespace CutTheRope.windows
             }
         }
 
-        [DllImport("Shell32.dll")]
-        private static extern int SHChangeNotify(int eventId, int flags, IntPtr item1, IntPtr item2);
-
         private void RefreshDesktop()
         {
-            SHChangeNotify(134217728, 4096, IntPtr.Zero, IntPtr.Zero);
+            _platform.RefreshDesktop();
         }
 
         public Size WindowMinimumSize()
@@ -178,10 +176,11 @@ namespace CutTheRope.windows
             return y * (float)_gameHeight / (float)_scaledViewRect.Height;
         }
 
-        public ScreenSizeManager(int gameWidth, int gameHeight)
+        public ScreenSizeManager(int gameWidth, int gameHeight, IPlatform platform)
         {
             _gameWidth = gameWidth;
             _gameHeight = gameHeight;
+            _platform = platform;
             _gameAspectRatio = (double)gameHeight / (double)gameWidth;
         }
 

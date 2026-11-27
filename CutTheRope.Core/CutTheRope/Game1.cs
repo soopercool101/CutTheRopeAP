@@ -18,7 +18,7 @@ namespace CutTheRope
 {
     public class Game1 : Game
     {
-        private readonly INativeWindowFactory _nativeWindowFactory;
+        private readonly IPlatform _platform;
         
         private Branding branding;
         
@@ -44,9 +44,9 @@ namespace CutTheRope
 
         private bool IsMinimized => _nativeWindow?.IsMinimised() ?? false;
 
-        public Game1(INativeWindowFactory nativeWindowFactory)
+        public Game1(IPlatform platform)
         {
-            _nativeWindowFactory = nativeWindowFactory;
+            _platform = platform;
             Global.XnaGame = this;
             Content.RootDirectory = "content";
             Global.GraphicsDeviceManager = new GraphicsDeviceManager(this);
@@ -69,7 +69,7 @@ namespace CutTheRope
             Deactivated += Game1_Deactivated;
             Exiting += Game1_Exiting;
             
-            this._nativeWindow = _nativeWindowFactory.SetupNativeWindow(Window.Handle, this);
+            this._nativeWindow = _platform.SetupNativeWindow(Window, this);
         }
 
         public MouseState GetMouseState() => _nativeWindow.GetMouseState();
@@ -176,6 +176,7 @@ namespace CutTheRope
         public static double GameSpeedMult = 1f;
         protected override void Update(GameTime gameTime)
         {
+            _nativeWindow?.Update();
             elapsedTime += gameTime.ElapsedGameTime;
             if (elapsedTime > TimeSpan.FromSeconds(1.0))
             {

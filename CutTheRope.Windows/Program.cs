@@ -4,7 +4,7 @@ using CutTheRope.archipelago;
 using CutTheRope.Windows;
 using Microsoft.Xna.Framework;
 
-var nativeWindowFactory = new WindowsNativeWindowFactory();
+var nativeWindowFactory = new WindowsPlatform();
 
 if (!ContentValidator.Validate(out var message))
 {

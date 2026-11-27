@@ -67,6 +67,11 @@ public class WindowsNativeWindow : INativeWindow
         };
     }
 
+    public void Update()
+    {
+        // noop
+    }
+
     private void form_MouseDown(object sender, MouseEventArgs e)
     {
         mouseState_X = e.X;

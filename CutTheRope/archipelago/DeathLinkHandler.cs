@@ -8,7 +8,7 @@ namespace CutTheRope.archipelago;
 
 public class DeathLinkHandler
 {
-    private static bool deathLinkEnabled => SlotData.DeathLink;
+    public static bool DeathLinkEnabled => Program.DeathLinkOverride ?? SlotData.DeathLink;
     private string slotName;
     private readonly DeathLinkService service;
     private readonly Queue<DeathLink> deathLinks = new();
@@ -25,7 +25,7 @@ public class DeathLinkHandler
         service.OnDeathLinkReceived += DeathLinkReceived;
         slotName = name;
 
-        if (deathLinkEnabled)
+        if (DeathLinkEnabled)
         {
             service.EnableDeathLink();
             FrameworkTypes._LOG("DeathLink enabled");
@@ -60,7 +60,7 @@ public class DeathLinkHandler
     {
         try
         {
-            if (deathLinks.Count < 1 || !deathLinkEnabled) return;
+            if (deathLinks.Count < 1 || !DeathLinkEnabled) return;
 
             var deathLink = deathLinks.Dequeue();
             var cause = string.IsNullOrWhiteSpace(deathLink.Cause)
@@ -110,7 +110,7 @@ public class DeathLinkHandler
                 return;
             }
 
-            if (!deathLinkEnabled) return;
+            if (!DeathLinkEnabled) return;
 
             if (string.IsNullOrEmpty(cause))
             {

@@ -11,10 +11,11 @@ namespace CutTheRope.archipelago
         public ConnectionWindow()
         {
             InitializeComponent();
-            var tooltip =
-                "The original PC release has game speed tied to framerate, which is fixed in this mod.\nThis setting is the percentage at which the game's speed runs, where 100 is equivalent to the mobile version.\nA value of 66 is roughly equivalent to the original PC port at 60 FPS.\n\nAll logic has been confirmed possible with a mouse at a speed of 100, but lower speeds will naturally be easier.";
-            toolTip1.SetToolTip(numericUpDown1, tooltip);
-            toolTip1.SetToolTip(label5, tooltip);
+            var gameSpeedInfo =
+                "The original PC release has game speed tied to framerate, which is fixed in this mod.\nThis setting is the percentage at which the game's speed runs, where 100 is equivalent to the mobile version.\nA value of 66 is roughly equivalent to the original PC port at 60 FPS.\n\nA speed of 100 or higher is generally recommended only for users with touch screens, as using a mouse makes certain levels very tricky otherwise.";
+            toolTip1.SetToolTip(numericUpDown1, gameSpeedInfo);
+            toolTip1.SetToolTip(label5, gameSpeedInfo);
+            toolTip1.SetToolTip(checkBox1, "If fully checked, DeathLink will be turned on, ignoring the SlotData value. If unchecked, DeathLink will be turned off, ignoring the SlotData value.");
 
 #if DEBUG
             // because why not make this the default
@@ -26,7 +27,7 @@ namespace CutTheRope.archipelago
             var slotName = "Player1";
             var password = string.Empty;
 #endif
-            var gameSpeed = 100;
+            var gameSpeed = 66;
 
             try
             {
@@ -74,8 +75,24 @@ namespace CutTheRope.archipelago
             else
             {
                 MessageBox.Show(
-                    "Could not connect to server. Double-check your connection info and confirm your room is open!",
+                    ArchipelagoClient.ConnectionError,
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            switch (checkBox1.CheckState)
+            {
+                case CheckState.Checked:
+                    Program.DeathLinkOverride = true;
+                    break;
+                case CheckState.Unchecked:
+                    Program.DeathLinkOverride = false;
+                    break;
+                case CheckState.Indeterminate:
+                    Program.DeathLinkOverride = null;
+                    break;
             }
         }
     }

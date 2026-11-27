@@ -21,9 +21,12 @@ public class ArchipelagoClient
     public bool AttemptingConnection { get; private set; }
 
     public static ArchipelagoData ServerData = new();
-    public static DeathLinkHandler DeathLinkHandler;
+    public static DeathLinkHandler DeathLinker;
     public string Player => Session?.Players.ActivePlayer.Alias ?? string.Empty;
     public ArchipelagoSession Session { get; private set; }
+
+    public static string ConnectionError;
+    public static readonly string DefaultConnectionError = "Could not connect to server. Double-check your connection info and confirm your room is open!";
 
     /// <summary>
     /// call to connect to an Archipelago session. Connection info should already be set up on ServerData
@@ -32,7 +35,7 @@ public class ArchipelagoClient
     public bool Connect()
     {
         if (Authenticated || AttemptingConnection) return false;
-
+        ConnectionError = DefaultConnectionError;
         FrameworkTypes._LOG("Connecting");
         AttemptingConnection = true;
 
@@ -133,7 +136,7 @@ public class ArchipelagoClient
                 }
 
                 var tags = new List<string>();
-                if (SlotData.DeathLink)
+                if (DeathLinkHandler.DeathLinkEnabled)
                 {
                     tags.Add("DeathLink");
                 }
@@ -149,7 +152,7 @@ public class ArchipelagoClient
                 Session.ConnectionInfo.UpdateConnectionOptions(Session.ConnectionInfo.Tags
                     .Concat(tags.Where(tag => Array.IndexOf(Session.ConnectionInfo.Tags, tag) == -1)).ToArray());
 
-                DeathLinkHandler = new(Session.CreateDeathLinkService(), ServerData.SlotName, false);
+                DeathLinker = new(Session.CreateDeathLinkService(), ServerData.SlotName, false);
                 Session.Socket.PacketReceived += Socket_PacketReceived;
 
                 //Session.Locations.CompleteLocationChecksAsync(ServerData.CheckedLocations.ToArray());

@@ -43,6 +43,8 @@ namespace CutTheRope.archipelago
             numericUpDown1 = new NumericUpDown();
             label5 = new Label();
             toolTip1 = new ToolTip(components);
+            checkBox1 = new CheckBox();
+            toolTip2 = new ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             SuspendLayout();
             // 
@@ -68,7 +70,7 @@ namespace CutTheRope.archipelago
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(12, 58);
+            label2.Location = new Point(12, 57);
             label2.Name = "label2";
             label2.Size = new Size(62, 15);
             label2.TabIndex = 2;
@@ -77,7 +79,7 @@ namespace CutTheRope.archipelago
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(12, 89);
+            label3.Location = new Point(12, 88);
             label3.Name = "label3";
             label3.Size = new Size(65, 15);
             label3.TabIndex = 4;
@@ -94,7 +96,7 @@ namespace CutTheRope.archipelago
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(12, 118);
+            label4.Location = new Point(12, 117);
             label4.Name = "label4";
             label4.Size = new Size(60, 15);
             label4.TabIndex = 6;
@@ -112,7 +114,7 @@ namespace CutTheRope.archipelago
             // button1
             // 
             button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button1.Location = new Point(271, 191);
+            button1.Location = new Point(271, 176);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 7;
@@ -123,7 +125,7 @@ namespace CutTheRope.archipelago
             // numericUpDown1
             // 
             numericUpDown1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            numericUpDown1.Location = new Point(271, 156);
+            numericUpDown1.Location = new Point(271, 147);
             numericUpDown1.Maximum = new decimal(new int[] { 150, 0, 0, 0 });
             numericUpDown1.Minimum = new decimal(new int[] { 50, 0, 0, 0 });
             numericUpDown1.Name = "numericUpDown1";
@@ -135,17 +137,34 @@ namespace CutTheRope.archipelago
             // 
             label5.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             label5.AutoSize = true;
-            label5.Location = new Point(189, 159);
+            label5.Location = new Point(189, 148);
             label5.Name = "label5";
             label5.Size = new Size(76, 15);
             label5.TabIndex = 9;
             label5.Text = "Game Speed:";
             // 
+            // checkBox1
+            // 
+            checkBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            checkBox1.AutoSize = true;
+            checkBox1.CheckAlign = ContentAlignment.MiddleRight;
+            checkBox1.Checked = true;
+            checkBox1.CheckState = CheckState.Indeterminate;
+            checkBox1.Location = new Point(11, 147);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(130, 19);
+            checkBox1.TabIndex = 10;
+            checkBox1.Text = "DeathLink Override:";
+            checkBox1.ThreeState = true;
+            checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
+            // 
             // ConnectionWindow
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(358, 228);
+            ClientSize = new Size(356, 211);
+            Controls.Add(checkBox1);
             Controls.Add(label5);
             Controls.Add(numericUpDown1);
             Controls.Add(button1);
@@ -157,8 +176,8 @@ namespace CutTheRope.archipelago
             Controls.Add(label1);
             Controls.Add(textBox1);
             MaximizeBox = false;
-            MaximumSize = new Size(374, 267);
-            MinimumSize = new Size(374, 267);
+            MaximumSize = new Size(372, 250);
+            MinimumSize = new Size(372, 250);
             Name = "ConnectionWindow";
             SizeGripStyle = SizeGripStyle.Hide;
             Text = "Cut the Rope Archipelago";
@@ -180,5 +199,7 @@ namespace CutTheRope.archipelago
         private NumericUpDown numericUpDown1;
         private Label label5;
         private ToolTip toolTip1;
+        private CheckBox checkBox1;
+        private ToolTip toolTip2;
     }
 }

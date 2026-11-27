@@ -519,13 +519,62 @@ namespace CutTheRope.game
                     mapNameLabel.setString(NSS(""));
                     return;
                 }
-                int scoreForPackLevel = CTRPreferences.getScoreForPackLevel(cTRRootController.getPack(), cTRRootController.getLevel());
-                mapNameLabel.setString(NSS(string.Concat(Application.getString(655380), ": ", scoreForPackLevel)));
+                mapNameLabel.setString(NSS($"Client {Program.ClientVersion} - APWorld v{SlotData.APWorldMajorVersion}.{SlotData.APWorldMinorVersion}.{SlotData.APWorldBuildVersion}"));
+                //int scoreForPackLevel = CTRPreferences.getScoreForPackLevel(cTRRootController.getPack(), cTRRootController.getLevel());
+                //mapNameLabel.setString(NSS(string.Concat(Application.getString(655380), ": ", scoreForPackLevel)));
             }
             else
             {
                 CTRSoundMgr._unpause();
             }
+        }
+
+        public static string GetReceivedItemsText()
+        {
+            var s = string.Empty;
+            var sep = " - ";
+            s += $"Bubbles: {(ReceivedItems.Bubble ? "Y" : "N")}";
+            s += sep;
+            s += $"Automatic Ropes: {(ReceivedItems.AutomaticGrab ? "Y" : "N")}";
+            s += sep;
+            s += $"Air Cushions: {(ReceivedItems.AirCushion ? "Y" : "N")}";
+            s += sep;
+            s += $"Sliders: {(ReceivedItems.Slider ? "Y" : "N")}";
+            s += sep;
+            s += $"Electric Sparks: ";
+            if (SlotData.ProgressiveElectricSparks)
+            {
+                s += (int)ReceivedItems.ElectroTimer;
+            }
+            else
+            {
+                s += ReceivedItems.ElectroTimer != ReceivedItems.ElectroTimerState.AlwaysOff ? "Y" : "N";
+            }
+            s += sep;
+            s += $"Hats: {(ReceivedItems.Hat ? "Y" : "N")}";
+            s += sep;
+            s += $"Bouncers: {(ReceivedItems.Bouncer ? "Y" : "N")}";
+            s += sep;
+            s += $"Wheels: {(ReceivedItems.Wheel ? "Y" : "N")}";
+            s += sep;
+            s += $"Gravity Buttons: {(ReceivedItems.GravityButton ? "Y" : "N")}";
+            s += sep;
+            s += $"Blades: ";
+            if (SlotData.ProgressiveBlades)
+            {
+                s += (int)ReceivedItems.Blade;
+            }
+            else
+            {
+                s += ReceivedItems.Blade != ReceivedItems.BladeState.Disabled ? "Y" : "N";
+            }
+            s += sep;
+            s += $"Bees: {(ReceivedItems.Bee ? "Y" : "N")}";
+            s += sep;
+            s += $"Records: {(ReceivedItems.Record ? "Y" : "N")}";
+
+
+            return s;
         }
 
         public override bool touchesBeganwithEvent(IList<TouchLocation> touches)

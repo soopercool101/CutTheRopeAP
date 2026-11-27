@@ -761,9 +761,11 @@ namespace CutTheRope.game
                                          (cTRRootController.getLevel() + 1) * 100 + 20 + starCount;
                             if (Global.ApClient.AllClearedLocations.Contains(id))
                             {
-                                starCount++;
                                 hudStar[starsPrecollected++].playTimeline(0);
+#if !DEBUG
+                                starCount++;
                                 continue;
+#endif
                             }
                         }
                         Star star = Star.Star_createWithResID(78);
@@ -1737,8 +1739,15 @@ namespace CutTheRope.game
                     bool flag5 = false;
                     if ((twoParts == 2) ? (GameObject.objectsIntersect(candy, star) && !noCandy) : ((GameObject.objectsIntersect(candyL, star) && !noCandyL) || (GameObject.objectsIntersect(candyR, star) && !noCandyR)))
                     {
+                        if (SlotData.StarsanityMode == SlotData.StarsanityType.Individual)
+                        {
+                            var cTRRootController = (CTRRootController)Application.sharedRootController();
+                            var id = (cTRRootController.getPack() + 1) * 10000 +
+                                     (cTRRootController.getLevel() + 1) * 100 + 20 + star.id;
+                            Global.ApClient.SendLocation(id);
+                        }
                         candyBlink.playTimeline(1);
-                        hudStar[starsCollected++].playTimeline(0);
+                        hudStar[SlotData.StarsanityMode == SlotData.StarsanityType.Individual ? starsCollected - 1 : starsCollected++].playTimeline(0);
                         Animation animation2 = Animation.Animation_createWithResID(71);
                         animation2.doRestoreCutTransparency();
                         animation2.x = star.x;
@@ -1748,13 +1757,6 @@ namespace CutTheRope.game
                         animation2.getTimeline(n2).delegateTimelineDelegate = aniPool;
                         animation2.playTimeline(0);
                         aniPool.addChild(animation2);
-                        if (SlotData.StarsanityMode == SlotData.StarsanityType.Individual)
-                        {
-                            var cTRRootController = (CTRRootController)Application.sharedRootController();
-                            var id = (cTRRootController.getPack() + 1) * 10000 +
-                                     (cTRRootController.getLevel() + 1) * 100 + 20 + star.id;
-                            Global.ApClient.SendLocation(id);
-                        }
                         stars.removeObject(star);
                         CTRSoundMgr._playSound(25 + starsCollected - 1);
                         if (target.getCurrentTimelineIndex() == 0)
@@ -1943,7 +1945,7 @@ namespace CutTheRope.game
                 cutWithRazorOrLine1Line2Immediate(razor, vectZero, vectZero, false);
             }
 
-            ArchipelagoClient.DeathLinkHandler.HandleDeathLink();
+            ArchipelagoClient.DeathLinker.HandleDeathLink();
             if (DeathLinkHandler.DeathLinkQueued && !((twoParts == 2 && noCandyL && noCandyR) || noCandy))
             {
                 DestroyCandy(true);
@@ -2451,7 +2453,7 @@ namespace CutTheRope.game
             CTRSoundMgr._playSound(18);
             dd.callObjectSelectorParamafterDelay(selector_animateLevelRestart, null, 1.0);
             gameSceneDelegate.gameLost();
-            ArchipelagoClient.DeathLinkHandler.SendDeathLink();
+            ArchipelagoClient.DeathLinker.SendDeathLink();
         }
 
         public override void draw()

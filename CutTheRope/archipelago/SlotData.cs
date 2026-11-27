@@ -60,6 +60,10 @@ namespace CutTheRope.archipelago
 
         public static byte StartingBox { get; private set; }
 
+        // In-game tracking
+        public static bool ProgressiveElectricSparks { get; private set; }
+        public static bool ProgressiveBlades { get; private set; }
+
         public static bool LoadSlotData(Dictionary<string, object> slotData)
         {
             Loaded = false;
@@ -72,15 +76,17 @@ namespace CutTheRope.archipelago
                 if (APWorldMajorVersion < LowestSupportedMajorVersion || (APWorldMajorVersion == LowestSupportedMajorVersion && APWorldMinorVersion < LowestSupportedMinorVersion))
                 {
                     ArchipelagoClient.Authenticated = false;
-                    FrameworkTypes._LOG($"ERROR: Game was generated on version {APWorldVersionString} which is lower than lowest supported APWorld version {LowestSupportedMajorVersion}.{LowestSupportedMinorVersion}.0. Please update your APWorld or use an older version of the mod.");
+                    FrameworkTypes._LOG($"ERROR: Game was generated on version {APWorldVersionString} which is lower than lowest supported APWorld version {LowestSupportedMajorVersion}.{LowestSupportedMinorVersion}.0. Please update your APWorld or use an older version of the client.");
                     FailedValidation = true;
+                    ArchipelagoClient.ConnectionError = $"Game was generated on version {APWorldVersionString} which is lower than lowest supported APWorld version {LowestSupportedMajorVersion}.{LowestSupportedMinorVersion}.0. Please update your APWorld or use an older version of the client.";
                     return false;
                 }
                 if (APWorldMajorVersion > HighestSupportedMajorVersion || (APWorldMajorVersion == HighestSupportedMajorVersion && APWorldMinorVersion > HighestSupportedMinorVersion))
                 {
                     ArchipelagoClient.Authenticated = false;
-                    FrameworkTypes._LOG($"ERROR: Game was generated on version {APWorldVersionString} which is higher than highest supported APWorld version {HighestSupportedMajorVersion}.{HighestSupportedMinorVersion}.X. Please update your game mod.");
+                    FrameworkTypes._LOG($"ERROR: Game was generated on version {APWorldVersionString} which is higher than highest supported APWorld version {HighestSupportedMajorVersion}.{HighestSupportedMinorVersion}.X. Please update your client.");
                     FailedValidation = true;
+                    ArchipelagoClient.ConnectionError = $"Game was generated on version {APWorldVersionString} which is higher than highest supported APWorld version {HighestSupportedMajorVersion}.{HighestSupportedMinorVersion}.X. Please update your client.";
                     return false;
                 }
             }
@@ -91,6 +97,7 @@ namespace CutTheRope.archipelago
                 ArchipelagoClient.Authenticated = false;
                 FrameworkTypes._LOG("ERROR: Game was generated on an unknown version, make sure your APWorld and game mod are up-to-date!");
                 FailedValidation = true;
+                ArchipelagoClient.ConnectionError = "The world you are attempting to connect to is not the correct APWorld for this client!";
                 return false;
             }
 
@@ -100,6 +107,8 @@ namespace CutTheRope.archipelago
             GoalBoxStarRequirement = (int)(long)slotData["goal_box_star_requirement"];
             BoxLockingMode = (BoxLockingType)(long)slotData["box_locking_mode"];
             StarsanityMode = (StarsanityType)(long)slotData["starsanity_mode"];
+            ProgressiveElectricSparks = (bool)slotData["progressive_electric_sparks"];
+            ProgressiveBlades = (bool)slotData["progressive_blades"];
             if (!(bool)slotData["tutorials_item"])
             {
                 ReceivedItems.Tutorials = true;

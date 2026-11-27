@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CutTheRope.windows
 {
-    internal class ScreenSizeManager
+    public class ScreenSizeManager
     {
         public const int MIN_WINDOW_WIDTH = 800;
 

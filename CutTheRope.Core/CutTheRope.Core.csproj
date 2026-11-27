@@ -1,11 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows7.0</TargetFramework>
-    <PlatformTarget>x86</PlatformTarget>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net10.0-windows7.0</TargetFramework>
 
-    <AssemblyName>CutTheRopeArchipelago</AssemblyName>
     <AssemblyTitle>Cut The Rope</AssemblyTitle>
     <Product>Cut The Rope</Product>
     <ProductName>$(Product)</ProductName>

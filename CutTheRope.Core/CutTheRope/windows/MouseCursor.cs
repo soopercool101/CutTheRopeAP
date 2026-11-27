@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input.Touch;
 
 namespace CutTheRope.windows
 {
-    internal class MouseCursor
+    public class MouseCursor
     {
         private Cursor _cursorWindows;
 

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CutTheRope.windows
 {
-    internal class Global
+    public class Global
     {
         private static SpriteBatch spriteBatch_;
 

@@ -519,7 +519,7 @@ namespace CutTheRope.game
                     mapNameLabel.setString(NSS(""));
                     return;
                 }
-                mapNameLabel.setString(NSS($"Client {Program.ClientVersion} - APWorld v{SlotData.APWorldMajorVersion}.{SlotData.APWorldMinorVersion}.{SlotData.APWorldBuildVersion}"));
+                mapNameLabel.setString(NSS($"Client {Variables.ClientVersion} - APWorld v{SlotData.APWorldMajorVersion}.{SlotData.APWorldMinorVersion}.{SlotData.APWorldBuildVersion}"));
                 //int scoreForPackLevel = CTRPreferences.getScoreForPackLevel(cTRRootController.getPack(), cTRRootController.getLevel());
                 //mapNameLabel.setString(NSS(string.Concat(Application.getString(655380), ": ", scoreForPackLevel)));
             }

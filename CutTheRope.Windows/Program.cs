@@ -1,10 +1,12 @@
 ﻿using System.Windows.Forms;
 using CutTheRope;
 using CutTheRope.archipelago;
+using CutTheRope.windows;
 using CutTheRope.Windows;
 using Microsoft.Xna.Framework;
 
-var nativeWindowFactory = new WindowsPlatform();
+var platform = new WindowsPlatform();
+Global.ScreenSizeManager = new ScreenSizeManager(2560, 1440, platform);
 
 if (!ContentValidator.Validate(out var message))
 {
@@ -14,6 +16,6 @@ if (!ContentValidator.Validate(out var message))
 
 if (new ConnectionWindow().ShowDialog() == DialogResult.OK)
 {
-    using Game1 game = new Game1(nativeWindowFactory);
+    using Game1 game = new Game1(platform);
     game.Run();
 }

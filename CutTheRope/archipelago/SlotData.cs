@@ -16,7 +16,7 @@ namespace CutTheRope.archipelago
         /// <summary>
         /// Backwards compatibility. Lowest supported minor version in the lowest supported major version.
         /// </summary>
-        public const int LowestSupportedMinorVersion = 0;
+        public const int LowestSupportedMinorVersion = 1;
         /// <summary>
         /// Highest x.y.# version supported, where y is in the highest supported minor version
         /// Should be up to date with latest APWorld whenever a new version is released.

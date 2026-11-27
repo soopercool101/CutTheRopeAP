@@ -90,10 +90,10 @@ namespace CutTheRope.iframework.media
         public virtual void playMusic(int resId)
         {
             stopMusic();
-            Song song = _contentManager.Load<Song>("sounds/" + CTRResourceMgr.XNA_ResName(resId));
-            MediaPlayer.IsRepeating = true;
             try
             {
+                Song song = _contentManager.Load<Song>("sounds/" + CTRResourceMgr.XNA_ResName(resId));
+                MediaPlayer.IsRepeating = true;
                 MediaPlayer.Play(song);
             }
             catch (Exception)

@@ -12,4 +12,8 @@
       <ProjectReference Include="..\CutTheRope.Core\CutTheRope.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.6.1" />
+    </ItemGroup>
+
 </Project>

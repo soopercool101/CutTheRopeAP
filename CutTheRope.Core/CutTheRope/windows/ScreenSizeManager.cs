@@ -1,7 +1,6 @@
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
 using CutTheRope.iframework.core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -154,9 +153,9 @@ namespace CutTheRope.windows
             SHChangeNotify(134217728, 4096, IntPtr.Zero, IntPtr.Zero);
         }
 
-        public void SetWindowMinimumSize(Form form)
+        public Size WindowMinimumSize()
         {
-            form.MinimumSize = new Size(800, ScaledGameHeight(800));
+            return new Size(800, ScaledGameHeight(800));
         }
 
         public int TransformWindowToViewX(int x)

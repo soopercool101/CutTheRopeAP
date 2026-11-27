@@ -31,7 +31,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Archipelago.MultiClient.Net" Version="6.7.1" />
-    <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.6.1" />
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.6.1">
+      <ExcludeAssets>runtime</ExcludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <None Update="content/**">

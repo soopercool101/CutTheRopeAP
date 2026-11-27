@@ -1,6 +1,10 @@
 ﻿using System.Windows.Forms;
 using CutTheRope;
 using CutTheRope.archipelago;
+using CutTheRope.Windows;
+using Microsoft.Xna.Framework;
+
+var nativeWindowFactory = new WindowsNativeWindowFactory();
 
 if (!ContentValidator.Validate(out var message))
 {
@@ -10,8 +14,6 @@ if (!ContentValidator.Validate(out var message))
 
 if (new ConnectionWindow().ShowDialog() == DialogResult.OK)
 {
-    using (Game1 game = new Game1())
-    {
-        game.Run();
-    }
+    using Game1 game = new Game1(nativeWindowFactory);
+    game.Run();
 }

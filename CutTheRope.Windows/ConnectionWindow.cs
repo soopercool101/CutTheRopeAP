@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
+using Archipelago.MultiClient.Net;
 using CutTheRope.windows;
 
 namespace CutTheRope.archipelago
@@ -60,25 +61,32 @@ namespace CutTheRope.archipelago
             ArchipelagoClient.ServerData.SlotName = textBox2.Text;
             ArchipelagoClient.ServerData.Password = textBox3.Text;
             Game1.GameSpeedMult = (double)numericUpDown1.Value / 100.0;
-            var loginResult = Global.ApClient.Connect().Result;
-            if (loginResult.Successful)
+            Global.ApClient.Connect().ContinueWith((Action<Task<LoginResult>>) (loginResult =>
             {
-                DialogResult = DialogResult.OK;
-                if (File.Exists(Variables.LoginDetailsFile))
-                    File.Delete(Variables.LoginDetailsFile);
-                File.WriteAllLines(Variables.LoginDetailsFile,
-                [
-                    ArchipelagoClient.ServerData.Uri, ArchipelagoClient.ServerData.SlotName,
-                    ArchipelagoClient.ServerData.Password, numericUpDown1.Value.ToString(CultureInfo.InvariantCulture)
-                ]);
-                Close();
-            }
-            else
-            {
-                MessageBox.Show(
-                    ArchipelagoClient.ConnectionError,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                var result = loginResult.Result;
+                Invoke(() =>
+                {
+                    if (result.Successful)
+                    {
+                        DialogResult = DialogResult.OK;
+                        if (File.Exists(Variables.LoginDetailsFile))
+                            File.Delete(Variables.LoginDetailsFile);
+                        File.WriteAllLines(Variables.LoginDetailsFile,
+                        [
+                            ArchipelagoClient.ServerData.Uri, ArchipelagoClient.ServerData.SlotName,
+                            ArchipelagoClient.ServerData.Password,
+                            numericUpDown1.Value.ToString(CultureInfo.InvariantCulture)
+                        ]);
+                        Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            ArchipelagoClient.ConnectionError,
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                });
+            }));
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)

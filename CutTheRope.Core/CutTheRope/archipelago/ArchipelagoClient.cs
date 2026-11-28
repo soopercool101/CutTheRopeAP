@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 using Archipelago.MultiClient.Net.Enums;
@@ -26,15 +27,18 @@ public class ArchipelagoClient
     public ArchipelagoSession Session { get; private set; }
 
     public static string ConnectionError;
-    public static readonly string DefaultConnectionError = "Could not connect to server. Double-check your connection info and confirm your room is open!";
+
+    public static readonly string DefaultConnectionError =
+        "Could not connect to server. Double-check your connection info and confirm your room is open!";
 
     /// <summary>
     /// call to connect to an Archipelago session. Connection info should already be set up on ServerData
     /// </summary>
     /// <returns></returns>
-    public bool Connect()
+    public async Task<LoginResult> Connect()
     {
-        if (Authenticated || AttemptingConnection) return false;
+        if (Authenticated || AttemptingConnection) return new LoginFailure("Already logging in");
+        ;
         ConnectionError = DefaultConnectionError;
         FrameworkTypes._LOG("Connecting");
         AttemptingConnection = true;
@@ -50,7 +54,29 @@ public class ArchipelagoClient
         }
 
         FrameworkTypes._LOG("Attempting Connection");
-        return TryConnect();
+        var loginResult = await TryConnect();
+        HandleConnectResult(loginResult);
+        if (!loginResult.Successful)
+        {
+            ConnectionError = loginResult switch
+            {
+                LoginFailure loginFailure when loginFailure.ErrorCodes.Contains(ConnectionRefusedError.InvalidGame) =>
+                    "This slot is not configured for Cut the Rope.",
+                LoginFailure loginFailure when loginFailure.ErrorCodes.Contains(ConnectionRefusedError.InvalidPassword)
+                    => "Check the password and try again.",
+                LoginFailure loginFailure when loginFailure.ErrorCodes.Contains(ConnectionRefusedError.InvalidSlot) =>
+                    "Check the slot name and try again.",
+                _ => "Unable to connect to Archipelago."
+            };
+            return loginResult;
+        }
+
+        if (!Authenticated || !SlotData.Loaded)
+        {
+            return new LoginFailure("Failed to authenticate or load slot data");
+        }
+
+        return loginResult;
     }
 
     /// <summary>
@@ -67,34 +93,35 @@ public class ArchipelagoClient
     /// <summary>
     /// attempt to connect to the server with our connection info
     /// </summary>
-    private bool TryConnect()
+    private async Task<LoginResult> TryConnect()
     {
         try
         {
             // For now, do this fully synchronously
             //ThreadPool.QueueUserWorkItem(_ =>
             //{
-                try
-                {
-                    FrameworkTypes._LOG("Beginning TryConnect (Inner)");
-                    HandleConnectResult(Session.TryConnectAndLogin(
-                        Game,
-                        ServerData.SlotName,
-                        ItemsHandlingFlags.AllItems, // TODO make sure to change this line
-                        new Version(APVersion),
-                        password: ServerData.Password,
-                        requestSlotData: true // ServerData.NeedSlotData
-                    ));
-                    FrameworkTypes._LOG("Finishing TryConnect (Inner)");
-                    return Authenticated && SlotData.Loaded;
-                }
-                catch (Exception e)
-                {
-                    FrameworkTypes._LOG("Failed connection in TryConnect (Inner)");
-                    AttemptingConnection = false;
-                    FrameworkTypes._LOG(e.Message);
-                    HandleConnectResult(new LoginFailure(e.ToString()));
-                }
+            try
+            {
+                FrameworkTypes._LOG("Beginning TryConnect (Inner)");
+                await Session.ConnectAsync();
+                var loginResult = await Session.LoginAsync(
+                    Game,
+                    ServerData.SlotName,
+                    ItemsHandlingFlags.AllItems, // TODO make sure to change this line
+                    new Version(APVersion),
+                    password: ServerData.Password,
+                    requestSlotData: true // ServerData.NeedSlotData
+                );
+                FrameworkTypes._LOG("Finishing TryConnect (Inner)");
+                return loginResult;
+            }
+            catch (Exception e)
+            {
+                FrameworkTypes._LOG("Failed connection in TryConnect (Inner)");
+                AttemptingConnection = false;
+                FrameworkTypes._LOG(e.Message);
+                return new LoginFailure(e.ToString());
+            }
             //});
         }
         catch (Exception e)
@@ -102,10 +129,8 @@ public class ArchipelagoClient
             AttemptingConnection = false;
             FrameworkTypes._LOG("Failed connection in TryConnect");
             FrameworkTypes._LOG(e.Message);
-            HandleConnectResult(new LoginFailure(e.ToString()));
+            return new LoginFailure(e.ToString());
         }
-
-        return false;
     }
 
     /// <summary>
@@ -119,7 +144,7 @@ public class ArchipelagoClient
             string outText;
             if (result.Successful)
             {
-                var success = (LoginSuccessful) result;
+                var success = (LoginSuccessful)result;
 
                 SlotData.LoadSlotData(success.SlotData);
                 ServerData.SetupSession(success.SlotData, Session.RoomState.Seed);
@@ -176,7 +201,7 @@ public class ArchipelagoClient
             }
             else
             {
-                var failure = (LoginFailure) result;
+                var failure = (LoginFailure)result;
                 outText = $"Failed to connect to {ServerData.Uri} as {ServerData.SlotName}.";
                 outText = failure.Errors.Aggregate(outText, (current, error) => current + $"\n    {error}");
 
@@ -203,6 +228,7 @@ public class ArchipelagoClient
     private static Dictionary<int, int> LevelsCompletePerBox = new();
 
     private object LevelUnlockLock = new();
+
     public bool GetLevelUnlocked(int box, int level)
     {
         lock (LevelUnlockLock)
@@ -211,6 +237,7 @@ public class ArchipelagoClient
             {
                 return true;
             }
+
             if (LevelsCompletePerBox.TryGetValue(box, out var value))
             {
                 return value >= level;
@@ -233,6 +260,7 @@ public class ArchipelagoClient
             {
                 return;
             }
+
             LevelsCompletePerBox[box] = level;
             if (level > 0)
             {
@@ -241,7 +269,8 @@ public class ArchipelagoClient
         }
     }
 
-    private static readonly DataStorageHelper.DataStorageUpdatedHandler[] UpdateBoxData = [
+    private static readonly DataStorageHelper.DataStorageUpdatedHandler[] UpdateBoxData =
+    [
         Box0_OnLevelCountChanged,
         Box1_OnLevelCountChanged,
         Box2_OnLevelCountChanged,
@@ -260,57 +289,68 @@ public class ArchipelagoClient
         LevelsCompletePerBox[box] = newValue;
     }
 
-    private static void Box0_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    private static void Box0_OnLevelCountChanged(JToken originalValue, JToken newValue,
+        Dictionary<string, JToken> additionalArguments)
     {
         Box_OnLevelCountChanged(0, newValue.ToObject<int>());
     }
 
-    private static void Box1_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    private static void Box1_OnLevelCountChanged(JToken originalValue, JToken newValue,
+        Dictionary<string, JToken> additionalArguments)
     {
         Box_OnLevelCountChanged(1, newValue.ToObject<int>());
     }
 
-    private static void Box2_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    private static void Box2_OnLevelCountChanged(JToken originalValue, JToken newValue,
+        Dictionary<string, JToken> additionalArguments)
     {
         Box_OnLevelCountChanged(2, newValue.ToObject<int>());
     }
 
-    private static void Box3_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    private static void Box3_OnLevelCountChanged(JToken originalValue, JToken newValue,
+        Dictionary<string, JToken> additionalArguments)
     {
         Box_OnLevelCountChanged(3, newValue.ToObject<int>());
     }
 
-    private static void Box4_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    private static void Box4_OnLevelCountChanged(JToken originalValue, JToken newValue,
+        Dictionary<string, JToken> additionalArguments)
     {
         Box_OnLevelCountChanged(4, newValue.ToObject<int>());
     }
 
-    private static void Box5_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    private static void Box5_OnLevelCountChanged(JToken originalValue, JToken newValue,
+        Dictionary<string, JToken> additionalArguments)
     {
         Box_OnLevelCountChanged(5, newValue.ToObject<int>());
     }
 
-    private static void Box6_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    private static void Box6_OnLevelCountChanged(JToken originalValue, JToken newValue,
+        Dictionary<string, JToken> additionalArguments)
     {
         Box_OnLevelCountChanged(6, newValue.ToObject<int>());
     }
 
-    private static void Box7_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    private static void Box7_OnLevelCountChanged(JToken originalValue, JToken newValue,
+        Dictionary<string, JToken> additionalArguments)
     {
         Box_OnLevelCountChanged(7, newValue.ToObject<int>());
     }
 
-    private static void Box8_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    private static void Box8_OnLevelCountChanged(JToken originalValue, JToken newValue,
+        Dictionary<string, JToken> additionalArguments)
     {
         Box_OnLevelCountChanged(8, newValue.ToObject<int>());
     }
 
-    private static void Box9_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    private static void Box9_OnLevelCountChanged(JToken originalValue, JToken newValue,
+        Dictionary<string, JToken> additionalArguments)
     {
         Box_OnLevelCountChanged(9, newValue.ToObject<int>());
     }
 
-    private static void Box10_OnLevelCountChanged(JToken originalValue, JToken newValue, Dictionary<string, JToken> additionalArguments)
+    private static void Box10_OnLevelCountChanged(JToken originalValue, JToken newValue,
+        Dictionary<string, JToken> additionalArguments)
     {
         Box_OnLevelCountChanged(10, newValue.ToObject<int>());
     }
@@ -430,7 +470,8 @@ public class ArchipelagoClient
                 break;
             case 105:
                 // Don't go down if electro timer is cheated in, but don't go to always off territory if multiple cheated in
-                ReceivedItems.ElectroTimer = (ReceivedItems.ElectroTimerState)Math.Max((byte)ReceivedItems.ElectroTimer, (byte)ReceivedItems.ElectroTimerState.Normal);
+                ReceivedItems.ElectroTimer = (ReceivedItems.ElectroTimerState)Math.Max((byte)ReceivedItems.ElectroTimer,
+                    (byte)ReceivedItems.ElectroTimerState.Normal);
                 break;
             case 205:
                 if (ReceivedItems.ElectroTimer < ReceivedItems.ElectroTimerState.AlwaysOff)
@@ -450,7 +491,8 @@ public class ArchipelagoClient
                 break;
             case 110:
                 // Don't go down if blade is cheated in, but don't go to always off territory if multiple cheated in
-                ReceivedItems.Blade = (ReceivedItems.BladeState)Math.Max((byte)ReceivedItems.Blade, (byte)ReceivedItems.BladeState.RotateAllowed);
+                ReceivedItems.Blade = (ReceivedItems.BladeState)Math.Max((byte)ReceivedItems.Blade,
+                    (byte)ReceivedItems.BladeState.RotateAllowed);
                 break;
             case 210:
                 if (ReceivedItems.Blade < ReceivedItems.BladeState.Disabled)
@@ -478,13 +520,14 @@ public class ArchipelagoClient
                     ReceivedItems.ReceivedBoxItems.Add((int)(receivedItem.ItemId - 10_01));
                     break;
                 }
+
                 FrameworkTypes._LOG($"Error: Unknown item ID: {receivedItem.ItemId}");
                 throw new ArgumentOutOfRangeException();
         }
     }
 
-    public static readonly string[] Traps = [
-
+    public static readonly string[] Traps =
+    [
     ];
 
     /// <summary>
@@ -532,7 +575,9 @@ public class ArchipelagoClient
         return AllLocations.Contains(location) && !AllClearedLocations.Contains(location);
     }
 
-    public System.Collections.ObjectModel.ReadOnlyCollection<long> AllClearedLocations => Session.Locations.AllLocationsChecked;
+    public System.Collections.ObjectModel.ReadOnlyCollection<long> AllClearedLocations =>
+        Session.Locations.AllLocationsChecked;
+
     public System.Collections.ObjectModel.ReadOnlyCollection<long> AllLocations => Session.Locations.AllLocations;
     public Dictionary<long, ScoutedItemInfo> ScoutedLocations { get; private set; }
     public ILocationCheckHelper Locations => Session.Locations;

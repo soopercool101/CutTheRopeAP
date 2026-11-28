@@ -60,7 +60,8 @@ namespace CutTheRope.archipelago
             ArchipelagoClient.ServerData.SlotName = textBox2.Text;
             ArchipelagoClient.ServerData.Password = textBox3.Text;
             Game1.GameSpeedMult = (double)numericUpDown1.Value / 100.0;
-            if (Global.ApClient.Connect())
+            var loginResult = Global.ApClient.Connect().Result;
+            if (loginResult.Successful)
             {
                 DialogResult = DialogResult.OK;
                 if (File.Exists(Variables.LoginDetailsFile))

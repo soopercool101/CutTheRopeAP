@@ -8,7 +8,7 @@ namespace CutTheRope.archipelago;
 
 public class DeathLinkHandler
 {
-    public static bool DeathLinkEnabled => Program.DeathLinkOverride ?? SlotData.DeathLink;
+    public static bool DeathLinkEnabled => Variables.DeathLinkOverride ?? SlotData.DeathLink;
     private string slotName;
     private readonly DeathLinkService service;
     private readonly Queue<DeathLink> deathLinks = new();

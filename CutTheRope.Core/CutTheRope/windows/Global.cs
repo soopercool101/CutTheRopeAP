@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CutTheRope.windows
 {
-    internal class Global
+    public class Global
     {
         private static SpriteBatch spriteBatch_;
 
@@ -12,7 +12,7 @@ namespace CutTheRope.windows
 
         private static GraphicsDeviceManager graphicsDeviceManager_;
 
-        private static ScreenSizeManager screenSizeManager_ = new ScreenSizeManager(2560, 1440);
+        private static ScreenSizeManager screenSizeManager_;
 
         private static MouseCursor mouseCursor_ = new MouseCursor();
 

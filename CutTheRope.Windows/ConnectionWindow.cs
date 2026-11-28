@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
+using Archipelago.MultiClient.Net;
 using CutTheRope.windows;
 
 namespace CutTheRope.archipelago
@@ -31,9 +32,9 @@ namespace CutTheRope.archipelago
 
             try
             {
-                if (File.Exists(Program.LoginDetailsFile))
+                if (File.Exists(Variables.LoginDetailsFile))
                 {
-                    var lines = File.ReadAllLines(Program.LoginDetailsFile);
+                    var lines = File.ReadAllLines(Variables.LoginDetailsFile);
                     uri = lines[0];
                     slotName = lines[1];
                     password = lines.Length > 2 ? lines[2] : string.Empty;
@@ -41,7 +42,7 @@ namespace CutTheRope.archipelago
                 }
                 else
                 {
-                    File.WriteAllLines(Program.LoginDetailsFile, [uri, slotName, password, "100"]);
+                    File.WriteAllLines(Variables.LoginDetailsFile, [uri, slotName, password, "100"]);
                 }
             }
             catch
@@ -60,24 +61,32 @@ namespace CutTheRope.archipelago
             ArchipelagoClient.ServerData.SlotName = textBox2.Text;
             ArchipelagoClient.ServerData.Password = textBox3.Text;
             Game1.GameSpeedMult = (double)numericUpDown1.Value / 100.0;
-            if (Global.ApClient.Connect())
+            Global.ApClient.Connect().ContinueWith((Action<Task<LoginResult>>) (loginResult =>
             {
-                DialogResult = DialogResult.OK;
-                if (File.Exists(Program.LoginDetailsFile))
-                    File.Delete(Program.LoginDetailsFile);
-                File.WriteAllLines(Program.LoginDetailsFile,
-                [
-                    ArchipelagoClient.ServerData.Uri, ArchipelagoClient.ServerData.SlotName,
-                    ArchipelagoClient.ServerData.Password, numericUpDown1.Value.ToString(CultureInfo.InvariantCulture)
-                ]);
-                Close();
-            }
-            else
-            {
-                MessageBox.Show(
-                    ArchipelagoClient.ConnectionError,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                var result = loginResult.Result;
+                Invoke(() =>
+                {
+                    if (result.Successful)
+                    {
+                        DialogResult = DialogResult.OK;
+                        if (File.Exists(Variables.LoginDetailsFile))
+                            File.Delete(Variables.LoginDetailsFile);
+                        File.WriteAllLines(Variables.LoginDetailsFile,
+                        [
+                            ArchipelagoClient.ServerData.Uri, ArchipelagoClient.ServerData.SlotName,
+                            ArchipelagoClient.ServerData.Password,
+                            numericUpDown1.Value.ToString(CultureInfo.InvariantCulture)
+                        ]);
+                        Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            ArchipelagoClient.ConnectionError,
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                });
+            }));
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -85,13 +94,13 @@ namespace CutTheRope.archipelago
             switch (checkBox1.CheckState)
             {
                 case CheckState.Checked:
-                    Program.DeathLinkOverride = true;
+                    Variables.DeathLinkOverride = true;
                     break;
                 case CheckState.Unchecked:
-                    Program.DeathLinkOverride = false;
+                    Variables.DeathLinkOverride = false;
                     break;
                 case CheckState.Indeterminate:
-                    Program.DeathLinkOverride = null;
+                    Variables.DeathLinkOverride = null;
                     break;
             }
         }

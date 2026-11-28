@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Windows.Forms;
 
 namespace CutTheRope
 {
@@ -288,7 +287,7 @@ namespace CutTheRope
 
         public static bool Validate(out string errorMessage)
         {
-            var contentDirectory = Path.Combine(Program.GameDirectory, "content");
+            var contentDirectory = Path.Combine(Variables.GameDirectory, "content");
             if (!Directory.Exists(contentDirectory))
             {
                 errorMessage = "content directory is missing! Please follow the setup guide!";

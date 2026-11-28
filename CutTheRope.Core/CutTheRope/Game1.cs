@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
-using System.Windows.Forms;
 using CutTheRope.archipelago;
 using CutTheRope.ctr_commons;
 using CutTheRope.iframework;
@@ -19,27 +18,11 @@ namespace CutTheRope
 {
     public class Game1 : Game
     {
+        private readonly IPlatform _platform;
+        
         private Branding branding;
-
-        private Process parentProcess;
-
-        private int mouseState_X;
-
-        private int mouseState_Y;
-
-        private int mouseState_ScrollWheelValue;
-
-        private Microsoft.Xna.Framework.Input.ButtonState mouseState_LeftButton;
-
-        private Microsoft.Xna.Framework.Input.ButtonState mouseState_MiddleButton;
-
-        private Microsoft.Xna.Framework.Input.ButtonState mouseState_RightButton;
-
-        private Microsoft.Xna.Framework.Input.ButtonState mouseState_XButton1;
-
-        private Microsoft.Xna.Framework.Input.ButtonState mouseState_XButton2;
-
-        private Cursor _cursorLast;
+        
+        private CursorType _cursorLast;
 
         private Dictionary<Keys, bool> keyState = new Dictionary<Keys, bool>();
 
@@ -56,18 +39,14 @@ namespace CutTheRope
         private TimeSpan elapsedTime = TimeSpan.Zero;
 
         private bool bFirstFrame = true;
+        
+        private INativeWindow? _nativeWindow;
 
-        private bool IsMinimized
-        {
-            get
-            {
-                Form form = WindowAsForm();
-                return form.WindowState == FormWindowState.Minimized;
-            }
-        }
+        private bool IsMinimized => _nativeWindow?.IsMinimised() ?? false;
 
-        public Game1()
+        public Game1(IPlatform platform)
         {
+            _platform = platform;
             Global.XnaGame = this;
             Content.RootDirectory = "content";
             Global.GraphicsDeviceManager = new GraphicsDeviceManager(this);
@@ -89,113 +68,24 @@ namespace CutTheRope
             Activated += Game1_Activated;
             Deactivated += Game1_Deactivated;
             Exiting += Game1_Exiting;
-            parentProcess = ParentProcessUtilities.GetParentProcess();
-            Form form = WindowAsForm();
-            form.MouseMove += form_MouseMove;
-            form.MouseUp += form_MouseUp;
-            form.MouseDown += form_MouseDown;
+            
+            this._nativeWindow = _platform.SetupNativeWindow(Window, this);
         }
 
-        private void form_MouseDown(object sender, MouseEventArgs e)
-        {
-            mouseState_X = e.X;
-            mouseState_Y = e.Y;
-            switch (e.Button)
-            {
-                case MouseButtons.Left:
-                    mouseState_LeftButton = Microsoft.Xna.Framework.Input.ButtonState.Pressed;
-                    break;
-                case MouseButtons.Middle:
-                    mouseState_MiddleButton = Microsoft.Xna.Framework.Input.ButtonState.Pressed;
-                    break;
-                case MouseButtons.Right:
-                    mouseState_RightButton = Microsoft.Xna.Framework.Input.ButtonState.Pressed;
-                    break;
-                case MouseButtons.XButton1:
-                    mouseState_XButton1 = Microsoft.Xna.Framework.Input.ButtonState.Pressed;
-                    break;
-                case MouseButtons.XButton2:
-                    mouseState_XButton2 = Microsoft.Xna.Framework.Input.ButtonState.Pressed;
-                    break;
-            }
-            if (_DrawMovie && e.Button == MouseButtons.Left)
-            {
-                iframework.core.Application.sharedMovieMgr().stop();
-            }
-            CtrRenderer.Java_com_zeptolab_ctr_CtrRenderer_nativeTouchProcess(Global.MouseCursor.GetTouchLocation());
-        }
-
-        private void form_MouseUp(object sender, MouseEventArgs e)
-        {
-            mouseState_X = e.X;
-            mouseState_Y = e.Y;
-            switch (e.Button)
-            {
-                case MouseButtons.Left:
-                    mouseState_LeftButton = Microsoft.Xna.Framework.Input.ButtonState.Released;
-                    break;
-                case MouseButtons.Middle:
-                    mouseState_MiddleButton = Microsoft.Xna.Framework.Input.ButtonState.Released;
-                    break;
-                case MouseButtons.Right:
-                    mouseState_RightButton = Microsoft.Xna.Framework.Input.ButtonState.Released;
-                    break;
-                case MouseButtons.XButton1:
-                    mouseState_XButton1 = Microsoft.Xna.Framework.Input.ButtonState.Released;
-                    break;
-                case MouseButtons.XButton2:
-                    mouseState_XButton2 = Microsoft.Xna.Framework.Input.ButtonState.Released;
-                    break;
-            }
-            CtrRenderer.Java_com_zeptolab_ctr_CtrRenderer_nativeTouchProcess(Global.MouseCursor.GetTouchLocation());
-        }
-
-        private void form_MouseMove(object sender, MouseEventArgs e)
-        {
-            mouseState_X = e.X;
-            mouseState_Y = e.Y;
-            CtrRenderer.Java_com_zeptolab_ctr_CtrRenderer_nativeTouchProcess(Global.MouseCursor.GetTouchLocation());
-        }
-
-        public MouseState GetMouseState()
-        {
-            return new MouseState(mouseState_X, mouseState_Y, mouseState_ScrollWheelValue, mouseState_LeftButton, mouseState_MiddleButton, mouseState_RightButton, mouseState_XButton1, mouseState_XButton2);
-        }
+        public MouseState GetMouseState() => _nativeWindow.GetMouseState();
 
         private void GraphicsDeviceManager_PreparingDeviceSettings(object sender, PreparingDeviceSettingsEventArgs e)
         {
             e.GraphicsDeviceInformation.PresentationParameters.DepthStencilFormat = DepthFormat.None;
         }
 
-        private void form_Resize(object sender, EventArgs e)
-        {
-            if (Global.ScreenSizeManager.SkipSizeChanges)
-            {
-                return;
-            }
-            Form form = WindowAsForm();
-            if (form.WindowState == FormWindowState.Maximized)
-            {
-                form.WindowState = FormWindowState.Normal;
-                if (!Global.ScreenSizeManager.IsFullScreen)
-                {
-                    Global.ScreenSizeManager.ToggleFullScreen();
-                }
-            }
-        }
-
-        public void SetCursor(Cursor cursor, MouseState mouseState)
+        public void SetCursor(CursorType cursor, MouseState mouseState)
         {
             if (Window.ClientBounds.Contains(Window.ClientBounds.X + mouseState.X, Window.ClientBounds.Y + mouseState.Y) && _cursorLast != cursor)
             {
-                WindowAsForm().Cursor = cursor;
+                _nativeWindow.SetCursor(cursor);
                 _cursorLast = cursor;
             }
-        }
-
-        private Form WindowAsForm()
-        {
-            return (Form)Control.FromHandle(Window.Handle);
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)
@@ -229,23 +119,13 @@ namespace CutTheRope
             SoundMgr.SetContentManager(Content);
             OpenGL.Init();
             Global.MouseCursor.Load(Content);
-            Form form = WindowAsForm();
+
             Window.AllowUserResizing = true;
-            if (form != null)
-            {
-                form.MaximizeBox = false;
-            }
             Preferences._loadPreferences();
             int num = Preferences._getIntForKey("PREFS_WINDOW_WIDTH");
             bool isFullScreen = num <= 0 || Preferences._getBooleanForKey("PREFS_WINDOW_FULLSCREEN");
             Global.ScreenSizeManager.Init(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode, num, isFullScreen);
             Window.ClientSizeChanged += Window_ClientSizeChanged;
-            if (form != null)
-            {
-                Global.ScreenSizeManager.SetWindowMinimumSize(form);
-                form.BackColor = System.Drawing.Color.Black;
-                form.Resize += form_Resize;
-            }
             CtrRenderer.Java_com_zeptolab_ctr_CtrRenderer_nativeInit(GetSystemLanguage());
             CtrRenderer.onSurfaceCreated();
             CtrRenderer.onSurfaceChanged(Global.ScreenSizeManager.WindowWidth, Global.ScreenSizeManager.WindowHeight);
@@ -296,6 +176,7 @@ namespace CutTheRope
         public static double GameSpeedMult = 1f;
         protected override void Update(GameTime gameTime)
         {
+            _nativeWindow?.Update();
             elapsedTime += gameTime.ElapsedGameTime;
             if (elapsedTime > TimeSpan.FromSeconds(1.0))
             {
@@ -505,6 +386,11 @@ namespace CutTheRope
             }
             base.Draw(gameTime);
             bFirstFrame = false;
+        }
+
+        public void MouseStateChanged()
+        {
+            CtrRenderer.Java_com_zeptolab_ctr_CtrRenderer_nativeTouchProcess(Global.MouseCursor.GetTouchLocation());
         }
     }
 }
